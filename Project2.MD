@@ -10,7 +10,9 @@
 
 (This is currently a placeholder and I will be adding the code block below:)
 '''
-
+import numpy as np
+import pandas as pd
+from scipy.interpolate import interp1d
 '''
 
 **MSE:**
@@ -19,7 +21,9 @@
 
 (This is currently a placeholder and I will be adding the code block below:)
 '''
-
+import numpy as np
+import pandas as pd
+from sklearn.ensemble import RandomForestRegressor
 '''
 
 **MSE:**
@@ -28,7 +32,9 @@
 
 (This is currently a placeholder and I will be adding the code block below:)
 '''
-
+import numpy as np
+import pandas as pd
+from scipy.interpolate import interp1d
 '''
 
 **MSE:**
@@ -37,7 +43,9 @@
 
 (This is currently a placeholder and I will be adding the code block below:)
 '''
-
+import numpy as np
+import pandas as pd
+from sklearn.ensemble import RandomForestRegressor
 '''
 
 **MSE:**
@@ -46,7 +54,9 @@
 
 (This is currently a placeholder and I will be adding the code block below:)
 '''
-
+import numpy as np
+import pandas as pd
+from scipy.interpolate import interp1d
 '''
 
 **MSE:**
@@ -55,7 +65,9 @@
 
 (This is currently a placeholder and I will be adding the code block below:)
 '''
-
+import numpy as np
+import pandas as pd
+from sklearn.ensemble import RandomForestRegressor
 '''
 
 **MSE:**
