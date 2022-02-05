@@ -1,3 +1,5 @@
+# Comparison of Locally Weighted and Random Forest Regression
+
 ## Concept of Locally Weighted Regression
 
 
