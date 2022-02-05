@@ -8,7 +8,7 @@
 
 
 
-### Locally Weighted Regression Applied To The UC-Irvine Appliances Dataset
+### Locally Weighted Regression Applied To The UC-Irvine Algerian Forest Fire Dataset
 
 (Editing of code below in progress, I have uploaded its current state, so far:)
 ```
@@ -46,7 +46,7 @@ def lowess_reg(x, y, xnew, kern, tau):
     f = interp1d(x.ravel(), yest.ravel(),fill_value='extrapolate')
     return f(xnew)
     
-data = pd.read_csv("energydata_complete.csv")
+data = pd.read_csv("Algerian_forest_fires_dataset_UPDATE.csv")
 
 x = data['temp'].values
 y = data['cnt'].values
@@ -72,7 +72,7 @@ print(mse(yhat_test_quart, ytest))
 
 **MSE:**
 
-### Random Forest Regression Applied To The UC-Irvine Appliances Dataset
+### Random Forest Regression Applied To The UC-Irvine Algerian Forest Fire Dataset
 
 (Editing of code below in progress, I have uploaded its current state, so far:)
 ```
@@ -85,7 +85,7 @@ from sklearn.model_selection import KFold, train_test_split as tts
 from sklearn.metrics import mean_squared_error as mse
 from sklearn.preprocessing import StandardScaler
 
-data = pd.read_csv("energydata_complete.csv")
+data = pd.read_csv("Algerian_forest_fires_dataset_UPDATE.csv")
 
 x = data['temp'].values
 y = data['cnt'].values
