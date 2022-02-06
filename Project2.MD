@@ -19,6 +19,7 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
 from sklearn.model_selection import KFold, train_test_split as tts
 from sklearn.metrics import mean_squared_error as mse
+from sklearn.preprocessing import StandardScaler
 
 def tricubic(x):
   return np.where(np.abs(x)>1,0,70/81*(1-np.abs(x)**3)**3)
@@ -52,14 +53,18 @@ y = data['Weekly_Sales'].values
 
 xtrain, xtest, ytrain, ytest = tts(x, y, test_size = 0.25, random_state = 123)
 
-yhat_test_tri = lowess_reg(xtrain, ytrain, xtest, tricubic, 0.1)
+scale = StandardScaler()
+ytrain_scaled = scale.fit_transform(ytrain.reshape(-1,1))
+ytest_scale = scale.transform(ytest.reshape(-1,1))
+
+yhat_test_tri = lowess_reg(xtrain, ytrain_scaled, xtest, tricubic, 0.1)
 print(mse(yhat_test_tri, ytest))
 
-yhat_test_epa = lowess_reg(xtrain, ytrain, xtest), Epanechnikov, 0.1)
+yhat_test_epa = lowess_reg(xtrain, ytrain_scaled, xtest), Epanechnikov, 0.1)
 print(mse(yhat_test_epa, ytest))
 
-yhat_test_quart = lowess_reg(xtrain, ytrain, xtest, Quartic, 0.1)
-print(mse(yhat_test_quart, ytest))
+yhat_test_quart = lowess_reg(xtrain, ytrain_scaled, xtest, Quartic, 0.1)
+print(mse(yhat_test_quart, ytest_scale))
 
 # Select the kernel with the lowest MSE for comparison
 
@@ -88,12 +93,16 @@ y = data['Weekly_Sales'].values
 
 xtrain, xtest, ytrain, ytest = tts(x, y, test_size = 0.25, random_state = 123)
 
+scale = StandardScaler()
+ytrain_scaled = scale.fit_transform(ytrain.reshape(-1,1))
+ytest_scale = scale.transform(ytest.reshape(-1,1))
+
 rf = RandomForestRegressor(n_estimators=1000,max_depth=3)
 
-rf.fit(xtrain, ytrain)
+rf.fit(xtrain, ytrain_scaled)
 yhat_rf = rf.predict(xtest)
 
-print(mse(yhat_rf, ytest))
+print(mse(yhat_rf, ytest_scale))
 
 # Plot a bar chart with each method's MSE 
 ```
