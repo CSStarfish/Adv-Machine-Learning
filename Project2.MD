@@ -73,7 +73,7 @@ print(mse(yhat_test_quart, ytest_scale))
 
 **MSE - Tricubic: 1.015528366246407**
 
-The Tricubic kernel proved to have the highest accuracy on the Walmart dataset.  I also performed loess regression with a tricubic kernel and a lower tau of 0.01, but the MSE was negatively impacted and slightly increased to 1.0155283663056112.  As such, I decided to continue my analysis on the Walmart dataset with a tau of 0.1.
+The Tricubic kernel proved to have the highest accuracy on the Walmart dataset.  I also performed loess regression with a tricubic kernel and a lower tau of 0.01, but the MSE was negatively impacted and slightly increased to 1.0155283663056112.  As such, I decided to try increasing the tau to 0.5.  This led to an improvement in accuracy with the lowest MSE at just 1.0155283662460473.
 
 
 **MSE - Epanechnikov: 1.0155283662485854**
