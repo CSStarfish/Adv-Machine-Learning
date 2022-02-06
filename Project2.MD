@@ -73,15 +73,16 @@ print(mse(yhat_test_quart, ytest_scale))
 
 **MSE - Tricubic: 1.015528366246407**
 
-The Tricubic kernel proved to have the highest accuracy on the Walmart dataset.  I also performed loess regression with a tricubic kernel and a lower tau of 0.01, but the MSE was negatively impacted and slightly declined to 1.0155283663056112.  As such, I decided to continue my analysis on the Walmart dataset with a tau of 0.1.
+The Tricubic kernel proved to have the highest accuracy on the Walmart dataset.  I also performed loess regression with a tricubic kernel and a lower tau of 0.01, but the MSE was negatively impacted and slightly increased to 1.0155283663056112.  As such, I decided to continue my analysis on the Walmart dataset with a tau of 0.1.
 
 
 **MSE - Epanechnikov: 1.0155283662485854**
 
-Similar to the Tricubic kernel with a smallerr tau of 0.01, the MSE slightly declined to 1.0155283662961123.
+Similar to the Tricubic kernel with a smaller tau of 0.01, the MSE slightly increased to 1.0155283662961123.
 
 
 **MSE - Quartic: 1.0155283662492287**
+Unlike the Tricubic and Epanechnikov kernels, utilizing the smaller tau of 0.01 decreased the MSE to 1.015528366238946.  As such, a smaller tau improved the accuracy of the model when using a Quartic kernel.
 
 ### Random Forest Regression Applied To A Walmart Dataset
 
