@@ -78,7 +78,7 @@ The Tricubic kernel proved to have the highest accuracy on the Walmart dataset. 
 
 **MSE - Epanechnikov: 1.0155283662485854**
 
-Similar to the Tricubic kernel with a smaller tau of 0.01, the MSE slightly increased to 1.0155283662961123.
+Similar to the Tricubic kernel with a smaller tau of 0.01, the MSE slightly increased to 1.0155283662961123, and decreased to just 1.01552836624602 with a higher tau of 0.5.
 
 
 **MSE - Quartic: 1.0155283662492287**
