@@ -8,7 +8,7 @@
 
 
 
-### Locally Weighted Regression Applied To The UC-Irvine Algerian Forest Fire Dataset
+### Locally Weighted Regression Applied To The UC-Irvine Walmart Dataset
 
 (Editing of code below in progress, I have uploaded its current state, so far:)
 ```
@@ -72,7 +72,7 @@ print(mse(yhat_test_quart, ytest))
 
 **MSE:**
 
-### Random Forest Regression Applied To The UC-Irvine Algerian Forest Fire Dataset
+### Random Forest Regression Applied To The UC-Irvine Walmart Dataset
 
 (Editing of code below in progress, I have uploaded its current state, so far:)
 ```
