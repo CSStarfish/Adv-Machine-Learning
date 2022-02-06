@@ -107,15 +107,15 @@ ytest_scale = scale.transform(ytest.reshape(-1,1))
 
 rf = RandomForestRegressor(n_estimators=1000,max_depth=3)
 
-rf.fit(xtrain, ytrain_scaled)
-yhat_rf = rf.predict(xtest)
+rf.fit(xtrain.reshape(-1,1), ytrain_scaled.reshape(-1,1)
+yhat_rf = rf.predict(xtest.reshape(-1,1))
 
 print(mse(yhat_rf, ytest_scale))
 
 # Plot a bar chart with each method's MSE 
 ```
 
-**MSE:**
+**MSE: 1.0026378217724825**
 
 ### Locally Weighted Regression Applied To The Boston Housing Dataset
 
