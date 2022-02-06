@@ -71,7 +71,7 @@ print(mse(yhat_test_quart, ytest_scale))
 # Plot a bar chart with each method's MSE 
 ```
 
-**MSE: 0.5724586751976627**
+**MSE: 1.015528366246407**
 
 ### Random Forest Regression Applied To A Walmart Dataset
 
