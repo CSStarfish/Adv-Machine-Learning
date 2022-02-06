@@ -120,6 +120,8 @@ print(mse(yhat_rf, ytest_scale))
 
 **MSE: 1.0026378217724825**
 
+With the number of trees decreased to 100, the MSE improved to just 1.002540902426993.  I then experimented with extending the depth of each tree to 5 levels, but this greatly increased the MSE to 1.0054284300015228 with a forest of 1000 trees and 1.0046603734933888 with a forest of 100 trees.
+
 ### Locally Weighted Regression Applied To The Boston Housing Dataset
 
 (Editing of code below in progress, I have uploaded its current state, so far:)
