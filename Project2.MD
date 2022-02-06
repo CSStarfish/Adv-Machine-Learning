@@ -283,7 +283,7 @@ print(mse(yhat_test_quart, ytest))
 # Plot a bar chart with each method's MSE 
 ```
 
-**MSE:**
+**MSE: 15.961885966790936**
 
 ### Random Forest Regression Applied To The Cars Dataset
 
