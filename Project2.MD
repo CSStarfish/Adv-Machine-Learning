@@ -184,7 +184,7 @@ print(mse(yhat_test_quart, ytest))
 # Plot a bar chart with each method's MSE 
 ```
 
-**MSE:**
+**MSE: 44.16006090451543**
 
 ### Random Forest Regression Applied To The Boston Housing Dataset
 
