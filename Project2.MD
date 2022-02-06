@@ -46,7 +46,7 @@ def lowess_reg(x, y, xnew, kern, tau):
     f = interp1d(x.ravel(), yest.ravel(),fill_value='extrapolate')
     return f(xnew)
     
-data = pd.read_csv("Algerian_forest_fires_dataset_UPDATE.csv")
+data = pd.read_csv("Walmart.csv")
 
 x = data['temp'].values
 y = data['cnt'].values
@@ -85,7 +85,7 @@ from sklearn.model_selection import KFold, train_test_split as tts
 from sklearn.metrics import mean_squared_error as mse
 from sklearn.preprocessing import StandardScaler
 
-data = pd.read_csv("Algerian_forest_fires_dataset_UPDATE.csv")
+data = pd.read_csv("Walmart.csv")
 
 x = data['temp'].values
 y = data['cnt'].values
