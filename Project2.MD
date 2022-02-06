@@ -72,8 +72,12 @@ print(mse(yhat_test_quart, ytest_scale))
 ```
 
 **MSE - Tricubic: 1.015528366246407**
+
+
 **MSE - Epanechnikov: 1.0155283662485854**
-**MSE - Quartic: **
+
+
+**MSE - Quartic:**
 
 ### Random Forest Regression Applied To A Walmart Dataset
 
