@@ -58,10 +58,10 @@ ytrain_scaled = scale.fit_transform(ytrain.reshape(-1,1))
 ytest_scale = scale.transform(ytest.reshape(-1,1))
 
 yhat_test_tri = lowess_reg(xtrain, ytrain_scaled, xtest, tricubic, 0.1)
-print(mse(yhat_test_tri, ytest))
+print(mse(yhat_test_tri, ytest_scale))
 
 yhat_test_epa = lowess_reg(xtrain, ytrain_scaled, xtest), Epanechnikov, 0.1)
-print(mse(yhat_test_epa, ytest))
+print(mse(yhat_test_epa, ytest_scale))
 
 yhat_test_quart = lowess_reg(xtrain, ytrain_scaled, xtest, Quartic, 0.1)
 print(mse(yhat_test_quart, ytest_scale))
@@ -71,7 +71,9 @@ print(mse(yhat_test_quart, ytest_scale))
 # Plot a bar chart with each method's MSE 
 ```
 
-**MSE: 1.015528366246407**
+**MSE - Tricubic: 1.015528366246407**
+**MSE - Epanechnikov: 1.0155283662485854**
+**MSE - Quartic: **
 
 ### Random Forest Regression Applied To A Walmart Dataset
 
