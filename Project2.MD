@@ -82,7 +82,7 @@ Similar to the Tricubic kernel with a smaller tau of 0.01, the MSE slightly incr
 
 
 **MSE - Quartic: 1.0155283662492287**
-Unlike the Tricubic and Epanechnikov kernels, utilizing the smaller tau of 0.01 decreased the MSE to 1.015528366238946.  As such, a smaller tau improved the accuracy of the model when using a Quartic kernel.
+Unlike the Tricubic and Epanechnikov kernels, utilizing the smaller tau of 0.01 decreased the MSE to 1.015528366238946.  As such, a smaller tau improved the accuracy of the model when using a Quartic kernel.  While increasing the tau to 0.5 did improve the MSE from the initial tau of 0.1, it did not improve it past that of the 0.01 tau.  With tau = 0.5, the MSE was 1.0155283662461692.
 
 ### Random Forest Regression Applied To A Walmart Dataset
 
