@@ -139,7 +139,6 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
 from sklearn.model_selection import KFold, train_test_split as tts
 from sklearn.metrics import mean_squared_error as mse
-from sklearn.preprocessing import StandardScaler
 
 def tricubic(x):
   return np.where(np.abs(x)>1,0,70/81*(1-np.abs(x)**3)**3)
@@ -166,24 +165,21 @@ def lowess_reg(x, y, xnew, kern, tau):
     f = interp1d(x.ravel(), yest.ravel(),fill_value='extrapolate')
     return f(xnew)
     
-data = pd.read_csv("Boston Housing Prices.csv")
+data2 = pd.read_csv("Boston Housing Prices.csv")
 
-x = data['rooms'].values
-y = data['cmedv'].values
+x2 = data2['rooms'].values
+y2 = data2['cmedv'].values
 
-xtrain, xtest, ytrain, ytest = tts(x, y, test_size = 0.25, random_state = 123)
-scale = StandardScaler()
-xtrain_scaled = scale.fit_transform(xtrain)
-xtest_scale = scale.transform(xtest)
+xtrain2, xtest2, ytrain2, ytest2 = tts(x2, y2, test_size = 0.25, random_state = 123)
 
-yhat_test_tri = lowess_reg(xtrain_scaled.ravel(), ytrain, xtest_scale.ravel(), tricubic, 0.1)
-print(mse(yhat_test_tri, ytest))
+yhat2_test_tri = lowess_reg(xtrain2, ytrain2, xtest2, tricubic, 0.1)
+print(mse(yhat2_test_tri, ytest2))
 
-yhat_test_epa = lowess_reg(xtrain_scaled.ravel(), ytrain, xtest_scale.ravel(), Epanechnikov, 0.1)
-print(mse(yhat_test_epa, ytest))
+yhat2_test_epa = lowess_reg(xtrain2, ytrain2, xtest2, Epanechnikov, 0.1)
+print(mse(yhat2_test_epa, ytest2))
 
-yhat_test_quart = lowess_reg(xtrain_scaled.ravel(), ytrain, xtest_scale.ravel(), Quartic, 0.1)
-print(mse(yhat_test_quart, ytest))
+yhat2_test_quart = lowess_reg(xtrain2, ytrain2, xtest2, Quartic, 0.1)
+print(mse(yhat2_test_quart, ytest2))
 
 # Select the kernel with the lowest MSE for comparison
 
@@ -207,24 +203,20 @@ import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import KFold, train_test_split as tts
 from sklearn.metrics import mean_squared_error as mse
-from sklearn.preprocessing import StandardScaler
 
-data = pd.read_csv("Boston Housing Prices.csv")
+data2 = pd.read_csv("Boston Housing Prices.csv")
 
-x = data['rooms'].values
-y = data['cmedv'].values
+x2 = data2['rooms'].values
+y2 = data2['cmedv'].values
 
-xtrain, xtest, ytrain, ytest = tts(x, y, test_size = 0.25, random_state = 123)
-scale = StandardScaler()
-xtrain_scaled = scale.fit_transform(xtrain)
-xtest_scale = scale.transform(xtest)
+xtrain2, xtest2, ytrain2, ytest2 = tts(x2, y2, test_size = 0.25, random_state = 123)
 
 rf = RandomForestRegressor(n_estimators=1000,max_depth=3)
 
-rf.fit(xtrain_scaled, ytrain)
-yhat_rf = rf.predict(xtest_scale)
+rf.fit(xtrain2.reshape(-1,1), ytrain2.reshape(-1,1))
+yhat2_rf = rf.predict(xtest2.reshape(-1,1))
 
-print(mse(yhat_rf, ytest))
+print(mse(yhat2_rf, ytest2))
 
 # Plot a bar chart with each method's MSE 
 ```
@@ -275,24 +267,24 @@ def lowess_reg(x, y, xnew, kern, tau):
     f = interp1d(x.ravel(), yest.ravel(),fill_value='extrapolate')
     return f(xnew)
     
-data = pd.read_csv("cars.csv")
+data3 = pd.read_csv("cars.csv")
 
-x = data['WGT'].values
-y = data['MPG'].values
+x3 = data3['WGT'].values
+y3 = data3['MPG'].values
 
-xtrain, xtest, ytrain, ytest = tts(x, y, test_size = 0.25, random_state = 123)
+xtrain3, xtest3, ytrain3, ytest3 = tts(x3, y3, test_size = 0.25, random_state = 123)
 scale = StandardScaler()
-xtrain_scaled = scale.fit_transform(xtrain)
-xtest_scale = scale.transform(xtest)
+xtrain3_scaled = scale.fit_transform(xtrain3)
+xtest3_scale = scale.transform(xtest3)
 
-yhat_test_tri = lowess_reg(xtrain_scaled.ravel(), ytrain, xtest_scale.ravel(), tricubic, 0.1)
-print(mse(yhat_test_tri, ytest))
+yhat3_test_tri = lowess_reg(xtrain3_scaled.ravel(), ytrain3, xtest3_scale.ravel(), tricubic, 0.1)
+print(mse(yhat3_test_tri, ytest3))
 
-yhat_test_epa = lowess_reg(xtrain_scaled.ravel(), ytrain, xtest_scale.ravel(), Epanechnikov, 0.1)
-print(mse(yhat_test_epa, ytest))
+yhat3_test_epa = lowess_reg(xtrain3_scaled.ravel(), ytrain3, xtest3_scale.ravel(), Epanechnikov, 0.1)
+print(mse(yhat3_test_epa, ytest3))
 
-yhat_test_quart = lowess_reg(xtrain_scaled.ravel(), ytrain, xtest_scale.ravel(), Quartic, 0.1)
-print(mse(yhat_test_quart, ytest))
+yhat3_test_quart = lowess_reg(xtrain3_scaled.ravel(), ytrain3, xtest3_scale.ravel(), Quartic, 0.1)
+print(mse(yhat3_test_quart, ytest3))
 
 # Select the kernel with the lowest MSE for comparison
 
@@ -318,22 +310,22 @@ from sklearn.model_selection import KFold, train_test_split as tts
 from sklearn.metrics import mean_squared_error as mse
 from sklearn.preprocessing import StandardScaler
 
-data = pd.read_csv("cars.csv")
+data3 = pd.read_csv("cars.csv")
 
-x = data['WGT'].values
-y = data['MPG'].values
+x3 = data3['WGT'].values
+y3 = data3['MPG'].values
 
-xtrain, xtest, ytrain, ytest = tts(x, y, test_size = 0.25, random_state = 123)
+xtrain3, xtest3, ytrain3, ytest3 = tts(x3, y3, test_size = 0.25, random_state = 123)
 scale = StandardScaler()
-xtrain_scaled = scale.fit_transform(xtrain)
-xtest_scale = scale.transform(xtest)
+xtrain3_scaled = scale.fit_transform(xtrain3)
+xtest3_scale = scale.transform(xtest3)
 
 rf = RandomForestRegressor(n_estimators=1000,max_depth=3)
 
-rf.fit(xtrain_scaled, ytrain)
-yhat_rf = rf.predict(xtest_scale)
+rf.fit(xtrain3_scaled.reshape(-1,1), ytrain3.reshape(-1,1))
+yhat3_rf = rf.predict(xtest3_scale.reshape(-1,1))
 
-print(mse(yhat_rf, ytest))
+print(mse(yhat3_rf, ytest3))
 
 # Plot a bar chart with each method's MSE 
 ```
