@@ -1,7 +1,7 @@
 # Comparison of Locally Weighted and Random Forest Regression
 
 ## Concept of Locally Weighted Regression
-The main idea of locally weighted regression is that the predictions are a linear combination the observed/actual values from the dataset (i.e., the predicted y is a linear combination of the values of y).
+The main idea of locally weighted regression is that the predictions are a linear combination the observed/actual values from the dataset (i.e., the predicted y is a linear combination of the values of y).  It applies weights to each value proportional to the distance between the local datapoints, with weights closer to one the closer they are together and closer to zero the further away they are, thus accounting for variability in the dataset.
 
 
 ## Concept of Random Forest Regression
