@@ -5,7 +5,7 @@ The main idea of locally weighted regression is that the predictions are a linea
 
 
 ## Concept of Random Forest Regression
-
+The main idea of random forest regression is that the predictions are made by running a collection of several decision trees at once and then averaging the results of their decisions together.
 
 
 ### Locally Weighted Regression Applied To A Walmart Dataset
