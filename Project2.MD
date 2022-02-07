@@ -336,3 +336,55 @@ print(mse(yhat3_rf, ytest3))
 **MSE (1,000 trees and depth of 5): 16.372545103908113**
 
 **MSE (100 trees and depth of 5): 16.236897436066638**
+
+
+## Charts
+import matplotlib.pyplot as plt
+
+### Walmart Data
+%matplotlib inline
+%config InlineBackend.figure_format = 'retina'
+
+fig, ax = plt.subplots(figsize=(10,8))
+ax.set_xlim(3, 9)
+ax.set_ylim(0, 51)
+ax.scatter(x=data['Temperature'], y=data['Weekly_Sales'],s=25)
+ax.set_xlabel('Temperature (degrees Celsius)',fontsize=16,color='darkgreen')
+ax.set_ylabel('Weekly Sales (Thousands of Dollars)',fontsize=16,color='darkgreen')
+ax.set_title('Walmart Sales Data',fontsize=18,color='purple')
+ax.grid(b=True,which='major', color ='grey', linestyle='-', alpha=0.8)
+ax.grid(b=True,which='minor', color ='grey', linestyle='--', alpha=0.2)
+ax.minorticks_on()
+plt.show()
+
+### Boston Housing Prices Data
+%matplotlib inline
+%config InlineBackend.figure_format = 'retina'
+
+fig, ax = plt.subplots(figsize=(10,8))
+ax.set_xlim(3, 9)
+ax.set_ylim(0, 51)
+ax.scatter(x=data2['rooms'], y=data2['cmedv'],s=25)
+ax.set_xlabel('Number of Rooms',fontsize=16,color='darkgreen')
+ax.set_ylabel('House Price (Thousands of Dollars)',fontsize=16,color='darkgreen')
+ax.set_title('Boston Housing Prices',fontsize=18,color='purple')
+ax.grid(b=True,which='major', color ='grey', linestyle='-', alpha=0.8)
+ax.grid(b=True,which='minor', color ='grey', linestyle='--', alpha=0.2)
+ax.minorticks_on()
+plt.show()
+
+### Cars Data
+%matplotlib inline
+%config InlineBackend.figure_format = 'retina'
+
+fig, ax = plt.subplots(figsize=(10,8))
+ax.set_xlim(3, 9)
+ax.set_ylim(0, 51)
+ax.scatter(x=data3['WGT'], y=data3['MPG'],s=25)
+ax.set_xlabel('Weight (lbs.)',fontsize=16,color='darkgreen')
+ax.set_ylabel('Miles Per Gallon',fontsize=16,color='darkgreen')
+ax.set_title('Car Mileage',fontsize=18,color='purple')
+ax.grid(b=True,which='major', color ='grey', linestyle='-', alpha=0.8)
+ax.grid(b=True,which='minor', color ='grey', linestyle='--', alpha=0.2)
+ax.minorticks_on()
+plt.show()
