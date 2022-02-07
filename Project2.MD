@@ -10,7 +10,6 @@
 
 ### Locally Weighted Regression Applied To A Walmart Dataset
 
-(Editing of code below in progress, I have uploaded its current state, so far:)
 ```
 import numpy as np
 import pandas as pd
@@ -84,9 +83,9 @@ Similar to the Tricubic kernel with a smaller tau of 0.01, the MSE slightly incr
 **MSE - Quartic: 1.0155283662492287**
 Unlike the Tricubic and Epanechnikov kernels, utilizing the smaller tau of 0.01 decreased the MSE to 1.015528366238946.  As such, a smaller tau improved the accuracy of the model when using a Quartic kernel.  While increasing the tau to 0.5 did improve the MSE from the initial tau of 0.1, it did not improve it past that of the 0.01 tau.  With tau = 0.5, the MSE was 1.0155283662461692.
 
+
 ### Random Forest Regression Applied To A Walmart Dataset
 
-(Editing of code below in progress, I have uploaded its current state, so far:)
 ```
 import numpy as np
 import pandas as pd
@@ -128,9 +127,9 @@ print(mse(yhat_rf, ytest_scale))
 
 With the number of trees decreased to 100, the MSE improved to just 1.002540902426993.  I then experimented with extending the depth of each tree to 5 levels, but this greatly increased the MSE to 1.0054284300015228 with a forest of 1000 trees and 1.0046603734933888 with a forest of 100 trees.
 
+
 ### Locally Weighted Regression Applied To The Boston Housing Dataset
 
-(Editing of code below in progress, I have uploaded its current state, so far:)
 ```
 import numpy as np
 import pandas as pd
@@ -192,9 +191,9 @@ print(mse(yhat2_test_quart, ytest2))
 
 **MSE - Quartic: 44.10804045673317**
 
+
 ### Random Forest Regression Applied To The Boston Housing Dataset
 
-(Editing of code below in progress, I have uploaded its current state, so far:)
 ```
 import numpy as np
 import pandas as pd
@@ -229,9 +228,9 @@ print(mse(yhat2_rf, ytest2))
 
 **MSE (100 trees and depth of 5): 45.01038118242601**
 
+
 ### Locally Weighted Regression Applied To The Cars Dataset
 
-(Editing of code below in progress, I have uploaded its current state, so far:)
 ```
 import numpy as np
 import pandas as pd
@@ -297,9 +296,9 @@ print(mse(yhat3_test_quart, ytest3))
 
 **MSE - Quartic: 15.993683601316075**
 
+
 ### Random Forest Regression Applied To The Cars Dataset
 
-(Editing of code below in progress, I have uploaded its current state, so far:)
 ```
 import numpy as np
 import pandas as pd
