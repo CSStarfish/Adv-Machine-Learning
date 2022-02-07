@@ -229,13 +229,13 @@ print(mse(yhat_rf, ytest))
 # Plot a bar chart with each method's MSE 
 ```
 
-**MSE (1,000 trees and depth of 3):**
+**MSE (1,000 trees and depth of 3): 43.85795072968915**
 
-**MSE (100 trees and depth of 3):**
+**MSE (100 trees and depth of 3): 43.96618831213318**
 
-**MSE (1,000 trees and depth of 5):**
+**MSE (1,000 trees and depth of 5): 45.008688679120844**
 
-**MSE (100 trees and depth of 5):**
+**MSE (100 trees and depth of 5): 45.01038118242601**
 
 ### Locally Weighted Regression Applied To The Cars Dataset
 
@@ -338,10 +338,10 @@ print(mse(yhat_rf, ytest))
 # Plot a bar chart with each method's MSE 
 ```
 
-**MSE (1,000 trees and depth of 3):**
+**MSE (1,000 trees and depth of 3): 15.764035906060245**
 
-**MSE (100 trees and depth of 3):**
+**MSE (100 trees and depth of 3): 15.759496652558436**
 
-**MSE (1,000 trees and depth of 5):**
+**MSE (1,000 trees and depth of 5): 16.372545103908113**
 
-**MSE (100 trees and depth of 5):**
+**MSE (100 trees and depth of 5): 16.236897436066638**
