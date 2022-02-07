@@ -118,7 +118,13 @@ print(mse(yhat_rf, ytest_scale))
 # Plot a bar chart with each method's MSE 
 ```
 
-**MSE: 1.0026378217724825**
+**MSE (1,000 trees and depth of 3): 1.0026378217724825**
+
+**MSE (100 trees and depth of 3): 1.002540902426993**
+
+**MSE (1,000 trees and depth of 5): 1.0054284300015228**
+
+**MSE (100 trees and depth of 5): 1.0046603734933888**
 
 With the number of trees decreased to 100, the MSE improved to just 1.002540902426993.  I then experimented with extending the depth of each tree to 5 levels, but this greatly increased the MSE to 1.0054284300015228 with a forest of 1000 trees and 1.0046603734933888 with a forest of 100 trees.
 
@@ -184,7 +190,11 @@ print(mse(yhat_test_quart, ytest))
 # Plot a bar chart with each method's MSE 
 ```
 
-**MSE: 44.16006090451543**
+**MSE - Tricubic: 44.16006090451543**
+
+**MSE - Epanechnikov: 44.358249572483196**
+
+**MSE - Quartic: 44.10804045673317**
 
 ### Random Forest Regression Applied To The Boston Housing Dataset
 
@@ -219,7 +229,13 @@ print(mse(yhat_rf, ytest))
 # Plot a bar chart with each method's MSE 
 ```
 
-**MSE:**
+**MSE (1,000 trees and depth of 3):**
+
+**MSE (100 trees and depth of 3):**
+
+**MSE (1,000 trees and depth of 5):**
+
+**MSE (100 trees and depth of 5):**
 
 ### Locally Weighted Regression Applied To The Cars Dataset
 
@@ -283,7 +299,11 @@ print(mse(yhat_test_quart, ytest))
 # Plot a bar chart with each method's MSE 
 ```
 
-**MSE: 15.961885966790936**
+**MSE - Tricubic: 15.961885966790936**
+
+**MSE - Epanechnikov: 16.04457105493449**
+
+**MSE - Quartic: 15.993683601316075**
 
 ### Random Forest Regression Applied To The Cars Dataset
 
@@ -318,5 +338,10 @@ print(mse(yhat_rf, ytest))
 # Plot a bar chart with each method's MSE 
 ```
 
-**MSE:**
+**MSE (1,000 trees and depth of 3):**
 
+**MSE (100 trees and depth of 3):**
+
+**MSE (1,000 trees and depth of 5):**
+
+**MSE (100 trees and depth of 5):**
