@@ -339,9 +339,11 @@ print(mse(yhat3_rf, ytest3))
 
 
 ## Charts
-import matplotlib.pyplot as plt
 
 ### Walmart Data
+```
+import matplotlib.pyplot as plt
+
 %matplotlib inline
 %config InlineBackend.figure_format = 'retina'
 
@@ -356,8 +358,12 @@ ax.grid(b=True,which='major', color ='grey', linestyle='-', alpha=0.8)
 ax.grid(b=True,which='minor', color ='grey', linestyle='--', alpha=0.2)
 ax.minorticks_on()
 plt.show()
+```
+
 
 ### Boston Housing Prices Data
+
+```
 %matplotlib inline
 %config InlineBackend.figure_format = 'retina'
 
@@ -372,8 +378,12 @@ ax.grid(b=True,which='major', color ='grey', linestyle='-', alpha=0.8)
 ax.grid(b=True,which='minor', color ='grey', linestyle='--', alpha=0.2)
 ax.minorticks_on()
 plt.show()
+```
+
 
 ### Cars Data
+
+```
 %matplotlib inline
 %config InlineBackend.figure_format = 'retina'
 
@@ -388,3 +398,4 @@ ax.grid(b=True,which='major', color ='grey', linestyle='-', alpha=0.8)
 ax.grid(b=True,which='minor', color ='grey', linestyle='--', alpha=0.2)
 ax.minorticks_on()
 plt.show()
+```
