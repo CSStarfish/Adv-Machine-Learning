@@ -291,8 +291,6 @@ print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tri_c
 print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_c1)))
 print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_c1)))
 
-
-
 # Tau = 0.05, Best kernel was Epanechnikov and an MSE of 18.48053295517476
 kf = KFold(n_splits=10,shuffle=True,random_state=410)
 mse_tri_c2 = []
@@ -315,8 +313,6 @@ for idxtrain, idxtest in kf.split(x_2):
 print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tri_c2)))
 print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_c2)))
 print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_c2)))
-
-
 
 # Tau = 0.1, Best kernel was Epanechnikov and an MSE of 17.81189365251738
 kf = KFold(n_splits=10,shuffle=True,random_state=410)
@@ -341,8 +337,6 @@ print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tri_c
 print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_c3)))
 print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_c3)))
 
-
-
 # Tau = 0.5, Best kernel was Quartic and an MSE of 17.765601561138332
 kf = KFold(n_splits=10,shuffle=True,random_state=410)
 mse_tri_c4 = []
@@ -365,7 +359,6 @@ for idxtrain, idxtest in kf.split(x_2):
 print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tri_c4)))
 print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_c4)))
 print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_c4)))
-
 
 # Testing Random Forests, Best was a forest of 1000 trees with a depth of 3 and an MSE of 17.980882233098686
 kf = KFold(n_splits=10,shuffle=True,random_state=410)
@@ -398,7 +391,6 @@ print("The MSE for Random Forest with 1000 trees and depth of 3: " + str(np.mean
 print("The MSE for Random Forest with 100 trees and depth of 5: " + str(np.mean(mse_100_5)))
 print("The MSE for Random Forest with 1000 trees and depth of 5: " + str(np.mean(mse_1000_5)))
 
-
 # Testing Kernel vs. Random Forest, Best was Locally Weighted Regression and an MSE of 26.603107562928574
 kf = KFold(n_splits=10,shuffle=True,random_state=410)
 mse_lwr = []
@@ -419,7 +411,44 @@ for idxtrain,idxtest in kf.split(x_2):
 print("The MSE for Random Forest is: " + str(np.mean(mse_rf)))
 print("The MSE for Locally Weighted Regression is: " + str(np.mean(mse_lwr)))
 
+# Plot
+xtrain, xtest, ytrain, ytest = tts(x_2.reshape(-1,1),y_2,test_size=0.25,random_state=123)
+
+rf2.fit(xtrain,ytrain)
+yhat = rf2.predict(xtest)
+
+M = np.column_stack([xtest,yhat])
+M = M[np.argsort(M[:,0])]
+
+ytrain = ytrain.reshape(len(ytrain),)
+ytest = ytest.reshape(len(ytest),)
+
+dat = np.concatenate([xtrain,ytrain.reshape(-1,1)], axis=1)
+dat = dat[np.argsort(dat[:, 0])]
+
+dat_test = np.concatenate([xtest,ytest.reshape(-1,1)], axis=1)
+dat_test = dat_test[np.argsort(dat_test[:, 0])]
+
+yhat_lowess = lowess_kern(dat[:,0],dat[:,1],Quartic,0.5)
+datc = np.concatenate([dat[:,0].reshape(-1,1),yhat_lowess.reshape(-1,1)], axis=1)
+f = interp1d(datc[:,0], datc[:,1],fill_value='extrapolate')
+yhat2 = f(dat_test[:,0])
+
+fig, ax = plt.subplots(figsize=(10,8))
+ax.set_xlim(1500, 5500)
+ax.set_ylim(7, 48)
+ax.scatter(x = cars_data['WGT'], y = cars_data['MPG'],s=25)
+ax.plot(dat_test[:,0], yhat2, color='orange',lw=3)
+ax.plot(M[:,0], M[:,1], color='yellow',lw=3)
+ax.set_xlabel('Weight (lbs.)',fontsize=16,color='Darkgreen')
+ax.set_ylabel('Mileage (Miles Per Gallon)',fontsize=16,color='Darkgreen')
+ax.set_title('Cars',fontsize=16,color='purple')
+ax.grid(b=True,which='major', color ='grey', linestyle='-', alpha=0.8)
+ax.grid(b=True,which='minor', color ='grey', linestyle='--', alpha=0.2)
+ax.minorticks_on()
+
 
 
 # Walmart Sales Data
+
 ```
