@@ -150,7 +150,79 @@ print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tri_b
 print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_b3)))
 print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_b3)))
 
-# Tau = 0.5
+# Tau = 0.5, Best kernel was quartic with an MSE of 36.924548944943005
+kf = KFold(n_splits=10,shuffle=True,random_state=410)
+mse_tri_b4 = []
+mse_epa_b4 = []
+mse_quart_b4 = []
+
+for idxtrain, idxtest in kf.split(x):
+  ytrain = y[idxtrain]
+  xtrain = x[idxtrain]
+  xtrain = scale.fit_transform(xtrain.reshape(-1,1))
+  ytest = y[idxtest]
+  xtest = x[idxtest]
+  xtest = scale.transform(xtest.reshape(-1,1))
+  yhat_tri = lowess_reg(xtrain.ravel(), ytrain, xtest.ravel(), tricubic, 0.5)
+  yhat_epa = lowess_reg(xtrain.ravel(), ytrain, xtest.ravel(), Epanechnikov, 0.5)
+  yhat_quart = lowess_reg(xtrain.ravel(), ytrain, xtest.ravel(), Quartic, 0.5)
+  mse_tri_b4.append(mse(ytest,yhat_tri))
+  mse_epa_b4.append(mse(ytest,yhat_epa))
+  mse_quart_b4.append(mse(ytest,yhat_quart))
+print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tri_b4)))
+print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_b4)))
+print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_b4)))
+
+# Testing Random Forests, Best was a forest of 1000 trees with a depth of 3 and an MSE of 35.87895228710361
+kf = KFold(n_splits=10,shuffle=True,random_state=410)
+mse_100_3 = []
+mse_100_5 = []
+mse_1000_3 = []
+mse_1000_5 = []
+
+for idxtrain,idxtest in kf.split(x):
+  ytrain = y[idxtrain]
+  xtrain = x[idxtrain]
+  xtrain = scale.fit_transform(xtrain.reshape(-1,1))
+  ytest = y[idxtest]
+  xtest = x[idxtest]
+  xtest = scale.transform(xtest.reshape(-1,1))
+  rf.fit(xtrain,ytrain)
+  rf2.fit(xtrain,ytrain)
+  rf3.fit(xtrain,ytrain)
+  rf4.fit(xtrain,ytrain)
+  yhat_rf_1003 = rf.predict(xtest)
+  yhat_rf_10003 = rf2.predict(xtest)
+  yhat_rf_10005 = rf3.predict(xtest)
+  yhat_rf_1005 = rf4.predict(xtest)
+  mse_100_3.append(mse(ytest,yhat_rf_1003))
+  mse_1000_3.append(mse(ytest,yhat_rf_10003))
+  mse_1000_5.append(mse(ytest,yhat_rf_10005))
+  mse_100_5.append(mse(ytest,yhat_rf_1005))
+print("The MSE for Random Forest with 100 trees and depth of 3: " + str(np.mean(mse_100_3)))
+print("The MSE for Random Forest with 1000 trees and depth of 3: " + str(np.mean(mse_1000_3)))
+print("The MSE for Random Forest with 100 trees and depth of 5: " + str(np.mean(mse_100_5)))
+print("The MSE for Random Forest with 1000 trees and depth of 5: " + str(np.mean(mse_1000_5)))
+
+# Testing Kernel vs. Random Forest, Best was Locally Weighted Regression and an MSE of 35.44061356471881
+kf = KFold(n_splits=10,shuffle=True,random_state=410)
+mse_lwr = []
+mse_rf = []
+
+for idxtrain,idxtest in kf.split(x):
+  ytrain = y[idxtrain]
+  xtrain = x[idxtrain]
+  xtrain = scale.fit_transform(xtrain.reshape(-1,1))
+  ytest = y[idxtest]
+  xtest = x[idxtest]
+  xtest = scale.transform(xtest.reshape(-1,1))
+  yhat_lwr = lowess_reg(xtrain.ravel(), ytrain, xtest.ravel(), tricubic, 0.1)
+  rf2.fit(xtrain,ytrain)
+  yhat_rf = rf2.predict(xtest)
+  mse_lwr.append(mse(ytest,yhat_lwr))
+  mse_rf.append(mse(ytest,yhat_rf))
+print("The MSE for Random Forest is: " + str(np.mean(mse_rf)))
+print("The MSE for Locally Weighted Regression is: " + str(np.mean(mse_lwr)))
 
 
 
