@@ -70,4 +70,93 @@ rf3 = RandomForestRegressor(n_estimators=1000,max_depth=5,random_state=123)
 rf4 = RandomForestRegressor(n_estimators=100,max_depth=5,random_state=123)
 
 scale = StandardScaler()
+
+
+
+# Boston Housing Prices Data
+boston_data = pd.read_csv("Boston Housing Prices.csv")
+
+x = boston_data["rooms"].values
+y = boston_data["cmedv"].values
+
+# Testing Kernels
+
+# Tau = 0.01, Best kernel was Epanechnikov and an MSE of 43.809283109365026
+kf = KFold(n_splits=10,shuffle=True,random_state=410)
+mse_tri_b1 = []
+mse_epa_b1 = []
+mse_quart_b1 = []
+
+for idxtrain, idxtest in kf.split(x):
+  ytrain = y[idxtrain]
+  xtrain = x[idxtrain]
+  xtrain = scale.fit_transform(xtrain.reshape(-1,1))
+  ytest = y[idxtest]
+  xtest = x[idxtest]
+  xtest = scale.transform(xtest.reshape(-1,1))
+  yhat_tri = lowess_reg(xtrain.ravel(), ytrain, xtest.ravel(), tricubic, 0.01)
+  yhat_epa = lowess_reg(xtrain.ravel(), ytrain, xtest.ravel(), Epanechnikov, 0.01)
+  yhat_quart = lowess_reg(xtrain.ravel(), ytrain, xtest.ravel(), Quartic, 0.01)
+  mse_tri_b1.append(mse(ytest,yhat_tri))
+  mse_epa_b1.append(mse(ytest,yhat_epa))
+  mse_quart_b1.append(mse(ytest,yhat_quart))
+print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tri_b1)))
+print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_b1)))
+print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_b1)))
+
+# Tau = 0.05, Best kernel was Epanechnikov and an MSE of 36.44728316493236
+kf = KFold(n_splits=10,shuffle=True,random_state=410)
+mse_tri_b2 = []
+mse_epa_b2 = []
+mse_quart_b2 = []
+
+for idxtrain, idxtest in kf.split(x):
+  ytrain = y[idxtrain]
+  xtrain = x[idxtrain]
+  xtrain = scale.fit_transform(xtrain.reshape(-1,1))
+  ytest = y[idxtest]
+  xtest = x[idxtest]
+  xtest = scale.transform(xtest.reshape(-1,1))
+  yhat_tri = lowess_reg(xtrain.ravel(), ytrain, xtest.ravel(), tricubic, 0.05)
+  yhat_epa = lowess_reg(xtrain.ravel(), ytrain, xtest.ravel(), Epanechnikov, 0.05)
+  yhat_quart = lowess_reg(xtrain.ravel(), ytrain, xtest.ravel(), Quartic, 0.05)
+  mse_tri_b2.append(mse(ytest,yhat_tri))
+  mse_epa_b2.append(mse(ytest,yhat_epa))
+  mse_quart_b2.append(mse(ytest,yhat_quart))
+print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tri_b2)))
+print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_b2)))
+print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_b2)))
+
+# Tau = 0.1, Best kernel was tricubic and an MSE of 35.44061356471881
+kf = KFold(n_splits=10,shuffle=True,random_state=410)
+mse_tri_b3 = []
+mse_epa_b3 = []
+mse_quart_b3 = []
+
+for idxtrain, idxtest in kf.split(x):
+  ytrain = y[idxtrain]
+  xtrain = x[idxtrain]
+  xtrain = scale.fit_transform(xtrain.reshape(-1,1))
+  ytest = y[idxtest]
+  xtest = x[idxtest]
+  xtest = scale.transform(xtest.reshape(-1,1))
+  yhat_tri = lowess_reg(xtrain.ravel(), ytrain, xtest.ravel(), tricubic, 0.1)
+  yhat_epa = lowess_reg(xtrain.ravel(), ytrain, xtest.ravel(), Epanechnikov, 0.1)
+  yhat_quart = lowess_reg(xtrain.ravel(), ytrain, xtest.ravel(), Quartic, 0.1)
+  mse_tri_b3.append(mse(ytest,yhat_tri))
+  mse_epa_b3.append(mse(ytest,yhat_epa))
+  mse_quart_b3.append(mse(ytest,yhat_quart))
+print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tri_b3)))
+print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_b3)))
+print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_b3)))
+
+# Tau = 0.5
+
+
+
+# Cars Data
+
+
+
+# Walmart Sales Data
 ```
