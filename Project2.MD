@@ -551,6 +551,90 @@ print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tri_w
 print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_w4)))
 print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_w4)))
 
-# Testing Random Forests
+# Testing Random Forests, Best was a forest of 1000 trees with a depth of 5 and an MSE of 3.3134753302710527
+kf = KFold(n_splits=10,shuffle=True,random_state=410)
+mse_100_3 = []
+mse_100_5 = []
+mse_1000_3 = []
+mse_1000_5 = []
 
+for idxtrain,idxtest in kf.split(x_3):
+  y3train = y_3[idxtrain]
+  x3train = x_3[idxtrain]
+  x3train = scale.fit_transform(x3train.reshape(-1,1))
+  y3test = y_3[idxtest]
+  x3test = x_3[idxtest]
+  x3test = scale.transform(x3test.reshape(-1,1))
+  rf.fit(x3train,y3train)
+  rf2.fit(x3train,y3train)
+  rf3.fit(x3train,y3train)
+  rf4.fit(x3train,y3train)
+  yhat_rf_1003 = rf.predict(x3test)
+  yhat_rf_10003 = rf2.predict(x3test)
+  yhat_rf_10005 = rf3.predict(x3test)
+  yhat_rf_1005 = rf4.predict(x3test)
+  mse_100_3.append(mse(y3test,yhat_rf_1003))
+  mse_1000_3.append(mse(y3test,yhat_rf_10003))
+  mse_1000_5.append(mse(y3test,yhat_rf_10005))
+  mse_100_5.append(mse(y3test,yhat_rf_1005))
+print("The MSE for Random Forest with 100 trees and depth of 3: " + str(np.mean(mse_100_3)))
+print("The MSE for Random Forest with 1000 trees and depth of 3: " + str(np.mean(mse_1000_3)))
+print("The MSE for Random Forest with 100 trees and depth of 5: " + str(np.mean(mse_100_5)))
+print("The MSE for Random Forest with 1000 trees and depth of 5: " + str(np.mean(mse_1000_5)))
+
+# Testing Kernel vs. Random Forest, Best was Random Forest Regression and an MSE of 3.3134753302710527
+kf = KFold(n_splits=10,shuffle=True,random_state=410)
+mse_lwr = []
+mse_rf = []
+
+for idxtrain,idxtest in kf.split(x_3):
+  y3train = y_3[idxtrain]
+  x3train = x_3[idxtrain]
+  x3train = scale.fit_transform(x3train.reshape(-1,1))
+  y3test = y_3[idxtest]
+  x3test = x_3[idxtest]
+  x3test = scale.transform(x3test.reshape(-1,1))
+  yhat_lwr = lowess_reg(x3train.ravel(), y3train, x3test.ravel(), Quartic, 0.05)
+  rf3.fit(x3train,y3train)
+  yhat_rf = rf3.predict(x3test)
+  mse_lwr.append(mse(y3test,yhat_lwr))
+  mse_rf.append(mse(y3test,yhat_rf))
+print("The MSE for Random Forest is: " + str(np.mean(mse_rf)))
+print("The MSE for Locally Weighted Regression is: " + str(np.mean(mse_lwr)))
+
+# Plot
+xtrain, xtest, ytrain, ytest = tts(x_3.reshape(-1,1),y_3,test_size=0.25,random_state=123)
+
+rf3.fit(xtrain,ytrain)
+yhat = rf3.predict(xtest)
+
+M = np.column_stack([xtest,yhat])
+M = M[np.argsort(M[:,0])]
+
+ytrain = ytrain.reshape(len(ytrain),)
+ytest = ytest.reshape(len(ytest),)
+
+dat = np.concatenate([xtrain,ytrain.reshape(-1,1)], axis=1)
+dat = dat[np.argsort(dat[:, 0])]
+
+dat_test = np.concatenate([xtest,ytest.reshape(-1,1)], axis=1)
+dat_test = dat_test[np.argsort(dat_test[:, 0])]
+
+yhat_lowess = lowess_kern(dat[:,0],dat[:,1],Quartic,0.05)
+datw = np.concatenate([dat[:,0].reshape(-1,1),yhat_lowess.reshape(-1,1)], axis=1)
+f = interp1d(datw[:,0], datw[:,1],fill_value='extrapolate')
+yhat2 = f(dat_test[:,0])
+
+fig, ax = plt.subplots(figsize=(10,8))
+ax.set_xlim(75000, 4000000)
+ax.set_ylim(0, 15)
+ax.scatter(x = walmart_data['Weekly_Sales'], y = walmart_data['Unemployment'],s=25)
+ax.plot(dat_test[:,0], yhat2, color='orange',lw=3)
+ax.plot(M[:,0], M[:,1], color='yellow',lw=3)
+ax.set_xlabel('Weekly Sales ($)',fontsize=16,color='Darkgreen')
+ax.set_ylabel('Unemployment Rate (% of Working-Age Population)',fontsize=16,color='Darkgreen')
+ax.set_title('Walmart Sales',fontsize=16,color='purple')
+ax.grid(b=True,which='major', color ='grey', linestyle='-', alpha=0.8)
+ax.grid(b=True,which='minor', color ='grey', linestyle='--', alpha=0.2)
+ax.minorticks_on()
 ```
