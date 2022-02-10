@@ -12,16 +12,18 @@ If we multiply the equation by a matrix of weights consisting of the transpose o
 ## Concept of Random Forest Regression
 The main idea of random forest regression is that the predictions are made by running a collection of several decision trees at once and then averaging the results of their decisions together.
 
+(I will be adding further information about the decision tree process next.)
+
 ## Visualization of Differences Between LOWESS and Random Forest Regression
 
 ### Boston Housing Prices Data
-![Boston](BostonHousingPricesRF_LOWESS Plot.png)
+![Boston](BostonHousingPricesRF_LOWESSPlot.jpg)
 
 ### Cars Data
-![Cars](CarsRF_LOWESS Plot.png)
+![Cars](CarsRF_LOWESSPlot.jpg)
 
 ### Walmart Sales Data
-![Walmart](WalmartRF_LOWESS Plot.png)
+![Walmart](WalmartRF_LOWESSPlot.jpg)
 
 
 ## Code - Making Mathematical Comparisons and Plotting Results
