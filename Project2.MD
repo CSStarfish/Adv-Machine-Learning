@@ -224,6 +224,42 @@ for idxtrain,idxtest in kf.split(x):
 print("The MSE for Random Forest is: " + str(np.mean(mse_rf)))
 print("The MSE for Locally Weighted Regression is: " + str(np.mean(mse_lwr)))
 
+# Plot
+xtrain, xtest, ytrain, ytest = tts(x.reshape(-1,1),y,test_size=0.25,random_state=123)
+
+rf2.fit(xtrain,ytrain)
+yhat = rf2.predict(xtest)
+
+M = np.column_stack([xtest,yhat])
+M = M[np.argsort(M[:,0])]
+
+ytrain = ytrain.reshape(len(ytrain),)
+ytest = ytest.reshape(len(ytest),)
+
+dat = np.concatenate([xtrain,ytrain.reshape(-1,1)], axis=1)
+dat = dat[np.argsort(dat[:, 0])]
+
+dat_test = np.concatenate([xtest,ytest.reshape(-1,1)], axis=1)
+dat_test = dat_test[np.argsort(dat_test[:, 0])]
+
+yhat_lowess = lowess_kern(dat[:,0],dat[:,1],tricubic,0.1)
+datb = np.concatenate([dat[:,0].reshape(-1,1),yhat_lowess.reshape(-1,1)], axis=1)
+f = interp1d(datb[:,0], datb[:,1],fill_value='extrapolate')
+yhat2 = f(dat_test[:,0])
+
+fig, ax = plt.subplots(figsize=(10,8))
+ax.set_xlim(3, 9)
+ax.set_ylim(0, 51)
+ax.scatter(x = boston_data['rooms'], y = boston_data['cmedv'],s=25)
+ax.plot(dat_test[:,0], yhat2, color='orange',lw=3)
+ax.plot(M[:,0], M[:,1], color='yellow',lw=3)
+ax.set_xlabel('Number of Rooms',fontsize=16,color='Darkgreen')
+ax.set_ylabel('House Price (Tens of Thousands of Dollars)',fontsize=16,color='Darkgreen')
+ax.set_title('Boston Housing Prices',fontsize=16,color='purple')
+ax.grid(b=True,which='major', color ='grey', linestyle='-', alpha=0.8)
+ax.grid(b=True,which='minor', color ='grey', linestyle='--', alpha=0.2)
+ax.minorticks_on()
+
 
 
 # Cars Data
