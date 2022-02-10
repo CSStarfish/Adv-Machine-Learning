@@ -269,18 +269,102 @@ x_2 = cars_data['WGT'].values
 y_2 = cars_data['MPG'].values
 
 # Tau = 0.01, Best kernel was Epanechnikov and an MSE of 24.31770096710489
+kf = KFold(n_splits=10,shuffle=True,random_state=410)
+mse_tri_c1 = []
+mse_epa_c1 = []
+mse_quart_c1 = []
+
+for idxtrain, idxtest in kf.split(x_2):
+  y2train = y_2[idxtrain]
+  x2train = x_2[idxtrain]
+  x2train = scale.fit_transform(x2train.reshape(-1,1))
+  y2test = y_2[idxtest]
+  x2test = x_2[idxtest]
+  x2test = scale.transform(x2test.reshape(-1,1))
+  yhat_tri = lowess_reg(x2train.ravel(), y2train, x2test.ravel(), tricubic, 0.01)
+  yhat_epa = lowess_reg(x2train.ravel(), y2train, x2test.ravel(), Epanechnikov, 0.01)
+  yhat_quart = lowess_reg(x2train.ravel(), y2train, x2test.ravel(), Quartic, 0.01)
+  mse_tri_c1.append(mse(y2test,yhat_tri))
+  mse_epa_c1.append(mse(y2test,yhat_epa))
+  mse_quart_c1.append(mse(y2test,yhat_quart))
+print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tri_c1)))
+print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_c1)))
+print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_c1)))
 
 
 
-# Tau = 0.05
+# Tau = 0.05, Best kernel was Epanechnikov and an MSE of 18.48053295517476
+kf = KFold(n_splits=10,shuffle=True,random_state=410)
+mse_tri_c2 = []
+mse_epa_c2 = []
+mse_quart_c2 = []
+
+for idxtrain, idxtest in kf.split(x_2):
+  y2train = y_2[idxtrain]
+  x2train = x_2[idxtrain]
+  x2train = scale.fit_transform(x2train.reshape(-1,1))
+  y2test = y_2[idxtest]
+  x2test = x_2[idxtest]
+  x2test = scale.transform(x2test.reshape(-1,1))
+  yhat_tri = lowess_reg(x2train.ravel(), y2train, x2test.ravel(), tricubic, 0.05)
+  yhat_epa = lowess_reg(x2train.ravel(), y2train, x2test.ravel(), Epanechnikov, 0.05)
+  yhat_quart = lowess_reg(x2train.ravel(), y2train, x2test.ravel(), Quartic, 0.05)
+  mse_tri_c2.append(mse(y2test,yhat_tri))
+  mse_epa_c2.append(mse(y2test,yhat_epa))
+  mse_quart_c2.append(mse(y2test,yhat_quart))
+print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tri_c2)))
+print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_c2)))
+print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_c2)))
 
 
 
-# Tau = 0.1
+# Tau = 0.1, Best kernel was Epanechnikov and an MSE of 17.81189365251738
+kf = KFold(n_splits=10,shuffle=True,random_state=410)
+mse_tri_c3 = []
+mse_epa_c3 = []
+mse_quart_c3 = []
+
+for idxtrain, idxtest in kf.split(x_2):
+  y2train = y_2[idxtrain]
+  x2train = x_2[idxtrain]
+  x2train = scale.fit_transform(x2train.reshape(-1,1))
+  y2test = y_2[idxtest]
+  x2test = x_2[idxtest]
+  x2test = scale.transform(x2test.reshape(-1,1))
+  yhat_tri = lowess_reg(x2train.ravel(), y2train, x2test.ravel(), tricubic, 0.1)
+  yhat_epa = lowess_reg(x2train.ravel(), y2train, x2test.ravel(), Epanechnikov, 0.1)
+  yhat_quart = lowess_reg(x2train.ravel(), y2train, x2test.ravel(), Quartic, 0.1)
+  mse_tri_c3.append(mse(y2test,yhat_tri))
+  mse_epa_c3.append(mse(y2test,yhat_epa))
+  mse_quart_c3.append(mse(y2test,yhat_quart))
+print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tri_c3)))
+print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_c3)))
+print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_c3)))
 
 
 
-# Tau = 0.5
+# Tau = 0.5, Best kernel was Quartic and an MSE of 17.765601561138332
+kf = KFold(n_splits=10,shuffle=True,random_state=410)
+mse_tri_c4 = []
+mse_epa_c4 = []
+mse_quart_c4 = []
+
+for idxtrain, idxtest in kf.split(x_2):
+  y2train = y_2[idxtrain]
+  x2train = x_2[idxtrain]
+  x2train = scale.fit_transform(x2train.reshape(-1,1))
+  y2test = y_2[idxtest]
+  x2test = x_2[idxtest]
+  x2test = scale.transform(x2test.reshape(-1,1))
+  yhat_tri = lowess_reg(x2train.ravel(), y2train, x2test.ravel(), tricubic, 0.5)
+  yhat_epa = lowess_reg(x2train.ravel(), y2train, x2test.ravel(), Epanechnikov, 0.5)
+  yhat_quart = lowess_reg(x2train.ravel(), y2train, x2test.ravel(), Quartic, 0.5)
+  mse_tri_c4.append(mse(y2test,yhat_tri))
+  mse_epa_c4.append(mse(y2test,yhat_epa))
+  mse_quart_c4.append(mse(y2test,yhat_quart))
+print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tri_c4)))
+print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_c4)))
+print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_c4)))
 
 
 # Walmart Sales Data
