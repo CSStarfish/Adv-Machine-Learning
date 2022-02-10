@@ -367,5 +367,59 @@ print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_e
 print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_c4)))
 
 
+# Testing Random Forests, Best was a forest of 1000 trees with a depth of 3 and an MSE of 17.980882233098686
+kf = KFold(n_splits=10,shuffle=True,random_state=410)
+mse_100_3 = []
+mse_100_5 = []
+mse_1000_3 = []
+mse_1000_5 = []
+
+for idxtrain,idxtest in kf.split(x_2):
+  y2train = y_2[idxtrain]
+  x2train = x_2[idxtrain]
+  x2train = scale.fit_transform(x2train.reshape(-1,1))
+  y2test = y_2[idxtest]
+  x2test = x_2[idxtest]
+  x2test = scale.transform(x2test.reshape(-1,1))
+  rf.fit(x2train,y2train)
+  rf2.fit(x2train,y2train)
+  rf3.fit(x2train,y2train)
+  rf4.fit(x2train,y2train)
+  yhat_rf_1003 = rf.predict(x2test)
+  yhat_rf_10003 = rf2.predict(x2test)
+  yhat_rf_10005 = rf3.predict(x2test)
+  yhat_rf_1005 = rf4.predict(x2test)
+  mse_100_3.append(mse(y2test,yhat_rf_1003))
+  mse_1000_3.append(mse(y2test,yhat_rf_10003))
+  mse_1000_5.append(mse(y2test,yhat_rf_10005))
+  mse_100_5.append(mse(y2test,yhat_rf_1005))
+print("The MSE for Random Forest with 100 trees and depth of 3: " + str(np.mean(mse_100_3)))
+print("The MSE for Random Forest with 1000 trees and depth of 3: " + str(np.mean(mse_1000_3)))
+print("The MSE for Random Forest with 100 trees and depth of 5: " + str(np.mean(mse_100_5)))
+print("The MSE for Random Forest with 1000 trees and depth of 5: " + str(np.mean(mse_1000_5)))
+
+
+# Testing Kernel vs. Random Forest, Best was Locally Weighted Regression and an MSE of 26.603107562928574
+kf = KFold(n_splits=10,shuffle=True,random_state=410)
+mse_lwr = []
+mse_rf = []
+
+for idxtrain,idxtest in kf.split(x_2):
+  y2train = y_2[idxtrain]
+  x2train = x_2[idxtrain]
+  x2train = scale.fit_transform(x2train.reshape(-1,1))
+  y2test = y_2[idxtest]
+  x2test = x_2[idxtest]
+  x2test = scale.transform(x2test.reshape(-1,1))
+  yhat_lwr = lowess_reg(x2train.ravel(), y2train, x2test.ravel(), Quartic, 0.5)
+  rf2.fit(x2train,y2train)
+  yhat_rf = rf2.predict(x2test)
+  mse_lwr.append(mse(y2test,yhat_lwr))
+  mse_rf.append(mse(y2test,yhat_rf))
+print("The MSE for Random Forest is: " + str(np.mean(mse_rf)))
+print("The MSE for Locally Weighted Regression is: " + str(np.mean(mse_lwr)))
+
+
+
 # Walmart Sales Data
 ```
