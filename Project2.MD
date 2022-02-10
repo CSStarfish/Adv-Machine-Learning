@@ -263,7 +263,24 @@ ax.minorticks_on()
 
 
 # Cars Data
+cars_data = pd.read_csv("cars.csv")
 
+x_2 = cars_data['WGT'].values
+y_2 = cars_data['MPG'].values
+
+# Tau = 0.01
+
+
+
+# Tau = 0.05
+
+
+
+# Tau = 0.1
+
+
+
+# Tau = 0.5
 
 
 # Walmart Sales Data
