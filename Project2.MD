@@ -12,3 +12,62 @@ The main idea of random forest regression is that the predictions are made by ru
 
 ## Code
 Note: I uploaded an ipynb file and I will be including the code directly into the markdown soon.
+
+```
+import numpy as np
+import pandas as pd
+from scipy import linalg
+import matplotlib.pyplot as plt
+from scipy.interpolate import interp1d
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import KFold, train_test_split as tts
+from sklearn.metrics import mean_squared_error as mse
+from sklearn.preprocessing import StandardScaler
+
+def tricubic(x):
+  return np.where(np.abs(x)>1,0,70/81*(1-np.abs(x)**3)**3)
+def Epanechnikov(x):
+  return np.where(np.abs(x)>1,0,3/4*(1-np.abs(x)**2)) 
+def Quartic(x):
+  return np.where(np.abs(x)>1,0,15/16*(1-np.abs(x)**2)**2) 
+
+def lowess_reg(x, y, xnew, kern, tau):
+    n = len(x)
+    yest = np.zeros(n)
+    
+    w = np.array([kern((x - x[i])/(2*tau)) for i in range(n)])     
+    
+    for i in range(n):
+        weights = w[:, i]
+        b = np.array([np.sum(weights * y), np.sum(weights * y * x)])
+        A = np.array([[np.sum(weights), np.sum(weights * x)],
+                    [np.sum(weights * x), np.sum(weights * x * x)]])
+        theta, res, rnk, s = linalg.lstsq(A, b)
+        yest[i] = theta[0] + theta[1] * x[i] 
+    f = interp1d(x, yest, fill_value='extrapolate')
+    return f(xnew)
+    
+def lowess_kern(x, y, kern, tau):
+
+    n = len(x)
+    yest = np.zeros(n)
+   
+    w = np.array([kern((x - x[i])/(2*tau)) for i in range(n)])     
+    
+    for i in range(n):
+        weights = w[:, i]
+        b = np.array([np.sum(weights * y), np.sum(weights * y * x)])
+        A = np.array([[np.sum(weights), np.sum(weights * x)],
+                    [np.sum(weights * x), np.sum(weights * x * x)]])
+        theta, res, rnk, s = linalg.lstsq(A, b)
+        yest[i] = theta[0] + theta[1] * x[i] 
+
+    return yest
+    
+rf = RandomForestRegressor(n_estimators=100,max_depth=3,random_state=123) 
+rf2 = RandomForestRegressor(n_estimators=1000,max_depth=3,random_state=123)
+rf3 = RandomForestRegressor(n_estimators=1000,max_depth=5,random_state=123)
+rf4 = RandomForestRegressor(n_estimators=100,max_depth=5,random_state=123)
+
+scale = StandardScaler()
+```
