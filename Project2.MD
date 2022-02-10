@@ -1,6 +1,6 @@
 # Comparison of Locally Weighted and Random Forest Regression
 
-## Concept of Locally Weighted Regression
+## Concept of Locally Weighted Regression (LOWESS)
 The main idea of locally weighted regression is that the predictions are a linear combination of the observed/actual values from the dataset (i.e., the predicted y is a linear combination of the actual values of y).  It applies weights to each value proportional to the distance between the local datapoints, with weights closer to one the closer they are together and closer to zero the further away they are, thus accounting for variability in the dataset.  Linear regression stems from the following equation:
 
 ![](linearregression.jpg).  
@@ -11,6 +11,17 @@ If we multiply the equation by a matrix of weights consisting of the transpose o
 
 ## Concept of Random Forest Regression
 The main idea of random forest regression is that the predictions are made by running a collection of several decision trees at once and then averaging the results of their decisions together.
+
+## Visualization of Differences Between LOWESS and Random Forest Regression
+
+### Boston Housing Prices Data
+![Boston](BostonHousingPricesRF_LOWESS Plot.png)
+
+### Cars Data
+![Cars](CarsRF_LOWESS Plot.png)
+
+### Walmart Sales Data
+![Walmart](WalmartRF_LOWESS Plot.png)
 
 
 ## Code - Making Mathematical Comparisons and Plotting Results
