@@ -10,7 +10,7 @@ The main idea of locally weighted regression is that the predictions are a linea
 The main idea of random forest regression is that the predictions are made by running a collection of several decision trees at once and then averaging the results of their decisions together.
 
 
-## Code
+## Code - Making Mathematical Comparisons and Plotting Results
 Note: I uploaded an ipynb file and I will be including the code directly into the markdown soon.
 
 ```
