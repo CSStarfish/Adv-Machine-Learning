@@ -11,4 +11,4 @@ The main idea of random forest regression is that the predictions are made by ru
 
 
 ## Code
-Note: I uploaded an ipynb file and I will be including the code directly into the markdown soon)
+Note: I uploaded an ipynb file and I will be including the code directly into the markdown soon.
