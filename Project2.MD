@@ -268,6 +268,8 @@ cars_data = pd.read_csv("cars.csv")
 x_2 = cars_data['WGT'].values
 y_2 = cars_data['MPG'].values
 
+# Testing Kernels
+
 # Tau = 0.01, Best kernel was Epanechnikov and an MSE of 24.31770096710489
 kf = KFold(n_splits=10,shuffle=True,random_state=410)
 mse_tri_c1 = []
@@ -450,5 +452,105 @@ ax.minorticks_on()
 
 
 # Walmart Sales Data
+walmart_data = pd.read_csv("Walmart.csv")
+
+x_3 = walmart_data["Weekly_Sales"].values
+y_3 = walmart_data["Unemployment"].values
+
+# Testing Kernels
+
+# Tau = 0.01, Best kernel was Epanechnikov and an MSE of 3.341048269327338
+kf = KFold(n_splits=10,shuffle=True,random_state=410)
+mse_tri_w1 = []
+mse_epa_w1 = []
+mse_quart_w1 = []
+
+for idxtrain, idxtest in kf.split(x_3):
+  y3train = y_3[idxtrain]
+  x3train = x_3[idxtrain]
+  x3train = scale.fit_transform(x3train.reshape(-1,1))
+  y3test = y_3[idxtest]
+  x3test = x_3[idxtest]
+  x3test = scale.transform(x3test.reshape(-1,1))
+  yhat_tri = lowess_reg(x3train.ravel(), y3train, x3test.ravel(), tricubic, 0.01)
+  yhat_epa = lowess_reg(x3train.ravel(), y3train, x3test.ravel(), Epanechnikov, 0.01)
+  yhat_quart = lowess_reg(x3train.ravel(), y3train, x3test.ravel(), Quartic, 0.01)
+  mse_tri_w1.append(mse(y3test,yhat_tri))
+  mse_epa_w1.append(mse(y3test,yhat_epa))
+  mse_quart_w1.append(mse(y3test,yhat_quart))
+print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tri_w1)))
+print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_w1)))
+print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_w1)))
+
+# Tau = 0.05, Best kernel was quartic and an MSE of 3.315280342725468
+kf = KFold(n_splits=10,shuffle=True,random_state=410)
+mse_tri_w2 = []
+mse_epa_w2 = []
+mse_quart_w2 = []
+
+for idxtrain, idxtest in kf.split(x_3):
+  y3train = y_3[idxtrain]
+  x3train = x_3[idxtrain]
+  x3train = scale.fit_transform(x3train.reshape(-1,1))
+  y3test = y_3[idxtest]
+  x3test = x_3[idxtest]
+  x3test = scale.transform(x3test.reshape(-1,1))
+  yhat_tri = lowess_reg(x3train.ravel(), y3train, x3test.ravel(), tricubic, 0.05)
+  yhat_epa = lowess_reg(x3train.ravel(), y3train, x3test.ravel(), Epanechnikov, 0.05)
+  yhat_quart = lowess_reg(x3train.ravel(), y3train, x3test.ravel(), Quartic, 0.05)
+  mse_tri_w2.append(mse(y3test,yhat_tri))
+  mse_epa_w2.append(mse(y3test,yhat_epa))
+  mse_quart_w2.append(mse(y3test,yhat_quart))
+print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tri_w2)))
+print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_w2)))
+print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_w2)))
+
+# Tau = 0.1, Best kernel was quartic and an MSE of 3.3454153879366153
+kf = KFold(n_splits=10,shuffle=True,random_state=410)
+mse_tri_w3 = []
+mse_epa_w3 = []
+mse_quart_w3 = []
+
+for idxtrain, idxtest in kf.split(x_3):
+  y3train = y_3[idxtrain]
+  x3train = x_3[idxtrain]
+  x3train = scale.fit_transform(x3train.reshape(-1,1))
+  y3test = y_3[idxtest]
+  x3test = x_3[idxtest]
+  x3test = scale.transform(x3test.reshape(-1,1))
+  yhat_tri = lowess_reg(x3train.ravel(), y3train, x3test.ravel(), tricubic, 0.1)
+  yhat_epa = lowess_reg(x3train.ravel(), y3train, x3test.ravel(), Epanechnikov, 0.1)
+  yhat_quart = lowess_reg(x3train.ravel(), y3train, x3test.ravel(), Quartic, 0.1)
+  mse_tri_w3.append(mse(y3test,yhat_tri))
+  mse_epa_w3.append(mse(y3test,yhat_epa))
+  mse_quart_w3.append(mse(y3test,yhat_quart))
+print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tri_w3)))
+print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_w3)))
+print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_w3)))
+
+# Tau = 0.5, Best kernel was quartic and an MSE of 3.4419039724403033
+kf = KFold(n_splits=10,shuffle=True,random_state=410)
+mse_tri_w4 = []
+mse_epa_w4 = []
+mse_quart_w4 = []
+
+for idxtrain, idxtest in kf.split(x_3):
+  y3train = y_3[idxtrain]
+  x3train = x_3[idxtrain]
+  x3train = scale.fit_transform(x3train.reshape(-1,1))
+  y3test = y_3[idxtest]
+  x3test = x_3[idxtest]
+  x3test = scale.transform(x3test.reshape(-1,1))
+  yhat_tri = lowess_reg(x3train.ravel(), y3train, x3test.ravel(), tricubic, 0.5)
+  yhat_epa = lowess_reg(x3train.ravel(), y3train, x3test.ravel(), Epanechnikov, 0.5)
+  yhat_quart = lowess_reg(x3train.ravel(), y3train, x3test.ravel(), Quartic, 0.5)
+  mse_tri_w4.append(mse(y3test,yhat_tri))
+  mse_epa_w4.append(mse(y3test,yhat_epa))
+  mse_quart_w4.append(mse(y3test,yhat_quart))
+print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tri_w4)))
+print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_w4)))
+print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_w4)))
+
+# Testing Random Forests
 
 ```
