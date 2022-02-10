@@ -20,7 +20,7 @@ The main idea of random forest regression is that the predictions are made by ru
 ![Boston](BostonHousingPricesRF_LOWESSPlot.jpg)
 
 ### Cars Data
-![Cars](CarsRF_LOWESSPlot.jpg)
+![Cars](CarRF_LOWESSPlot.jpg)
 
 ### Walmart Sales Data
 ![Walmart](WalmartRF_LOWESSPlot.jpg)
