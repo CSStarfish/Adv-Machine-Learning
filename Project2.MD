@@ -7,6 +7,7 @@ Locally weighted regression is a non-parametric method of regression.  As oppose
 ![Linear_Data](LineardataExample.png)
 
 ### Figure 2.
+![Linear_Fit](LinearfitExample.png)
 
 
 Locally weighted regression is quite similar to the method of moving averages, in that the technique uses smoothing to create a model to predict y given a value x.  It essentially assumes that even though the relationship between two variables in a dataset may not be globally linear, it may be locally linear in a given region.  As such, locally weighted regression locally fits the data through a series of short linear regression lines between datapoints that appear to form a smooth curve on a more global scale.  The main idea of locally weighted regression is that the predictions are a linear combination of the observed/actual values from the dataset (i.e., the predicted y is a linear combination of the actual values of y).  It applies weights to each value proportional to the distance between the local datapoints, with weights closer to one the closer they are together and closer to zero the further away they are, thus accounting for variability in the dataset.  Linear regression stems from the following equation:
