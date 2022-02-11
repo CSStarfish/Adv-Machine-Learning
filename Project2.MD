@@ -33,19 +33,20 @@ To build on this knowledge to better explain locally weighted regression, one wi
 
 One of the hyperparameters to the kernel function determines how wide the region you wish to highlight should be - smaller values will result in choppier and more variable curves, whereas larger values will result in smoother curves.
 
-(I will be inserting a chart showing comparisons of the different taus from my datasets next.)
+**(I will be inserting a chart showing comparisons of the different taus from my datasets next.)**
 
 Locally weighted regression differs from random forest regression because it performs smooth surface reconstruction to give a smooth fit to the data - based on my analysis as shown in my code and plots below, I have found that locally weighted regression tends to be more accurate than random forests.
 
 ## Concept of Random Forest Regression
 Random forest regression is another non-parametric model that differs from locally weighted regression because it performs predictions through ensembling.  The main idea of random forest regression is that the predictions are made by running a collection of several decision trees at once and then averaging the results of their decisions together.  A decision tree consists of a a collection of nodes, with the top single node being the "root."  Each parent node then splits the data based on the criteria that the split minimizes the residual sum of squares, consisting of the sum of the quantity of differences between the y-values in the left child node and the mean y-value in that child node squared and the sum of the quantity of differences between the y-values in the right child node and the mean y-value in that child node squared.  If the datapoints fall below the value that splits the parent node, they will be placed in the left child node; if the datapoints fall above the value that splits the parent node, they will be placed in the right child node.  In a random forest model, a collection of decision trees are created across different subsets of the overall dataset and then the results are averaged together to create a final prediction.  By averaging together the results of multiple decision trees (the number of which are specified by the user in the function call), random forest evens out the variability in results that may be found between each tree.  One of the parameters for a decision tree is how many levels to let it split into, which is called its depth - if the tree is allowed to split too often then the model will be too atuned to each individaul datapoint and thus be overfit.  On the other hand, if the tree is not able to split into enough nodes, then the model will be underfit and will likewise be erroneous.  As such, one must test varying levels of trees and depth levels in the course of developing a random forest model to determine which method leads to the most ideally minimized MSE.  We will see this testing shown in my analysis of the data below.
 
-## Visualization of Differences Between LOWESS and Random Forest Regression
+
+## Analysis and Visualization of Differences Between LOWESS and Random Forest Regression
 
 ### Boston Housing Prices Data
 
 This dataset contains information pertaining to housing prices and potential contributing features to those price values, such as number of rooms and pupil-to-teacher ratios in local schools.  For my analysis, I utilized rooms as the predictor and cmedv as the dependent variable.
-(I will be finishing my description of the data next.)
+**(I will be finishing my description of the data next, including a snapshot of each dataframe.)**
 
 ![Boston](BostonHousingPricesRF_LOWESSPlot.jpg)
 
@@ -53,7 +54,7 @@ This dataset contains information pertaining to housing prices and potential con
 
 This dataset contains information pertaining to car models and their features, such as weight and mileage.  For my analysis, I utilized WGT as the predictor and MPG as the dependent variable.
 
-(I will be finishing my description of the data next.)
+**(I will be finishing my description of the data next, including a snapshot of each dataframe.)**
 
 ![Cars](CarRF_LOWESSPlot.jpg)
 
@@ -61,9 +62,12 @@ This dataset contains information pertaining to car models and their features, s
 
 This dataset contains information pertaining to weekly Walmart Sales data and potential contributing factors to those sales, such as whether or not it was a holiday, the temperature at that time, and the CPI.  For my analysis, I utilized Weekly_Sales as the predictor and Unemployment as the dependent variable.
 
-(I will be adding a description of the data next.)
+**(I will be finishing my description of the data next, including a snapshot of each dataframe.)**
 
 ![Walmart](WalmartRF_LOWESSPlot.jpg)
+
+
+## Conclusions
 
 
 ## Code - Making Mathematical Comparisons and Plotting Results
