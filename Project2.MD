@@ -26,6 +26,9 @@ In this equation, X is a matrix with dimensionality n x p (where n is the number
 
 To build on this knowledge to better explain locally weighted regression, we can note that each row in X is in the P-dimensional space, which means the distance between each datapoint is the Euclidean distance between each row vector.  Additionally, we can note that there will be n weight vectors connected to each obervation.  If the Euclidean distance between observations is above a particular threshold, tau, then the weight of that particular row vector will be set to zero.  This inclusion of close observations and exclusion of observations farther away is what makes the linear regression occur locally to a specific region of datapoints.  As mentioned previously in discussing linear regression, we will find that each predicted value of y is a linear combination of each actual value of y as shown in Eq. 2, and each of these linear combinations is a different combination of the actual/observed y values due to this local approach of weighting.  As a result, the non-parametric model creates more accurate predictions than a parametric linear regression model because the non-parametric model is locally weighted and thus better follows the trend of the data.  Locally weighted regression differs from random forest regression because it performs smooth surface reconstruction to give a smooth fit to the data - based on my analysis as shown in my code and plots below, I have found that locally weighted regression tends to be more accurate than random forests.
 
+### Eq. 3
+![](weightedyhat.jpg)
+
 (I will be adding further information about the hyperparameter tau and its effects on the model's variability next.)
 
 ## Concept of Random Forest Regression
