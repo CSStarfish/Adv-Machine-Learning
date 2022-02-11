@@ -45,12 +45,21 @@ Random forest regression is another non-parametric model that differs from local
 ## Visualization of Differences Between LOWESS and Random Forest Regression
 
 ### Boston Housing Prices Data
+
+(I will be adding a description of the data next.)
+
 ![Boston](BostonHousingPricesRF_LOWESSPlot.jpg)
 
 ### Cars Data
+
+(I will be adding a description of the data next.)
+
 ![Cars](CarRF_LOWESSPlot.jpg)
 
 ### Walmart Sales Data
+
+(I will be adding a description of the data next.)
+
 ![Walmart](WalmartRF_LOWESSPlot.jpg)
 
 
