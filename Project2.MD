@@ -53,7 +53,7 @@ This dataset contains information pertaining to housing prices and potential con
 
 ![Boston](BostonHousingPricesRF_LOWESSPlot.jpg)
 
-The plot above shows the LOWESS model fit to the data in orange and the random forest model fit to the data in yellow.  It becomes readily apparent that LOWESS does a much better job at following the trends of the data and matches it almost completely, whereas random forest struggles with this.
+The plot above shows the LOWESS model fit to the data in orange and the random forest model fit to the data in yellow.  In this case, the LOWESS model and random forest model curves were quite similar and followed the trend of the dataset quite nicely.  However, LOWESS appears to fit it slightly better, as shown by its better ability to pick up on the trend of the data towards the bottom left between the 4 and 5 room x-values.  We will soon see that LOWESS and random forest were not quite as comparable for the remaining two datasets I analyzed.
 
 ### Cars Data
 
@@ -63,7 +63,7 @@ This dataset contains information pertaining to car models and their features, s
 
 ![Cars](CarRF_LOWESSPlot.jpg)
 
-The plot above shows the LOWESS model fit to the data in orange and the random forest model fit to the data in yellow.
+The plot above shows the LOWESS model fit to the data in orange and the random forest model fit to the data in yellow.  It becomes readily apparent that LOWESS does a much better job at following the trends of the data and matches it almost completely, whereas random forest struggles with this.
 
 ### Walmart Sales Data
 
