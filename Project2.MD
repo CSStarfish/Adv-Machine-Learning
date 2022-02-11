@@ -39,8 +39,6 @@ The main idea of random forest regression is that the predictions are made by ru
 
 
 ## Code - Making Mathematical Comparisons and Plotting Results
-Note: I uploaded an ipynb file and I will be including the code directly into the markdown soon.
-
 ```
 import numpy as np
 import pandas as pd
