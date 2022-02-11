@@ -44,11 +44,11 @@ Random forest regression is another non-parametric model that differs from local
 
 ## Analysis and Visualization of Differences Between LOWESS and Random Forest Regression
 
-To analyze the differences between LOWESS and Random Forest Regression, I selected three different datasets to apply these techniques to and evaluate the models' prediction accuracy.  My first dataset involved predicting the median house prices in Boston based on their number of rooms, the second datset involved predicting a car's mileage based on its weight, and the final dataset I selected involved predicting the unemployment level based on weekly Walmart sales.  I selected these pairs of features from their respective datasets because they were all quantitative variables and seemed to the most logically highly correlated amongst the remaining features from each respective data.  I decided to not only compare LOWESS to random forest, but also to compare various kernels and tau values amongst the LOWESS models and various numbers of trees and depths amongst the random forest models.  From there, I compared the best performing LOWESS model from each dataset to the best performing random forest model.  I based my decision on their accuracy, as measured by their MSE (i.e., their mean squared error).  To best compare each model, I uilized 10 k-fold cross validation.
+To analyze the differences between LOWESS and Random Forest Regression, I selected three different datasets to apply these techniques to and evaluate the models' prediction accuracy.  My first dataset involved predicting the median house prices in Boston based on their number of rooms, the second datset involved predicting a car's mileage based on its weight, and the final dataset I selected involved predicting the unemployment level based on weekly Walmart sales.  I selected these pairs of features from their respective datasets because they were all quantitative variables and seemed to the most logically highly correlated amongst the remaining features from each respective data.  I also scaled all input data prior to including it in my models.  I decided to not only compare LOWESS to random forest, but also to compare various kernels and tau values amongst the LOWESS models and various numbers of trees and depths amongst the random forest models.  From there, I compared the best performing LOWESS model from each dataset to the best performing random forest model.  I based my decision on their accuracy, as measured by their MSE (i.e., their mean squared error).  To best compare each model, I uilized 10 k-fold cross validation.
 
 ### Boston Housing Prices Data
 
-This dataset contains information pertaining to housing prices and potential contributing features to those price values, such as number of rooms and pupil-to-teacher ratios in local schools.  Below I have attached a screenshot of a sample of the dataset.  For my analysis, I utilized rooms as the predictor and cmedv as the dependent variable.
+This dataset contains information pertaining to housing prices and potential contributing features to those price values, such as number of rooms and pupil-to-teacher ratios in local schools.  Below I have attached a screenshot of a sample of the dataset, including each of the dataset's original features.  For my analysis, I utilized rooms as the predictor and cmedv as the dependent variable.
 
 ### Figure 5.
 ![Boston_DF](boston.jpg)
@@ -60,7 +60,7 @@ The plot above shows the LOWESS model fit to the data in orange and the random f
 
 ### Cars Data
 
-This dataset contains information pertaining to car models and their features, such as weight and mileage.  For my analysis, I utilized WGT as the predictor and MPG as the dependent variable.
+This dataset contains information pertaining to car models and their features, such as weight and mileage.  Below I have attached a screenshot of a sample of the dataset, including each of the dataset's original features.  For my analysis, I utilized WGT as the predictor and MPG as the dependent variable.
 
 ### Figure 7.
 ![Cars_DF](cars.jpg)
@@ -72,7 +72,7 @@ The plot above shows the LOWESS model fit to the data in orange and the random f
 
 ### Walmart Sales Data
 
-This dataset contains information pertaining to weekly Walmart Sales data and potential contributing factors to those sales, such as whether or not it was a holiday, the temperature at that time, and the CPI.  For my analysis, I utilized Weekly_Sales as the predictor and Unemployment as the dependent variable.
+This dataset contains information pertaining to weekly Walmart Sales data and potential contributing factors to those sales, such as whether or not it was a holiday, the temperature at that time, and the CPI.  Below I have attached a screenshot of a sample of the dataset, including each of the dataset's original features.  For my analysis, I utilized Weekly_Sales as the predictor and Unemployment as the dependent variable.
 
 ### Figure 9.
 ![Walmart_DF](Walmart.jpg)
