@@ -31,9 +31,10 @@ To build on this knowledge to better explain locally weighted regression, one wi
 ### Eq. 4
 ![](weightedyhat.jpg)
 
-One of the hyperparameters to the kernel function determines how wide the region you wish to highlight should be - smaller values will result in choppier and more variable curves, whereas larger values will result in smoother curves.  As a result, smaller taus may result in overfitting more often than a larger tau.  On the other hand, larger taus may be so smooth that it is too underfit to the data and fails to pick up on important trends.  Thus, it is important to test varying levels of tau when performing one's data analysis to select the optimal tau to adequately minimize the model's MSE.  We will see this testing shown in my analysis of the data following the description of random forest regresssion.
+One of the hyperparameters to the kernel function determines how wide the region you wish to highlight should be - smaller values will result in choppier and more variable curves, whereas larger values will result in smoother curves.  As a result, smaller taus may result in overfitting more often than a larger tau.  On the other hand, larger taus may be so smooth that it is too underfit to the data and fails to pick up on important trends.  Thus, it is important to test varying levels of tau when performing one's data analysis to select the optimal tau to adequately minimize the model's MSE.  We will see this testing shown in my analysis of the data following the description of random forest regression.  To show the different degrees of smoothing caused by varying levels of tau, I have included Figure 4 below, which shows the lowest weighted regression models fit to the first dataset I analyzed.  The yellow curve has the smallest tau at 0.01, and thus also has the highest degree of variability.  The curve with the next highest degree of volatility is the blue curve, which has a tau of 0.05, but we can see that it is slightly more smoothed than the yellow curve.  The smoothing becomes most apparent in the orange and red curves, which have taus of 0.1 and 0.5, respectively.  One may note that the red curve has the highest tau and thus is the most smooth of the models tested.
 
-**(I will be inserting a chart showing comparisons of the different taus from my datasets next.)**
+### Figure 4.
+![Boston_Taus](BostonTaus.png)
 
 Locally weighted regression differs from random forest regression because it performs smooth surface reconstruction to give a smooth fit to the data - based on my analysis as shown in my code and plots below, I have found that locally weighted regression tends to be more accurate than random forests.
 
@@ -49,8 +50,10 @@ To analyze the differences between LOWESS and Random Forest Regression, I select
 
 This dataset contains information pertaining to housing prices and potential contributing features to those price values, such as number of rooms and pupil-to-teacher ratios in local schools.  Below I have attached a screenshot of a sample of the dataset.  For my analysis, I utilized rooms as the predictor and cmedv as the dependent variable.
 
+### Figure 5.
 ![Boston_DF](boston.jpg)
 
+### Figure 6.
 ![Boston](BostonHousingPricesRF_LOWESSPlot.jpg)
 
 The plot above shows the LOWESS model fit to the data in orange and the random forest model fit to the data in yellow.  In this case, the LOWESS model and random forest model curves were quite similar and followed the trend of the dataset quite nicely.  However, LOWESS appears to fit it slightly better, as shown by its better ability to pick up on the trend of the data towards the bottom left between the 4 and 5 room x-values.  We will soon see that LOWESS and random forest were not quite as comparable for the remaining two datasets I analyzed.
@@ -59,8 +62,10 @@ The plot above shows the LOWESS model fit to the data in orange and the random f
 
 This dataset contains information pertaining to car models and their features, such as weight and mileage.  For my analysis, I utilized WGT as the predictor and MPG as the dependent variable.
 
+### Figure 7.
 ![Cars_DF](cars.jpg)
 
+### Figure 8.
 ![Cars](CarRF_LOWESSPlot.jpg)
 
 The plot above shows the LOWESS model fit to the data in orange and the random forest model fit to the data in yellow.  It becomes readily apparent that LOWESS does a much better job at following the trends of the data and matches it almost completely, whereas random forest struggles with this.
@@ -69,8 +74,10 @@ The plot above shows the LOWESS model fit to the data in orange and the random f
 
 This dataset contains information pertaining to weekly Walmart Sales data and potential contributing factors to those sales, such as whether or not it was a holiday, the temperature at that time, and the CPI.  For my analysis, I utilized Weekly_Sales as the predictor and Unemployment as the dependent variable.
 
+### Figure 9.
 ![Walmart_DF](Walmart.jpg)
 
+### Figure 10.
 ![Walmart](WalmartRF_LOWESSPlot.jpg)
 
 The plot above shows the LOWESS model fit to the data in orange and the random forest model fit to the data in yellow.  Out of all the plots shown for the model fits on each datset, it is most apparent in the plot for the Walmart dataset that LOWESS does a much better job at following the trends of the data than random forest.
