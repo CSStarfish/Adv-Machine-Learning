@@ -43,12 +43,13 @@ Random forest regression is another non-parametric model that differs from local
 
 ## Analysis and Visualization of Differences Between LOWESS and Random Forest Regression
 
-To analyze the differences between LOWESS and Random Forest Regression, I selected three different datasets to apply these techniques to and evaluate the models' prediction accuracy.  My first dataset involved predicting the median house prices in Boston based on their number of rooms, the second datset involved predicting a car's mileage based on its weight, and the final dataset I selected involved predicting the unemployment level based on weekly Walmart sales.  I decided to not only compare LOWESS to random forest, but also to compare various kernels and tau values amongst the LOWESS models and various numbers of trees and depths amongst the random forest models.  From there, I compared the best performing LOWESS model from each dataset to the best performing random forest model.  I based my decision on their accuracy, as measured by their MSE (i.e., their mean squared error).
+To analyze the differences between LOWESS and Random Forest Regression, I selected three different datasets to apply these techniques to and evaluate the models' prediction accuracy.  My first dataset involved predicting the median house prices in Boston based on their number of rooms, the second datset involved predicting a car's mileage based on its weight, and the final dataset I selected involved predicting the unemployment level based on weekly Walmart sales.  I decided to not only compare LOWESS to random forest, but also to compare various kernels and tau values amongst the LOWESS models and various numbers of trees and depths amongst the random forest models.  From there, I compared the best performing LOWESS model from each dataset to the best performing random forest model.  I based my decision on their accuracy, as measured by their MSE (i.e., their mean squared error).  To best compare each model, I uilized 10 k-fold cross validation.
 
 ### Boston Housing Prices Data
 
-This dataset contains information pertaining to housing prices and potential contributing features to those price values, such as number of rooms and pupil-to-teacher ratios in local schools.  For my analysis, I utilized rooms as the predictor and cmedv as the dependent variable.
-**(I will be finishing my description of the data next, including a snapshot of each dataframe.)**
+This dataset contains information pertaining to housing prices and potential contributing features to those price values, such as number of rooms and pupil-to-teacher ratios in local schools.  Below I have attached a screenshot of a sample of the dataset.  For my analysis, I utilized rooms as the predictor and cmedv as the dependent variable.
+
+![Boston_DF](Boston.png)
 
 ![Boston](BostonHousingPricesRF_LOWESSPlot.jpg)
 
