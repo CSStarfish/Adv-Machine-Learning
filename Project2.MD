@@ -23,14 +23,19 @@ In this equation, X is a matrix with dimensionality n x p (where n is the number
 ### Eq. 2
 ![](yhat.jpg)
 
-To build on this knowledge to better explain locally weighted regression, we can note that each row in X is in the P-dimensional space, which means the distance between each datapoint is the Euclidean distance between each row vector.  Additionally, we can note that there will be n weight vectors connected to each obervation.  If the Euclidean distance between observations is above a particular threshold, tau, then the weight of that particular row vector will be set to zero.  This inclusion of close observations and exclusion of observations farther away is what makes the linear regression occur locally to a specific region of datapoints.  As mentioned previously in discussing linear regression, we will find that each predicted value of y is a linear combination of each actual value of y, and each of these linear combinations is a differently weighted combination of the actual/observed y values due to this local approach of weighting (please see Eq. 3 below).  As a result, the non-parametric model creates more accurate predictions than a parametric linear regression model because the non-parametric model is locally weighted and thus better follows the trend of the data.  Locally weighted regression differs from random forest regression because it performs smooth surface reconstruction to give a smooth fit to the data - based on my analysis as shown in my code and plots below, I have found that locally weighted regression tends to be more accurate than random forests.
+To build on this knowledge to better explain locally weighted regression, one will multiply the equation in Eq. 1 by an n x n matrix of weights, W, with each weight corresponding to each datapoint, as shown in Eq. 3 below. As such, we can note that there will be n weight vectors connected to each obervation.  Additionally, We can note that each row in X is in the P-dimensional space, which means the distance between each datapoint is the Euclidean distance between each row vector.  If the Euclidean distance between observations is above a particular threshold, denoted in our kernel functions by the hyperparameter tau, then the weight of that particular row vector will be set to zero.  This inclusion of close observations and exclusion of observations farther away is what makes the linear regression occur locally to a specific region of datapoints.  As mentioned previously in discussing linear regression, we will find that each predicted value of y is a linear combination of each actual value of y, and each of these linear combinations is a differently weighted combination of the actual/observed y values stemming from the local wighting approach, as displayed in Eq. 4 below.  As a result, the non-parametric model creates more accurate predictions than a parametric linear regression model because the non-parametric model is locally weighted and thus better follows the trend of the data.  
 
 ### Eq. 3
+![](weights.jpg)
+
+### Eq. 4
 ![](weightedyhat.jpg)
 
 One of the hyperparameters to the kernel function determines how wide the region you wish to highlight should be - smaller values will result in choppier and more variable curves, whereas larger values will result in smoother curves.
 
 (I will be inserting a chart showing comparisons of the different taus from my datasets next.)
+
+Locally weighted regression differs from random forest regression because it performs smooth surface reconstruction to give a smooth fit to the data - based on my analysis as shown in my code and plots below, I have found that locally weighted regression tends to be more accurate than random forests.
 
 ## Concept of Random Forest Regression
 Random forest regression is another non-parametric model that differs from locally weighted regression because it performs predictions through ensembling.  The main idea of random forest regression is that the predictions are made by running a collection of several decision trees at once and then averaging the results of their decisions together.
