@@ -28,7 +28,9 @@ To build on this knowledge to better explain locally weighted regression, we can
 ### Eq. 3
 ![](weightedyhat.jpg)
 
-(I will be adding further information about the hyperparameter tau and its effects on the model's variability next.)
+One of the hyperparameters to the kernel function determines how wide the region you wish to highlight should be - smaller values will result in choppier and more variable curves, whereas larger values will result in smoother curves.
+
+(I will be inserting a chart showing comparisons of the different taus from my datasets next.)
 
 ## Concept of Random Forest Regression
 Random forest regression is another non-parametric model that differs from locally weighted regression because it performs predictions through ensembling.  The main idea of random forest regression is that the predictions are made by running a collection of several decision trees at once and then averaging the results of their decisions together.
