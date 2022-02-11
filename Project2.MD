@@ -46,17 +46,22 @@ Random forest regression is another non-parametric model that differs from local
 
 ### Boston Housing Prices Data
 
-(I will be adding a description of the data next.)
+This dataset contains information pertaining to housing prices and potential contributing features to those price values, such as number of rooms and pupil-to-teacher ratios in local schools.  For my analysis, I utilized rooms as the predictor and cmedv as the dependent variable.
+(I will be finishing my description of the data next.)
 
 ![Boston](BostonHousingPricesRF_LOWESSPlot.jpg)
 
 ### Cars Data
 
-(I will be adding a description of the data next.)
+This dataset contains information pertaining to car models and their features, such as weight and mileage.  For my analysis, I utilized WGT as the predictor and MPG as the dependent variable.
+
+(I will be finishing my description of the data next.)
 
 ![Cars](CarRF_LOWESSPlot.jpg)
 
 ### Walmart Sales Data
+
+This dataset contains information pertaining to weekly Walmart Sales data and potential contributing factors to those sales, such as whether or not it was a holiday, the temperature at that time, and the CPI.  For my analysis, I utilized Weekly_Sales as the predictor and Unemployment as the dependent variable.
 
 (I will be adding a description of the data next.)
 
