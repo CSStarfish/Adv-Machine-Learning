@@ -65,7 +65,7 @@ This dataset contains information pertaining to car models and their features, s
 
 This dataset contains information pertaining to weekly Walmart Sales data and potential contributing factors to those sales, such as whether or not it was a holiday, the temperature at that time, and the CPI.  For my analysis, I utilized Weekly_Sales as the predictor and Unemployment as the dependent variable.
 
-**(I will be finishing my description of the data next, including a snapshot of each dataframe.)**
+![Walmart_DF](Walmart.jpg)
 
 ![Walmart](WalmartRF_LOWESSPlot.jpg)
 
