@@ -57,7 +57,7 @@ This dataset contains information pertaining to housing prices and potential con
 
 This dataset contains information pertaining to car models and their features, such as weight and mileage.  For my analysis, I utilized WGT as the predictor and MPG as the dependent variable.
 
-**(I will be finishing my description of the data next, including a snapshot of each dataframe.)**
+![Cars_DF](cars.jpg)
 
 ![Cars](CarRF_LOWESSPlot.jpg)
 
