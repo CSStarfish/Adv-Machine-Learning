@@ -31,7 +31,7 @@ To build on this knowledge to better explain locally weighted regression, one wi
 ### Eq. 4
 ![](weightedyhat.jpg)
 
-One of the hyperparameters to the kernel function determines how wide the region you wish to highlight should be - smaller values will result in choppier and more variable curves, whereas larger values will result in smoother curves.
+One of the hyperparameters to the kernel function determines how wide the region you wish to highlight should be - smaller values will result in choppier and more variable curves, whereas larger values will result in smoother curves.  As a result, smaller taus may result in overfitting more often than a larger tau.  On the other hand, larger taus may be so smooth that it is too underfit to the data and fails to pick up on important trends.  Thus, it is important to test varying levels of tau when performing one's data analysis to select the optimal tau to adequately minimize the model's MSE.  We will see this testing shown in my analysis of the data following the description of random forest regresssion.
 
 **(I will be inserting a chart showing comparisons of the different taus from my datasets next.)**
 
@@ -68,6 +68,7 @@ This dataset contains information pertaining to weekly Walmart Sales data and po
 
 
 ## Conclusions
+As briefly mentioned previously in Locally Weighted Regression (LOWESS), my analysis showed that LOWESS models tend to outperform random forest regression models.
 
 
 ## Code - Making Mathematical Comparisons and Plotting Results
