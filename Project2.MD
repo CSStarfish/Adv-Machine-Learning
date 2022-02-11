@@ -49,7 +49,7 @@ To analyze the differences between LOWESS and Random Forest Regression, I select
 
 This dataset contains information pertaining to housing prices and potential contributing features to those price values, such as number of rooms and pupil-to-teacher ratios in local schools.  Below I have attached a screenshot of a sample of the dataset.  For my analysis, I utilized rooms as the predictor and cmedv as the dependent variable.
 
-![Boston_DF](boston.png)
+![Boston_DF](boston.jpg)
 
 ![Boston](BostonHousingPricesRF_LOWESSPlot.jpg)
 
