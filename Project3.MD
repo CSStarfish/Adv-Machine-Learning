@@ -1,29 +1,29 @@
 # Analyzing The Effects of Gradient Boosting on Multivariate Regression Analysis
 
-# Concept of Multivariate Regression Analysis
+## Concept of Multivariate Regression Analysis
 
 
-# Concept of Gradient Boosting
+## Concept of Gradient Boosting
 
 
-# Concept of Extreme Gradient Boosting (XGBoost)
+## Concept of Extreme Gradient Boosting (XGBoost)
 
 
-# Analysis and Visualization of Differences Between Ordinary Multivariate LOWESS Regression, Gradient Boosted LOWESS Regression, and Extreme Gradient Boosted LOWESS Regression
+## Analysis and Visualization of Differences Between Ordinary Multivariate LOWESS Regression, Gradient Boosted LOWESS Regression, and Extreme Gradient Boosted LOWESS Regression
 
-## Boston Housing Prices Dataset
-
-
-## Cars Dataset
+### Boston Housing Prices Dataset
 
 
-## Walmart Sales Dataset
+### Cars Dataset
 
 
-## Conclusions
+### Walmart Sales Dataset
 
 
-## Code - Making Mathematical Comparisons and Plotting Results
+### Conclusions
+
+
+### Code - Making Mathematical Comparisons and Plotting Results
 
 Note: Please see my main Github repository (entitled Adv-Machine-Learning) for the code below saved as a .ipynb file named "Project_3.ipynb"). Thank you!
 
