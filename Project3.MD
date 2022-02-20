@@ -1,3 +1,14 @@
+# Analyzing The Effects of Gradient Boosting on Multivariate Regression Analysis
+
+## Concept of Multivariate Regression Analysis
+
+
+## Concept of Gradient Boosting
+
+
+## Concept of Extreme Gradient Boosting (XGBoost)
+
+
 ### Code
 ```
 # Import Statements
