@@ -9,6 +9,20 @@
 ## Concept of Extreme Gradient Boosting (XGBoost)
 
 
+## Analysis and Visualization of Differences Between Ordinary Multivariate LOWESS Regression, Gradient Boosted LOWESS Regression, and Extreme Gradient Boosted LOWESS Regression
+
+### Boston Housing Prices Dataset
+
+
+### Cars Dataset
+
+
+### Walmart Sales Dataset
+
+
+### Conclusions
+
+
 ### Code
 ```
 # Import Statements
