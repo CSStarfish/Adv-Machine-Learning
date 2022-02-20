@@ -1,15 +1,15 @@
 # Analyzing The Effects of Gradient Boosting on Multivariate Regression Analysis
 
-## Concept of Multivariate Regression Analysis
+### Concept of Multivariate Regression Analysis
 
 
-## Concept of Gradient Boosting
+### Concept of Gradient Boosting
 
 
-## Concept of Extreme Gradient Boosting (XGBoost)
+### Concept of Extreme Gradient Boosting (XGBoost)
 
 
-## Analysis and Visualization of Differences Between Ordinary Multivariate LOWESS Regression, Gradient Boosted LOWESS Regression, and Extreme Gradient Boosted LOWESS Regression
+## Analysis and Visualization of Differences Between Multivariate Regression, Gradient Boosted Multivariate Regression, and Extreme Gradient Boosted Multivariate Regression
 
 ### Boston Housing Prices Dataset
 
