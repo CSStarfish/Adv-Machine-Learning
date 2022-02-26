@@ -1,7 +1,7 @@
 # Analyzing The Effects of Gradient Boosting on Multivariate Regression Analysis
 
 ### Concept of Multivariate Regression Analysis
-
+Like univariate locally weighted (LOWESS) regression, we want to use a non-parametric linear model to predict the y-values by applying weights to each observation row in X.  As discussed in Project 2, this process is performed by multiplying the nxn, diagonal matrix W by y and multiplying the same nxn, diagonal matrix W by the nxp matrix X and the beta vector of coefficients, n different times for each element of y (which is a column vector with shape nx1).  Each of the n matrices, W, are different from the others based on the Euclidean distances between the X observations they are being applied upon.  After calculating the Euclidean distance between each observation of X via the chosen kernel (i.e, tricubic, Epanechnikov, quartic, etc.), weights are appropriately applied closer to a value of 1 when the observations are closer together and closer to a value of 0 when the observations are farther apart.  This is determined by projecting the rows from the product of matrix W and y onto the column space of the product of W and X.  The predicted values of y will be used alongside X to interpolate additional testing X-values provide and validate the accuracy of the model.  For multivariate regression, we will be determining how multiple features of X contribute to the dependent variable y, as opposed to a single X feature's contribution in univariate regression.
 
 ### Concept of Gradient Boosting
 
@@ -18,6 +18,9 @@
 
 
 ### Walmart Sales Dataset
+
+
+### Concrete Strength Dataset
 
 
 ### Conclusions
