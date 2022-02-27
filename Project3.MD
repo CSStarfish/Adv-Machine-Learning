@@ -93,7 +93,7 @@ Ultimately, the XGB model won the competition with an MSE of just 22.04 and an M
 This dataset contains information pertaining to the compressive strength of concrete and the component materials in that particular batch of concrete, such as its age, fly ash content, and its amounts and sizes of aggregate.  Below I have attached a screenshot of a sample of the dataset, including each of the dataset's original features.  For my multivariate analysis, I utilized water content, age, and coarse aggregate content as the predictors and compressive strength as the dependent variable. I have also included graphs depicting each of the features against y (Compressive Strength).
 
 #### Features
-![](ConcreteFeatures.jpg)
+![](ConcreteFeature.jpg)
 
 #### Water Content
 ![](ConcreteWater.png)
