@@ -1240,19 +1240,1114 @@ print('The Cross-validated Mean Absolute Error for triangular LWR without interc
 print('The Cross-validated Mean Absolute Error for triweight BLWR without intercept is : '+str(np.mean(mae_blwr1_F)))
 print('The Cross-validated Mean Absolute Error for triangular BLWR without intercept is : '+str(np.mean(mae_blwr2_F)))
 
-
-
-# Will be updating soon
-
 # Making plots
 
 # Cars Dataset
+cars = pd.read_csv('cars.csv')
 
-# Will be updating soon
+X = cars[['ENG', 'CYL', 'WGT']].values
+y = cars['MPG'].values
+
+#  Make plots to visualize each X feature
+fig, ax = plt.subplots(figsize=(10,8))
+ax.set_xlim(25, 500)
+ax.set_ylim(0, 50)
+ax.scatter(x = cars['ENG'], y = cars['MPG'],s=25)
+ax.set_xlabel('Engine Horse Power',fontsize=16,color='Darkgreen')
+ax.set_ylabel('Mileage (MPG)',fontsize=16,color='Darkgreen')
+ax.set_title('Cars',fontsize=16,color='purple')
+ax.grid(b=True,which='major', color ='grey', linestyle='-', alpha=0.8)
+ax.grid(b=True,which='minor', color ='grey', linestyle='--', alpha=0.2)
+ax.minorticks_on()
+
+fig, ax = plt.subplots(figsize=(10,8))
+ax.set_xlim(2, 9)
+ax.set_ylim(0, 50)
+ax.scatter(x = cars['CYL'], y = cars['MPG'],s=25)
+ax.set_xlabel('Number of Cylinders',fontsize=16,color='Darkgreen')
+ax.set_ylabel('Mileage (MPG)',fontsize=16,color='Darkgreen')
+ax.set_title('Cars',fontsize=16,color='purple')
+ax.grid(b=True,which='major', color ='grey', linestyle='-', alpha=0.8)
+ax.grid(b=True,which='minor', color ='grey', linestyle='--', alpha=0.2)
+ax.minorticks_on()
+
+fig, ax = plt.subplots(figsize=(10,8))
+ax.set_xlim(1500, 5250)
+ax.set_ylim(0, 50)
+ax.scatter(x = cars['WGT'], y = cars['MPG'],s=25)
+ax.set_xlabel('Weight of Car (lbs.)',fontsize=16,color='Darkgreen')
+ax.set_ylabel('Mileage (MPG)',fontsize=16,color='Darkgreen')
+ax.set_title('Cars',fontsize=16,color='purple')
+ax.grid(b=True,which='major', color ='grey', linestyle='-', alpha=0.8)
+ax.grid(b=True,which='minor', color ='grey', linestyle='--', alpha=0.2)
+ax.minorticks_on()
+
+# Testing Kernels, tau = 0.01
+kf = KFold(n_splits=10,shuffle=True,random_state=410)
+mse_tric_c1 = []
+mse_epa_c1 = []
+mse_quart_c1 = []
+mse_trian_c1 = []
+mse_triw_c1 = []
+mae_tric_c1 = []
+mae_epa_c1 = []
+mae_quart_c1 = []
+mae_trian_c1 = []
+mae_triw_c1 = []
+
+for idxtrain, idxtest in kf.split(X):
+  ytrain = y[idxtrain]
+  xtrain = X[idxtrain]
+  ytest = y[idxtest]
+  xtest = X[idxtest]
+
+  xtrain = scale.fit_transform(xtrain)
+  xtest = scale.transform(xtest)
+
+  yhat_tri_T = lw_reg(xtrain, ytrain, xtest, Tricubic, 0.01, intercept=True)
+  yhat_tri_F = lw_reg(xtrain, ytrain, xtest, Tricubic, 0.01, intercept=False)
+  yhat_epa_T = lw_reg(xtrain, ytrain, xtest, Epanechnikov, 0.01, intercept=True)
+  yhat_epa_F = lw_reg(xtrain, ytrain, xtest, Epanechnikov, 0.01, intercept=False)
+  yhat_quart_T = lw_reg(xtrain, ytrain, xtest, Quartic, 0.01, intercept=True)
+  yhat_quart_F = lw_reg(xtrain, ytrain, xtest, Quartic, 0.01, intercept=False)
+  yhat_trian_T = lw_reg(xtrain, ytrain, xtest, Triangular, 0.01, intercept=True)
+  yhat_trian_F = lw_reg(xtrain, ytrain, xtest, Triangular, 0.01, intercept=False)
+  yhat_triw_T = lw_reg(xtrain, ytrain, xtest, Triweight, 0.01, intercept=True)
+  yhat_triw_F = lw_reg(xtrain, ytrain, xtest, Triweight, 0.01, intercept=False)
+
+  if(mse(ytest,yhat_tri_T) < mse(ytest,yhat_tri_F)):
+    mse_tric_c1.append(mse(ytest,yhat_tri_T))
+  else:
+    mse_tric_c1.append(mse(ytest,yhat_tri_F))
+
+  if(mse(ytest,yhat_epa_T) < mse(ytest,yhat_epa_F)):
+    mse_epa_c1.append(mse(ytest,yhat_epa_T))
+  else:
+    mse_epa_c1.append(mse(ytest,yhat_epa_F))
+
+  if(mse(ytest,yhat_quart_T) < mse(ytest,yhat_quart_F)):
+    mse_quart_c1.append(mse(ytest,yhat_quart_T))
+  else:
+    mse_quart_c1.append(mse(ytest,yhat_quart_F))
+
+  if(mse(ytest,yhat_trian_T) < mse(ytest,yhat_trian_F)):
+    mse_trian_c1.append(mse(ytest,yhat_trian_T))
+  else:
+    mse_trian_c1.append(mse(ytest,yhat_trian_F))
+  
+  if(mse(ytest,yhat_triw_T) < mse(ytest,yhat_triw_F)):
+    mse_triw_c1.append(mse(ytest,yhat_triw_T))
+  else:
+    mse_triw_c1.append(mse(ytest,yhat_triw_F))
+
+
+  if(mae(ytest,yhat_tri_T) < mae(ytest,yhat_tri_F)):
+    mae_tric_c1.append(mae(ytest,yhat_tri_T))
+  else:
+    mae_tric_c1.append(mae(ytest,yhat_tri_F))
+
+  if(mae(ytest,yhat_epa_T) < mae(ytest,yhat_epa_F)):
+    mae_epa_c1.append(mae(ytest,yhat_epa_T))
+  else:
+    mae_epa_c1.append(mae(ytest,yhat_epa_F))
+
+  if(mae(ytest,yhat_quart_T) < mae(ytest,yhat_quart_F)):
+    mae_quart_c1.append(mae(ytest,yhat_quart_T))
+  else:
+    mae_quart_c1.append(mae(ytest,yhat_quart_F))
+
+  if(mae(ytest,yhat_trian_T) < mae(ytest,yhat_trian_F)):
+    mae_trian_c1.append(mae(ytest,yhat_trian_T))
+  else:
+    mae_trian_c1.append(mae(ytest,yhat_trian_F))
+  
+  if(mae(ytest,yhat_triw_T) < mae(ytest,yhat_triw_F)):
+    mae_triw_c1.append(mae(ytest,yhat_triw_T))
+  else:
+    mae_triw_c1.append(mae(ytest,yhat_triw_F))
+
+print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tric_c1)))
+print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_c1)))
+print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_c1)))
+print("The MSE for LOWESS with the triangular kernel is: " + str(np.mean(mse_trian_c1)))
+print("The MSE for LOWESS with the triweight kernel is: " + str(np.mean(mse_triw_c1)))
+print("\n")
+print("The MAE for LOWESS with the tricubic kernel is: " + str(np.mean(mae_tric_c1)))
+print("The MAE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mae_epa_c1)))
+print("The MAE for LOWESS with the quartic kernel is: " + str(np.mean(mae_quart_c1)))
+print("The MAE for LOWESS with the triangular kernel is: " + str(np.mean(mae_trian_c1)))
+print("The MAE for LOWESS with the triweight kernel is: " + str(np.mean(mae_triw_c1)))
+
+# Testing Kernels, tau = 0.05
+kf = KFold(n_splits=10,shuffle=True,random_state=410)
+mse_tric_c2 = []
+mse_epa_c2 = []
+mse_quart_c2 = []
+mse_trian_c2 = []
+mse_triw_c2 = []
+mae_tric_c2 = []
+mae_epa_c2 = []
+mae_quart_c2 = []
+mae_trian_c2 = []
+mae_triw_c2 = []
+
+for idxtrain, idxtest in kf.split(X):
+  ytrain = y[idxtrain]
+  xtrain = X[idxtrain]
+  ytest = y[idxtest]
+  xtest = X[idxtest]
+  xtrain = scale.fit_transform(xtrain)
+  xtest = scale.transform(xtest)
+
+  yhat_tri_T = lw_reg(xtrain, ytrain, xtest, Tricubic, 0.05, intercept=True)
+  yhat_tri_F = lw_reg(xtrain, ytrain, xtest, Tricubic, 0.05, intercept=False)
+  yhat_epa_T = lw_reg(xtrain, ytrain, xtest, Epanechnikov, 0.05, intercept=True)
+  yhat_epa_F = lw_reg(xtrain, ytrain, xtest, Epanechnikov, 0.05, intercept=False)
+  yhat_quart_T = lw_reg(xtrain, ytrain, xtest, Quartic, 0.05, intercept=True)
+  yhat_quart_F = lw_reg(xtrain, ytrain, xtest, Quartic, 0.05, intercept=False)
+  yhat_trian_T = lw_reg(xtrain, ytrain, xtest, Triangular, 0.05, intercept=True)
+  yhat_trian_F = lw_reg(xtrain, ytrain, xtest, Triangular, 0.05, intercept=False)
+  yhat_triw_T = lw_reg(xtrain, ytrain, xtest, Triweight, 0.05, intercept=True)
+  yhat_triw_F = lw_reg(xtrain, ytrain, xtest, Triweight, 0.05, intercept=False)
+
+  if(mse(ytest,yhat_tri_T) < mse(ytest,yhat_tri_F)):
+    mse_tric_c2.append(mse(ytest,yhat_tri_T))
+  else:
+    mse_tric_c2.append(mse(ytest,yhat_tri_F))
+
+  if(mse(ytest,yhat_epa_T) < mse(ytest,yhat_epa_F)):
+    mse_epa_c2.append(mse(ytest,yhat_epa_T))
+  else:
+    mse_epa_c2.append(mse(ytest,yhat_epa_F))
+
+  if(mse(ytest,yhat_quart_T) < mse(ytest,yhat_quart_F)):
+    mse_quart_c2.append(mse(ytest,yhat_quart_T))
+  else:
+    mse_quart_c2.append(mse(ytest,yhat_quart_F))
+
+  if(mse(ytest,yhat_trian_T) < mse(ytest,yhat_trian_F)):
+    mse_trian_c2.append(mse(ytest,yhat_trian_T))
+  else:
+    mse_trian_c2.append(mse(ytest,yhat_trian_F))
+  
+  if(mse(ytest,yhat_triw_T) < mse(ytest,yhat_triw_F)):
+    mse_triw_c2.append(mse(ytest,yhat_triw_T))
+  else:
+    mse_triw_c2.append(mse(ytest,yhat_triw_F))
+
+
+  if(mae(ytest,yhat_tri_T) < mae(ytest,yhat_tri_F)):
+    mae_tric_c2.append(mae(ytest,yhat_tri_T))
+  else:
+    mae_tric_c2.append(mae(ytest,yhat_tri_F))
+
+  if(mae(ytest,yhat_epa_T) < mae(ytest,yhat_epa_F)):
+    mae_epa_c2.append(mae(ytest,yhat_epa_T))
+  else:
+    mae_epa_c2.append(mae(ytest,yhat_epa_F))
+
+  if(mae(ytest,yhat_quart_T) < mae(ytest,yhat_quart_F)):
+    mae_quart_c2.append(mae(ytest,yhat_quart_T))
+  else:
+    mae_quart_c2.append(mae(ytest,yhat_quart_F))
+
+  if(mae(ytest,yhat_trian_T) < mae(ytest,yhat_trian_F)):
+    mae_trian_c2.append(mae(ytest,yhat_trian_T))
+  else:
+    mae_trian_c2.append(mae(ytest,yhat_trian_F))
+  
+  if(mae(ytest,yhat_triw_T) < mae(ytest,yhat_triw_F)):
+    mae_triw_c2.append(mae(ytest,yhat_triw_T))
+  else:
+    mae_triw_c2.append(mae(ytest,yhat_triw_F))
+
+print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tric_c2)))
+print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_c2)))
+print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_c2)))
+print("The MSE for LOWESS with the triangular kernel is: " + str(np.mean(mse_trian_c2)))
+print("The MSE for LOWESS with the triweight kernel is: " + str(np.mean(mse_triw_c2)))
+print("\n")
+print("The MAE for LOWESS with the tricubic kernel is: " + str(np.mean(mae_tric_c2)))
+print("The MAE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mae_epa_c2)))
+print("The MAE for LOWESS with the quartic kernel is: " + str(np.mean(mae_quart_c2)))
+print("The MAE for LOWESS with the triangular kernel is: " + str(np.mean(mae_trian_c2)))
+print("The MAE for LOWESS with the triweight kernel is: " + str(np.mean(mae_triw_c2)))
+
+# Testing Kernels, tau = 0.1
+kf = KFold(n_splits=10,shuffle=True,random_state=410)
+mse_tric_c3 = []
+mse_epa_c3 = []
+mse_quart_c3 = []
+mse_trian_c3 = []
+mse_triw_c3 = []
+mae_tric_c3 = []
+mae_epa_c3 = []
+mae_quart_c3 = []
+mae_trian_c3 = []
+mae_triw_c3 = []
+
+for idxtrain, idxtest in kf.split(X):
+  ytrain = y[idxtrain]
+  xtrain = X[idxtrain]
+  ytest = y[idxtest]
+  xtest = X[idxtest]
+  xtrain = scale.fit_transform(xtrain)
+  xtest = scale.transform(xtest)
+
+  yhat_tri_T = lw_reg(xtrain, ytrain, xtest, Tricubic, 0.1, intercept=True)
+  yhat_tri_F = lw_reg(xtrain, ytrain, xtest, Tricubic, 0.1, intercept=False)
+  yhat_epa_T = lw_reg(xtrain, ytrain, xtest, Epanechnikov, 0.1, intercept=True)
+  yhat_epa_F = lw_reg(xtrain, ytrain, xtest, Epanechnikov, 0.1, intercept=False)
+  yhat_quart_T = lw_reg(xtrain, ytrain, xtest, Quartic, 0.1, intercept=True)
+  yhat_quart_F = lw_reg(xtrain, ytrain, xtest, Quartic, 0.1, intercept=False)
+  yhat_trian_T = lw_reg(xtrain, ytrain, xtest, Triangular, 0.1, intercept=True)
+  yhat_trian_F = lw_reg(xtrain, ytrain, xtest, Triangular, 0.1, intercept=False)
+  yhat_triw_T = lw_reg(xtrain, ytrain, xtest, Triweight, 0.1, intercept=True)
+  yhat_triw_F = lw_reg(xtrain, ytrain, xtest, Triweight, 0.1, intercept=False)
+
+  if(mse(ytest,yhat_tri_T) < mse(ytest,yhat_tri_F)):
+    mse_tric_c3.append(mse(ytest,yhat_tri_T))
+  else:
+    mse_tric_c3.append(mse(ytest,yhat_tri_F))
+
+  if(mse(ytest,yhat_epa_T) < mse(ytest,yhat_epa_F)):
+    mse_epa_c3.append(mse(ytest,yhat_epa_T))
+  else:
+    mse_epa_c3.append(mse(ytest,yhat_epa_F))
+
+  if(mse(ytest,yhat_quart_T) < mse(ytest,yhat_quart_F)):
+    mse_quart_c3.append(mse(ytest,yhat_quart_T))
+  else:
+    mse_quart_c3.append(mse(ytest,yhat_quart_F))
+
+  if(mse(ytest,yhat_trian_T) < mse(ytest,yhat_trian_F)):
+    mse_trian_c3.append(mse(ytest,yhat_trian_T))
+  else:
+    mse_trian_c3.append(mse(ytest,yhat_trian_F))
+  
+  if(mse(ytest,yhat_triw_T) < mse(ytest,yhat_triw_F)):
+    mse_triw_c3.append(mse(ytest,yhat_triw_T))
+  else:
+    mse_triw_c3.append(mse(ytest,yhat_triw_F))
+
+
+  if(mae(ytest,yhat_tri_T) < mae(ytest,yhat_tri_F)):
+    mae_tric_c3.append(mae(ytest,yhat_tri_T))
+  else:
+    mae_tric_c3.append(mae(ytest,yhat_tri_F))
+
+  if(mae(ytest,yhat_epa_T) < mae(ytest,yhat_epa_F)):
+    mae_epa_c3.append(mae(ytest,yhat_epa_T))
+  else:
+    mae_epa_c3.append(mae(ytest,yhat_epa_F))
+
+  if(mae(ytest,yhat_quart_T) < mae(ytest,yhat_quart_F)):
+    mae_quart_c3.append(mae(ytest,yhat_quart_T))
+  else:
+    mae_quart_c3.append(mae(ytest,yhat_quart_F))
+
+  if(mae(ytest,yhat_trian_T) < mae(ytest,yhat_trian_F)):
+    mae_trian_c3.append(mae(ytest,yhat_trian_T))
+  else:
+    mae_trian_c3.append(mae(ytest,yhat_trian_F))
+  
+  if(mae(ytest,yhat_triw_T) < mae(ytest,yhat_triw_F)):
+    mae_triw_c3.append(mae(ytest,yhat_triw_T))
+  else:
+    mae_triw_c3.append(mae(ytest,yhat_triw_F))
+
+print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tric_c3)))
+print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_c3)))
+print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_c3)))
+print("The MSE for LOWESS with the triangular kernel is: " + str(np.mean(mse_trian_c3)))
+print("The MSE for LOWESS with the triweight kernel is: " + str(np.mean(mse_triw_c3)))
+print("\n")
+print("The MAE for LOWESS with the tricubic kernel is: " + str(np.mean(mae_tric_c3)))
+print("The MAE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mae_epa_c3)))
+print("The MAE for LOWESS with the quartic kernel is: " + str(np.mean(mae_quart_c3)))
+print("The MAE for LOWESS with the triangular kernel is: " + str(np.mean(mae_trian_c3)))
+print("The MAE for LOWESS with the triweight kernel is: " + str(np.mean(mae_triw_c3)))
+
+# Testing Kernels, tau = 0.5
+kf = KFold(n_splits=10,shuffle=True,random_state=410)
+mse_tric_c4 = []
+mse_epa_c4 = []
+mse_quart_c4 = []
+mse_trian_c4 = []
+mse_triw_c4 = []
+mae_tric_c4 = []
+mae_epa_c4 = []
+mae_quart_c4 = []
+mae_trian_c4 = []
+mae_triw_c4 = []
+
+for idxtrain, idxtest in kf.split(X):
+  ytrain = y[idxtrain]
+  xtrain = X[idxtrain]
+  ytest = y[idxtest]
+  xtest = X[idxtest]
+  xtrain = scale.fit_transform(xtrain)
+  xtest = scale.transform(xtest)
+
+  yhat_tri_T = lw_reg(xtrain, ytrain, xtest, Tricubic, 0.5, intercept=True)
+  yhat_tri_F = lw_reg(xtrain, ytrain, xtest, Tricubic, 0.5, intercept=False)
+  yhat_epa_T = lw_reg(xtrain, ytrain, xtest, Epanechnikov, 0.5, intercept=True)
+  yhat_epa_F = lw_reg(xtrain, ytrain, xtest, Epanechnikov, 0.5, intercept=False)
+  yhat_quart_T = lw_reg(xtrain, ytrain, xtest, Quartic, 0.5, intercept=True)
+  yhat_quart_F = lw_reg(xtrain, ytrain, xtest, Quartic, 0.5, intercept=False)
+  yhat_trian_T = lw_reg(xtrain, ytrain, xtest, Triangular, 0.5, intercept=True)
+  yhat_trian_F = lw_reg(xtrain, ytrain, xtest, Triangular, 0.5, intercept=False)
+  yhat_triw_T = lw_reg(xtrain, ytrain, xtest, Triweight, 0.5, intercept=True)
+  yhat_triw_F = lw_reg(xtrain, ytrain, xtest, Triweight, 0.5, intercept=False)
+
+  if(mse(ytest,yhat_tri_T) < mse(ytest,yhat_tri_F)):
+    mse_tric_c4.append(mse(ytest,yhat_tri_T))
+  else:
+    mse_tric_c4.append(mse(ytest,yhat_tri_F))
+
+  if(mse(ytest,yhat_epa_T) < mse(ytest,yhat_epa_F)):
+    mse_epa_c4.append(mse(ytest,yhat_epa_T))
+  else:
+    mse_epa_c4.append(mse(ytest,yhat_epa_F))
+
+  if(mse(ytest,yhat_quart_T) < mse(ytest,yhat_quart_F)):
+    mse_quart_c4.append(mse(ytest,yhat_quart_T))
+  else:
+    mse_quart_c4.append(mse(ytest,yhat_quart_F))
+
+  if(mse(ytest,yhat_trian_T) < mse(ytest,yhat_trian_F)):
+    mse_trian_c4.append(mse(ytest,yhat_trian_T))
+  else:
+    mse_trian_c4.append(mse(ytest,yhat_trian_F))
+  
+  if(mse(ytest,yhat_triw_T) < mse(ytest,yhat_triw_F)):
+    mse_triw_c4.append(mse(ytest,yhat_triw_T))
+  else:
+    mse_triw_c4.append(mse(ytest,yhat_triw_F))
+
+
+  if(mae(ytest,yhat_tri_T) < mae(ytest,yhat_tri_F)):
+    mae_tric_c4.append(mae(ytest,yhat_tri_T))
+  else:
+    mae_tric_c4.append(mae(ytest,yhat_tri_F))
+
+  if(mae(ytest,yhat_epa_T) < mae(ytest,yhat_epa_F)):
+    mae_epa_c4.append(mae(ytest,yhat_epa_T))
+  else:
+    mae_epa_c4.append(mae(ytest,yhat_epa_F))
+
+  if(mae(ytest,yhat_quart_T) < mae(ytest,yhat_quart_F)):
+    mae_quart_c4.append(mae(ytest,yhat_quart_T))
+  else:
+    mae_quart_c4.append(mae(ytest,yhat_quart_F))
+
+  if(mae(ytest,yhat_trian_T) < mae(ytest,yhat_trian_F)):
+    mae_trian_c4.append(mae(ytest,yhat_trian_T))
+  else:
+    mae_trian_c4.append(mae(ytest,yhat_trian_F))
+  
+  if(mae(ytest,yhat_triw_T) < mae(ytest,yhat_triw_F)):
+    mae_triw_c4.append(mae(ytest,yhat_triw_T))
+  else:
+    mae_triw_c4.append(mae(ytest,yhat_triw_F))
+
+print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tric_c4)))
+print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_c4)))
+print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_c4)))
+print("The MSE for LOWESS with the triangular kernel is: " + str(np.mean(mse_trian_c4)))
+print("The MSE for LOWESS with the triweight kernel is: " + str(np.mean(mse_triw_c4)))
+print("\n")
+print("The MAE for LOWESS with the tricubic kernel is: " + str(np.mean(mae_tric_c4)))
+print("The MAE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mae_epa_c4)))
+print("The MAE for LOWESS with the quartic kernel is: " + str(np.mean(mae_quart_c4)))
+print("The MAE for LOWESS with the triangular kernel is: " + str(np.mean(mae_trian_c4)))
+print("The MAE for LOWESS with the triweight kernel is: " + str(np.mean(mae_triw_c4)))
+
+# Testing Kernels, tau = 1
+kf = KFold(n_splits=10,shuffle=True,random_state=410)
+mse_tric_c5 = []
+mse_epa_c5 = []
+mse_quart_c5 = []
+mse_trian_c5 = []
+mse_triw_c5 = []
+mae_tric_c5 = []
+mae_epa_c5 = []
+mae_quart_c5 = []
+mae_trian_c5 = []
+mae_triw_c5 = []
+
+for idxtrain, idxtest in kf.split(X):
+  ytrain = y[idxtrain]
+  xtrain = X[idxtrain]
+  ytest = y[idxtest]
+  xtest = X[idxtest]
+  xtrain = scale.fit_transform(xtrain)
+  xtest = scale.transform(xtest)
+
+  yhat_tri_T = lw_reg(xtrain, ytrain, xtest, Tricubic, 1, intercept=True)
+  yhat_tri_F = lw_reg(xtrain, ytrain, xtest, Tricubic, 1, intercept=False)
+  yhat_epa_T = lw_reg(xtrain, ytrain, xtest, Epanechnikov, 1, intercept=True)
+  yhat_epa_F = lw_reg(xtrain, ytrain, xtest, Epanechnikov, 1, intercept=False)
+  yhat_quart_T = lw_reg(xtrain, ytrain, xtest, Quartic, 1, intercept=True)
+  yhat_quart_F = lw_reg(xtrain, ytrain, xtest, Quartic, 1, intercept=False)
+  yhat_trian_T = lw_reg(xtrain, ytrain, xtest, Triangular, 1, intercept=True)
+  yhat_trian_F = lw_reg(xtrain, ytrain, xtest, Triangular, 1, intercept=False)
+  yhat_triw_T = lw_reg(xtrain, ytrain, xtest, Triweight, 1, intercept=True)
+  yhat_triw_F = lw_reg(xtrain, ytrain, xtest, Triweight, 1, intercept=False)
+
+  if(mse(ytest,yhat_tri_T) < mse(ytest,yhat_tri_F)):
+    mse_tric_c5.append(mse(ytest,yhat_tri_T))
+  else:
+    mse_tric_c5.append(mse(ytest,yhat_tri_F))
+
+  if(mse(ytest,yhat_epa_T) < mse(ytest,yhat_epa_F)):
+    mse_epa_c5.append(mse(ytest,yhat_epa_T))
+  else:
+    mse_epa_c5.append(mse(ytest,yhat_epa_F))
+
+  if(mse(ytest,yhat_quart_T) < mse(ytest,yhat_quart_F)):
+    mse_quart_c5.append(mse(ytest,yhat_quart_T))
+  else:
+    mse_quart_c5.append(mse(ytest,yhat_quart_F))
+
+  if(mse(ytest,yhat_trian_T) < mse(ytest,yhat_trian_F)):
+    mse_trian_c5.append(mse(ytest,yhat_trian_T))
+  else:
+    mse_trian_c5.append(mse(ytest,yhat_trian_F))
+  
+  if(mse(ytest,yhat_triw_T) < mse(ytest,yhat_triw_F)):
+    mse_triw_c5.append(mse(ytest,yhat_triw_T))
+  else:
+    mse_triw_c5.append(mse(ytest,yhat_triw_F))
+
+
+  if(mae(ytest,yhat_tri_T) < mae(ytest,yhat_tri_F)):
+    mae_tric_c5.append(mae(ytest,yhat_tri_T))
+  else:
+    mae_tric_c5.append(mae(ytest,yhat_tri_F))
+
+  if(mae(ytest,yhat_epa_T) < mae(ytest,yhat_epa_F)):
+    mae_epa_c5.append(mae(ytest,yhat_epa_T))
+  else:
+    mae_epa_c5.append(mae(ytest,yhat_epa_F))
+
+  if(mae(ytest,yhat_quart_T) < mae(ytest,yhat_quart_F)):
+    mae_quart_c5.append(mae(ytest,yhat_quart_T))
+  else:
+    mae_quart_c5.append(mae(ytest,yhat_quart_F))
+
+  if(mae(ytest,yhat_trian_T) < mae(ytest,yhat_trian_F)):
+    mae_trian_c5.append(mae(ytest,yhat_trian_T))
+  else:
+    mae_trian_c5.append(mae(ytest,yhat_trian_F))
+  
+  if(mae(ytest,yhat_triw_T) < mae(ytest,yhat_triw_F)):
+    mae_triw_c5.append(mae(ytest,yhat_triw_T))
+  else:
+    mae_triw_c5.append(mae(ytest,yhat_triw_F))
+
+print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tric_c5)))
+print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_c5)))
+print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_c5)))
+print("The MSE for LOWESS with the triangular kernel is: " + str(np.mean(mse_trian_c5)))
+print("The MSE for LOWESS with the triweight kernel is: " + str(np.mean(mse_triw_c5)))
+print("\n")
+print("The MAE for LOWESS with the tricubic kernel is: " + str(np.mean(mae_tric_c5)))
+print("The MAE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mae_epa_c5)))
+print("The MAE for LOWESS with the quartic kernel is: " + str(np.mean(mae_quart_c5)))
+print("The MAE for LOWESS with the triangular kernel is: " + str(np.mean(mae_trian_c5)))
+print("The MAE for LOWESS with the triweight kernel is: " + str(np.mean(mae_triw_c5)))
+
+# Testing Kernels, tau = 1.25
+kf = KFold(n_splits=10,shuffle=True,random_state=410)
+mse_tric_c6 = []
+mse_epa_c6 = []
+mse_quart_c6 = []
+mse_trian_c6 = []
+mse_triw_c6 = []
+mae_tric_c6 = []
+mae_epa_c6 = []
+mae_quart_c6 = []
+mae_trian_c6 = []
+mae_triw_c6 = []
+
+for idxtrain, idxtest in kf.split(X):
+  ytrain = y[idxtrain]
+  xtrain = X[idxtrain]
+  ytest = y[idxtest]
+  xtest = X[idxtest]
+  xtrain = scale.fit_transform(xtrain)
+  xtest = scale.transform(xtest)
+
+  yhat_tri_T = lw_reg(xtrain, ytrain, xtest, Tricubic, 1.25, intercept=True)
+  yhat_tri_F = lw_reg(xtrain, ytrain, xtest, Tricubic, 1.25, intercept=False)
+  yhat_epa_T = lw_reg(xtrain, ytrain, xtest, Epanechnikov, 1.25, intercept=True)
+  yhat_epa_F = lw_reg(xtrain, ytrain, xtest, Epanechnikov, 1.25, intercept=False)
+  yhat_quart_T = lw_reg(xtrain, ytrain, xtest, Quartic, 1.25, intercept=True)
+  yhat_quart_F = lw_reg(xtrain, ytrain, xtest, Quartic, 1.25, intercept=False)
+  yhat_trian_T = lw_reg(xtrain, ytrain, xtest, Triangular, 1.25, intercept=True)
+  yhat_trian_F = lw_reg(xtrain, ytrain, xtest, Triangular, 1.25, intercept=False)
+  yhat_triw_T = lw_reg(xtrain, ytrain, xtest, Triweight, 1.25, intercept=True)
+  yhat_triw_F = lw_reg(xtrain, ytrain, xtest, Triweight, 1.25, intercept=False)
+
+  if(mse(ytest,yhat_tri_T) < mse(ytest,yhat_tri_F)):
+    mse_tric_c6.append(mse(ytest,yhat_tri_T))
+  else:
+    mse_tric_c6.append(mse(ytest,yhat_tri_F))
+
+  if(mse(ytest,yhat_epa_T) < mse(ytest,yhat_epa_F)):
+    mse_epa_c6.append(mse(ytest,yhat_epa_T))
+  else:
+    mse_epa_c6.append(mse(ytest,yhat_epa_F))
+
+  if(mse(ytest,yhat_quart_T) < mse(ytest,yhat_quart_F)):
+    mse_quart_c6.append(mse(ytest,yhat_quart_T))
+  else:
+    mse_quart_c6.append(mse(ytest,yhat_quart_F))
+
+  if(mse(ytest,yhat_trian_T) < mse(ytest,yhat_trian_F)):
+    mse_trian_c6.append(mse(ytest,yhat_trian_T))
+  else:
+    mse_trian_c6.append(mse(ytest,yhat_trian_F))
+  
+  if(mse(ytest,yhat_triw_T) < mse(ytest,yhat_triw_F)):
+    mse_triw_c6.append(mse(ytest,yhat_triw_T))
+  else:
+    mse_triw_c6.append(mse(ytest,yhat_triw_F))
+
+
+  if(mae(ytest,yhat_tri_T) < mae(ytest,yhat_tri_F)):
+    mae_tric_c6.append(mae(ytest,yhat_tri_T))
+  else:
+    mae_tric_c6.append(mae(ytest,yhat_tri_F))
+
+  if(mae(ytest,yhat_epa_T) < mae(ytest,yhat_epa_F)):
+    mae_epa_c6.append(mae(ytest,yhat_epa_T))
+  else:
+    mae_epa_c6.append(mae(ytest,yhat_epa_F))
+
+  if(mae(ytest,yhat_quart_T) < mae(ytest,yhat_quart_F)):
+    mae_quart_c6.append(mae(ytest,yhat_quart_T))
+  else:
+    mae_quart_c6.append(mae(ytest,yhat_quart_F))
+
+  if(mae(ytest,yhat_trian_T) < mae(ytest,yhat_trian_F)):
+    mae_trian_c6.append(mae(ytest,yhat_trian_T))
+  else:
+    mae_trian_c6.append(mae(ytest,yhat_trian_F))
+  
+  if(mae(ytest,yhat_triw_T) < mae(ytest,yhat_triw_F)):
+    mae_triw_c6.append(mae(ytest,yhat_triw_T))
+  else:
+    mae_triw_c6.append(mae(ytest,yhat_triw_F))
+
+print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tric_c6)))
+print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_c6)))
+print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_c6)))
+print("The MSE for LOWESS with the triangular kernel is: " + str(np.mean(mse_trian_c6)))
+print("The MSE for LOWESS with the triweight kernel is: " + str(np.mean(mse_triw_c6)))
+print("\n")
+print("The MAE for LOWESS with the tricubic kernel is: " + str(np.mean(mae_tric_c6)))
+print("The MAE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mae_epa_c6)))
+print("The MAE for LOWESS with the quartic kernel is: " + str(np.mean(mae_quart_c6)))
+print("The MAE for LOWESS with the triangular kernel is: " + str(np.mean(mae_trian_c6)))
+print("The MAE for LOWESS with the triweight kernel is: " + str(np.mean(mae_triw_c6)))
+
+# Testing Kernels, tau = 1.5
+kf = KFold(n_splits=10,shuffle=True,random_state=410)
+mse_tric_c7 = []
+mse_epa_c7 = []
+mse_quart_c7 = []
+mse_trian_c7 = []
+mse_triw_c7 = []
+mae_tric_c7 = []
+mae_epa_c7 = []
+mae_quart_c7 = []
+mae_trian_c7 = []
+mae_triw_c7 = []
+
+for idxtrain, idxtest in kf.split(X):
+  ytrain = y[idxtrain]
+  xtrain = X[idxtrain]
+  ytest = y[idxtest]
+  xtest = X[idxtest]
+  xtrain = scale.fit_transform(xtrain)
+  xtest = scale.transform(xtest)
+
+  yhat_tri_T = lw_reg(xtrain, ytrain, xtest, Tricubic, 1.5, intercept=True)
+  yhat_tri_F = lw_reg(xtrain, ytrain, xtest, Tricubic, 1.5, intercept=False)
+  yhat_epa_T = lw_reg(xtrain, ytrain, xtest, Epanechnikov, 1.5, intercept=True)
+  yhat_epa_F = lw_reg(xtrain, ytrain, xtest, Epanechnikov, 1.5, intercept=False)
+  yhat_quart_T = lw_reg(xtrain, ytrain, xtest, Quartic, 1.5, intercept=True)
+  yhat_quart_F = lw_reg(xtrain, ytrain, xtest, Quartic, 1.5, intercept=False)
+  yhat_trian_T = lw_reg(xtrain, ytrain, xtest, Triangular, 1.5, intercept=True)
+  yhat_trian_F = lw_reg(xtrain, ytrain, xtest, Triangular, 1.5, intercept=False)
+  yhat_triw_T = lw_reg(xtrain, ytrain, xtest, Triweight, 1.5, intercept=True)
+  yhat_triw_F = lw_reg(xtrain, ytrain, xtest, Triweight, 1.5, intercept=False)
+
+  if(mse(ytest,yhat_tri_T) < mse(ytest,yhat_tri_F)):
+    mse_tric_c7.append(mse(ytest,yhat_tri_T))
+  else:
+    mse_tric_c7.append(mse(ytest,yhat_tri_F))
+
+  if(mse(ytest,yhat_epa_T) < mse(ytest,yhat_epa_F)):
+    mse_epa_c7.append(mse(ytest,yhat_epa_T))
+  else:
+    mse_epa_c7.append(mse(ytest,yhat_epa_F))
+
+  if(mse(ytest,yhat_quart_T) < mse(ytest,yhat_quart_F)):
+    mse_quart_c7.append(mse(ytest,yhat_quart_T))
+  else:
+    mse_quart_c7.append(mse(ytest,yhat_quart_F))
+
+  if(mse(ytest,yhat_trian_T) < mse(ytest,yhat_trian_F)):
+    mse_trian_c7.append(mse(ytest,yhat_trian_T))
+  else:
+    mse_trian_c7.append(mse(ytest,yhat_trian_F))
+  
+  if(mse(ytest,yhat_triw_T) < mse(ytest,yhat_triw_F)):
+    mse_triw_c7.append(mse(ytest,yhat_triw_T))
+  else:
+    mse_triw_c7.append(mse(ytest,yhat_triw_F))
+
+
+  if(mae(ytest,yhat_tri_T) < mae(ytest,yhat_tri_F)):
+    mae_tric_c7.append(mae(ytest,yhat_tri_T))
+  else:
+    mae_tric_c7.append(mae(ytest,yhat_tri_F))
+
+  if(mae(ytest,yhat_epa_T) < mae(ytest,yhat_epa_F)):
+    mae_epa_c7.append(mae(ytest,yhat_epa_T))
+  else:
+    mae_epa_c7.append(mae(ytest,yhat_epa_F))
+
+  if(mae(ytest,yhat_quart_T) < mae(ytest,yhat_quart_F)):
+    mae_quart_c7.append(mae(ytest,yhat_quart_T))
+  else:
+    mae_quart_c7.append(mae(ytest,yhat_quart_F))
+
+  if(mae(ytest,yhat_trian_T) < mae(ytest,yhat_trian_F)):
+    mae_trian_c7.append(mae(ytest,yhat_trian_T))
+  else:
+    mae_trian_c7.append(mae(ytest,yhat_trian_F))
+  
+  if(mae(ytest,yhat_triw_T) < mae(ytest,yhat_triw_F)):
+    mae_triw_c7.append(mae(ytest,yhat_triw_T))
+  else:
+    mae_triw_c7.append(mae(ytest,yhat_triw_F))
+
+print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tric_c7)))
+print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_c7)))
+print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_c7)))
+print("The MSE for LOWESS with the triangular kernel is: " + str(np.mean(mse_trian_c7)))
+print("The MSE for LOWESS with the triweight kernel is: " + str(np.mean(mse_triw_c7)))
+print("\n")
+print("The MAE for LOWESS with the tricubic kernel is: " + str(np.mean(mae_tric_c7)))
+print("The MAE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mae_epa_c7)))
+print("The MAE for LOWESS with the quartic kernel is: " + str(np.mean(mae_quart_c7)))
+print("The MAE for LOWESS with the triangular kernel is: " + str(np.mean(mae_trian_c7)))
+print("The MAE for LOWESS with the triweight kernel is: " + str(np.mean(mae_triw_c7)))
+
+# Testing Kernels, tau = 2
+kf = KFold(n_splits=10,shuffle=True,random_state=410)
+mse_tric_c8 = []
+mse_epa_c8 = []
+mse_quart_c8 = []
+mse_trian_c8 = []
+mse_triw_c8 = []
+mae_tric_c8 = []
+mae_epa_c8 = []
+mae_quart_c8 = []
+mae_trian_c8 = []
+mae_triw_c8 = []
+
+for idxtrain, idxtest in kf.split(X):
+  ytrain = y[idxtrain]
+  xtrain = X[idxtrain]
+  ytest = y[idxtest]
+  xtest = X[idxtest]
+  xtrain = scale.fit_transform(xtrain)
+  xtest = scale.transform(xtest)
+
+  yhat_tri_T = lw_reg(xtrain, ytrain, xtest, Tricubic, 2, intercept=True)
+  yhat_tri_F = lw_reg(xtrain, ytrain, xtest, Tricubic, 2, intercept=False)
+  yhat_epa_T = lw_reg(xtrain, ytrain, xtest, Epanechnikov, 2, intercept=True)
+  yhat_epa_F = lw_reg(xtrain, ytrain, xtest, Epanechnikov, 2, intercept=False)
+  yhat_quart_T = lw_reg(xtrain, ytrain, xtest, Quartic, 2, intercept=True)
+  yhat_quart_F = lw_reg(xtrain, ytrain, xtest, Quartic, 2, intercept=False)
+  yhat_trian_T = lw_reg(xtrain, ytrain, xtest, Triangular, 2, intercept=True)
+  yhat_trian_F = lw_reg(xtrain, ytrain, xtest, Triangular, 2, intercept=False)
+  yhat_triw_T = lw_reg(xtrain, ytrain, xtest, Triweight, 2, intercept=True)
+  yhat_triw_F = lw_reg(xtrain, ytrain, xtest, Triweight, 2, intercept=False)
+
+  if(mse(ytest,yhat_tri_T) < mse(ytest,yhat_tri_F)):
+    mse_tric_c8.append(mse(ytest,yhat_tri_T))
+  else:
+    mse_tric_c8.append(mse(ytest,yhat_tri_F))
+
+  if(mse(ytest,yhat_epa_T) < mse(ytest,yhat_epa_F)):
+    mse_epa_c8.append(mse(ytest,yhat_epa_T))
+  else:
+    mse_epa_c8.append(mse(ytest,yhat_epa_F))
+
+  if(mse(ytest,yhat_quart_T) < mse(ytest,yhat_quart_F)):
+    mse_quart_c8.append(mse(ytest,yhat_quart_T))
+  else:
+    mse_quart_c8.append(mse(ytest,yhat_quart_F))
+
+  if(mse(ytest,yhat_trian_T) < mse(ytest,yhat_trian_F)):
+    mse_trian_c8.append(mse(ytest,yhat_trian_T))
+  else:
+    mse_trian_c8.append(mse(ytest,yhat_trian_F))
+  
+  if(mse(ytest,yhat_triw_T) < mse(ytest,yhat_triw_F)):
+    mse_triw_c8.append(mse(ytest,yhat_triw_T))
+  else:
+    mse_triw_c8.append(mse(ytest,yhat_triw_F))
+
+
+  if(mae(ytest,yhat_tri_T) < mae(ytest,yhat_tri_F)):
+    mae_tric_c8.append(mae(ytest,yhat_tri_T))
+  else:
+    mae_tric_c8.append(mae(ytest,yhat_tri_F))
+
+  if(mae(ytest,yhat_epa_T) < mae(ytest,yhat_epa_F)):
+    mae_epa_c8.append(mae(ytest,yhat_epa_T))
+  else:
+    mae_epa_c8.append(mae(ytest,yhat_epa_F))
+
+  if(mae(ytest,yhat_quart_T) < mae(ytest,yhat_quart_F)):
+    mae_quart_c8.append(mae(ytest,yhat_quart_T))
+  else:
+    mae_quart_c8.append(mae(ytest,yhat_quart_F))
+
+  if(mae(ytest,yhat_trian_T) < mae(ytest,yhat_trian_F)):
+    mae_trian_c8.append(mae(ytest,yhat_trian_T))
+  else:
+    mae_trian_c8.append(mae(ytest,yhat_trian_F))
+  
+  if(mae(ytest,yhat_triw_T) < mae(ytest,yhat_triw_F)):
+    mae_triw_c8.append(mae(ytest,yhat_triw_T))
+  else:
+    mae_triw_c8.append(mae(ytest,yhat_triw_F))
+
+print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tric_c8)))
+print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_c8)))
+print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_c8)))
+print("The MSE for LOWESS with the triangular kernel is: " + str(np.mean(mse_trian_c8)))
+print("The MSE for LOWESS with the triweight kernel is: " + str(np.mean(mse_triw_c8)))
+print("\n")
+print("The MAE for LOWESS with the tricubic kernel is: " + str(np.mean(mae_tric_c8)))
+print("The MAE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mae_epa_c8)))
+print("The MAE for LOWESS with the quartic kernel is: " + str(np.mean(mae_quart_c8)))
+print("The MAE for LOWESS with the triangular kernel is: " + str(np.mean(mae_trian_c8)))
+print("The MAE for LOWESS with the triweight kernel is: " + str(np.mean(mae_triw_c8)))
+
+# Testing XGB
+kf = KFold(n_splits=10,shuffle=True,random_state=410)
+mse_100 = []
+mse_1000 = []
+mse_100_l10 = []
+mse_1000_l10 = []
+mse_100_l50 = []
+mse_1000_l50 = []
+mse_100_d5 = []
+mse_1000_d5 = []
+mse_100_l10_d5 = []
+mse_1000_l10_d5 = []
+mse_100_l50_d5 = []
+mse_1000_l50_d5 = []
+mse_100_a5 = []
+mse_1000_a5 = []
+mse_100_l10_a5 = []
+mse_1000_l10_a5 = []
+mse_100_l50_a5 = []
+mse_1000_l50_a5 = []
+mse_100_d5_a5 = []
+mse_1000_d5_a5 = []
+mse_100_l10_d5_a5 = []
+mse_1000_l10_d5_a5 = []
+mse_100_l50_d5_a5 = []
+mse_1000_l50_d5_a5 = []
+
+for idxtrain, idxtest in kf.split(X):
+  ytrain = y[idxtrain]
+  xtrain = X[idxtrain]
+  ytest = y[idxtest]
+  xtest = X[idxtest]
+  xtrain = scale.fit_transform(xtrain)
+  xtest = scale.transform(xtest)
+
+  model_xgb_1 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=20,alpha=1,gamma=10,max_depth=3)
+  model_xgb_1.fit(xtrain,ytrain)
+  yhat_xgb_1 = model_xgb_1.predict(xtest)
+
+  model_xgb_2 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=20,alpha=1,gamma=10,max_depth=3)
+  model_xgb_2.fit(xtrain,ytrain)
+  yhat_xgb_2 = model_xgb_2.predict(xtest)
+
+  model_xgb_3 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=10,alpha=1,gamma=10,max_depth=3)
+  model_xgb_3.fit(xtrain,ytrain)
+  yhat_xgb_3 = model_xgb_3.predict(xtest)
+
+  model_xgb_4 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=10,alpha=1,gamma=10,max_depth=3)
+  model_xgb_4.fit(xtrain,ytrain)
+  yhat_xgb_4 = model_xgb_4.predict(xtest)
+
+  model_xgb_5 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=50,alpha=1,gamma=10,max_depth=3)
+  model_xgb_5.fit(xtrain,ytrain)
+  yhat_xgb_5 = model_xgb_5.predict(xtest)
+
+  model_xgb_6 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=50,alpha=1,gamma=10,max_depth=3)
+  model_xgb_6.fit(xtrain,ytrain)
+  yhat_xgb_6 = model_xgb_6.predict(xtest)
+
+  model_xgb_7 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=20,alpha=1,gamma=10,max_depth=5)
+  model_xgb_7.fit(xtrain,ytrain)
+  yhat_xgb_7 = model_xgb_7.predict(xtest)
+
+  model_xgb_8 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=20,alpha=1,gamma=10,max_depth=5)
+  model_xgb_8.fit(xtrain,ytrain)
+  yhat_xgb_8 = model_xgb_8.predict(xtest)
+
+  model_xgb_9 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=10,alpha=1,gamma=10,max_depth=5)
+  model_xgb_9.fit(xtrain,ytrain)
+  yhat_xgb_9 = model_xgb_9.predict(xtest)
+
+  model_xgb_10 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=10,alpha=1,gamma=10,max_depth=5)
+  model_xgb_10.fit(xtrain,ytrain)
+  yhat_xgb_10 = model_xgb_10.predict(xtest)
+
+  model_xgb_11 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=50,alpha=1,gamma=10,max_depth=5)
+  model_xgb_11.fit(xtrain,ytrain)
+  yhat_xgb_11 = model_xgb_11.predict(xtest)
+
+  model_xgb_12 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=50,alpha=1,gamma=10,max_depth=5)
+  model_xgb_12.fit(xtrain,ytrain)
+  yhat_xgb_12 = model_xgb_12.predict(xtest)
+
+  model_xgb_13 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=20,alpha=5,gamma=10,max_depth=3)
+  model_xgb_13.fit(xtrain,ytrain)
+  yhat_xgb_13 = model_xgb_13.predict(xtest)
+
+  model_xgb_14 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=20,alpha=5,gamma=10,max_depth=3)
+  model_xgb_14.fit(xtrain,ytrain)
+  yhat_xgb_14 = model_xgb_14.predict(xtest)
+
+  model_xgb_15 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=10,alpha=5,gamma=10,max_depth=3)
+  model_xgb_15.fit(xtrain,ytrain)
+  yhat_xgb_15 = model_xgb_15.predict(xtest)
+
+  model_xgb_16 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=10,alpha=5,gamma=10,max_depth=3)
+  model_xgb_16.fit(xtrain,ytrain)
+  yhat_xgb_16 = model_xgb_16.predict(xtest)
+
+  model_xgb_17 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=50,alpha=5,gamma=10,max_depth=3)
+  model_xgb_17.fit(xtrain,ytrain)
+  yhat_xgb_17 = model_xgb_17.predict(xtest)
+
+  model_xgb_18 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=50,alpha=5,gamma=10,max_depth=3)
+  model_xgb_18.fit(xtrain,ytrain)
+  yhat_xgb_18 = model_xgb_18.predict(xtest)
+
+  model_xgb_19 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=20,alpha=5,gamma=10,max_depth=5)
+  model_xgb_19.fit(xtrain,ytrain)
+  yhat_xgb_19 = model_xgb_19.predict(xtest)
+
+  model_xgb_20 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=20,alpha=5,gamma=10,max_depth=5)
+  model_xgb_20.fit(xtrain,ytrain)
+  yhat_xgb_20 = model_xgb_20.predict(xtest)
+
+  model_xgb_21 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=10,alpha=5,gamma=10,max_depth=5)
+  model_xgb_21.fit(xtrain,ytrain)
+  yhat_xgb_21 = model_xgb_21.predict(xtest)
+
+  model_xgb_22 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=10,alpha=5,gamma=10,max_depth=5)
+  model_xgb_22.fit(xtrain,ytrain)
+  yhat_xgb_22 = model_xgb_22.predict(xtest)
+
+  model_xgb_23 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=50,alpha=5,gamma=10,max_depth=5)
+  model_xgb_23.fit(xtrain,ytrain)
+  yhat_xgb_23 = model_xgb_23.predict(xtest)
+
+  model_xgb_24 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=50,alpha=5,gamma=10,max_depth=5)
+  model_xgb_24.fit(xtrain,ytrain)
+  yhat_xgb_24 = model_xgb_24.predict(xtest)
+
+  mse_100.append(mse(ytest,yhat_xgb_1))
+  mse_1000.append(mse(ytest,yhat_xgb_2))
+
+  mse_100_l10.append(mse(ytest,yhat_xgb_3))
+  mse_1000_l10.append(mse(ytest,yhat_xgb_4))
+
+  mse_100_l50.append(mse(ytest,yhat_xgb_5))
+  mse_1000_l50.append(mse(ytest,yhat_xgb_6))
+
+  mse_100_d5.append(mse(ytest,yhat_xgb_7))
+  mse_1000_d5.append(mse(ytest,yhat_xgb_8))
+
+  mse_100_l10_d5.append(mse(ytest,yhat_xgb_9))
+  mse_1000_l10_d5.append(mse(ytest,yhat_xgb_10))
+
+  mse_100_l50_d5.append(mse(ytest,yhat_xgb_11))
+  mse_1000_l50_d5.append(mse(ytest,yhat_xgb_12))
+
+  mse_100_a5.append(mse(ytest,yhat_xgb_13))
+  mse_1000_a5.append(mse(ytest,yhat_xgb_14))
+
+  mse_100_l10_a5.append(mse(ytest,yhat_xgb_15))
+  mse_1000_l10_a5.append(mse(ytest,yhat_xgb_16))
+
+  mse_100_l50_a5.append(mse(ytest,yhat_xgb_17))
+  mse_1000_l50_a5.append(mse(ytest,yhat_xgb_18))
+
+  mse_100_d5_a5.append(mse(ytest,yhat_xgb_19))
+  mse_1000_d5_a5.append(mse(ytest,yhat_xgb_20))
+
+  mse_100_l10_d5_a5.append(mse(ytest,yhat_xgb_21))
+  mse_1000_l10_d5_a5.append(mse(ytest,yhat_xgb_22))
+
+  mse_100_l50_d5_a5.append(mse(ytest,yhat_xgb_23))
+  mse_1000_l50_d5_a5.append(mse(ytest,yhat_xgb_24))
+
+print("The MSE for 100 trees is: " + str(np.mean(mse_100)))
+print("The MSE for 1000 trees is: " + str(np.mean(mse_1000)))
+
+print("The MSE for 100 trees and a lambda of 10 is: " + str(np.mean(mse_100_l10)))
+print("The MSE for 1000 trees and a lambda of 10 is: " + str(np.mean(mse_1000_l10)))
+
+print("The MSE for 100 trees and a lambda of 50 is: " + str(np.mean(mse_100_l50)))
+print("The MSE for 1000 trees and a lambda of 50 is: " + str(np.mean(mse_1000_l50)))
+
+print("The MSE for 100 trees and a depth of 5 is: " + str(np.mean(mse_100_d5)))
+print("The MSE for 1000 trees and a depth of 5 is: " + str(np.mean(mse_1000_d5)))
+
+print("The MSE for 100 trees, depth of 5, and a lambda of 10 is: " + str(np.mean(mse_100_l10_d5)))
+print("The MSE for 1000 trees, depth of 5, and a lambda of 10 is: " + str(np.mean(mse_1000_l10_d5)))
+
+print("The MSE for 100 trees, depth of 5, and a lambda of 50 is: " + str(np.mean(mse_100_l50_d5)))
+print("The MSE for 1000 trees, depth of 5, and a lambda of 50 is: " + str(np.mean(mse_1000_l50_d5)))
+
+print("The MSE for 100 tres and an alpha of 5 is: " + str(np.mean(mse_100_a5)))
+print("The MSE for 1000 trees and an alpha of 5 is: " + str(np.mean(mse_1000_a5)))
+
+print("The MSE for 100 trees, lambda of 10, and an alpha of 5 is: " + str(np.mean(mse_100_l10_a5)))
+print("The MSE for 1000 trees, lambda of 10, and an alpha of 5 is: " + str(np.mean(mse_1000_l10_a5)))
+
+print("The MSE for 100 trees, lambda of 50, and an alpha of 5 is: " + str(np.mean(mse_100_l50_a5)))
+print("The MSE for 1000 trees, lambda of 50, and an alpha of 5 is: " + str(np.mean(mse_1000_l50_a5)))
+
+print("The MSE for 100 trees, depth of 5, and an alpha of 5 is: " + str(np.mean(mse_100_d5_a5)))
+print("The MSE for 1000 trees, depth of 5, and an alpha of 5 is: " + str(np.mean(mse_1000_d5_a5)))
+
+print("The MSE for 100 trees, lambda of 10, depth of 5, and an alpha of 5 is: " + str(np.mean(mse_100_l10_d5_a5)))
+print("The MSE for 1000 trees, lambda of 10, depth of 5, and an alpha of 5 is: " + str(np.mean(mse_1000_l10_d5_a5)))
+
+print("The MSE for 100 trees, lambda of 50, depth of 5, and an alpha of 5 is: " + str(np.mean(mse_100_l50_d5_a5)))
+print("The MSE for 1000 trees, lambda of 50, depth of 5, and an alpha of 5 is: " + str(np.mean(mse_1000_l50_d5_a5)))
+
+# Testing regular gradient boosting
+kf = KFold(n_splits=10,shuffle=True,random_state=1234)
+
+# We want more nested cross-validation
+
+mse_lwr1_T = []
+mse_lwr2_T = []
+mse_lwr1_F = []
+mse_lwr2_F = []
+mse_blwr1_T = []
+mse_blwr2_T = []
+mse_blwr1_F = []
+mse_blwr2_F = []
+mse_xgb_1 = []
+mse_xgb_2 = []
+
+mae_lwr1_T = []
+mae_lwr2_T = []
+mae_lwr1_F = []
+mae_lwr2_F = []
+mae_blwr1_T = []
+mae_blwr2_T = []
+mae_blwr1_F = []
+mae_blwr2_F = []
+mae_xgb_1 = []
+mae_xgb_2 = []
+
+for i in range(100):
+  kf = KFold(n_splits=10,shuffle=True,random_state=i)
+  # this is the Cross-Validation Loop
+  for idxtrain, idxtest in kf.split(X):
+    xtrain = X[idxtrain]
+    ytrain = y[idxtrain]
+    ytest = y[idxtest]
+    xtest = X[idxtest]
+
+    xtrain = scale.fit_transform(xtrain)
+    xtest = scale.transform(xtest)
+
+    yhat_lwr1_T = lw_reg(xtrain,ytrain, xtest,Triangular,tau=0.5,intercept=True)
+    yhat_lwr1_F = lw_reg(xtrain,ytrain, xtest,Triangular,tau=0.5,intercept=False)
+    yhat_lwr2_T = lw_reg(xtrain,ytrain, xtest,Epanechnikov,tau=0.5,intercept=True)
+    yhat_lwr2_F = lw_reg(xtrain,ytrain, xtest,Epanechnikov,tau=0.5,intercept=False)
+    yhat_blwr1_T = boosted_lwr(xtrain,ytrain, xtest,Triangular,tau=0.5,intercept=True)
+    yhat_blwr1_F = boosted_lwr(xtrain,ytrain, xtest,Triangular,tau=0.5,intercept=False)
+    yhat_blwr2_T = boosted_lwr(xtrain,ytrain, xtest,Epanechnikov,tau=0.5,intercept=True)
+    yhat_blwr2_F = boosted_lwr(xtrain,ytrain, xtest,Epanechnikov,tau=0.5,intercept=False)
+    model_xgb_1 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=50,alpha=1,gamma=10,max_depth=5)
+    model_xgb_1.fit(xtrain,ytrain)
+    yhat_xgb_1 = model_xgb_1.predict(xtest)
+    model_xgb_2 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=50,alpha=5,gamma=10,max_depth=5)
+    model_xgb_2.fit(xtrain,ytrain)
+    yhat_xgb_2 = model_xgb_2.predict(xtest)
+
+    mse_lwr1_T.append(mse(ytest,yhat_lwr1_T))
+    mse_lwr2_T.append(mse(ytest,yhat_lwr2_T))
+    mse_lwr1_F.append(mse(ytest,yhat_lwr1_F))
+    mse_lwr2_F.append(mse(ytest,yhat_lwr2_F))
+    mse_blwr1_T.append(mse(ytest,yhat_blwr1_T))
+    mse_blwr2_T.append(mse(ytest,yhat_blwr2_T))
+    mse_blwr1_F.append(mse(ytest,yhat_blwr1_F))
+    mse_blwr2_F.append(mse(ytest,yhat_blwr2_F))
+    mse_xgb_1.append(mse(ytest, yhat_xgb_1))
+    mse_xgb_2.append(mse(ytest, yhat_xgb_2))
+
+    mae_lwr1_T.append(mae(ytest,yhat_lwr1_T))
+    mae_lwr2_T.append(mae(ytest,yhat_lwr2_T))
+    mae_lwr1_F.append(mae(ytest,yhat_lwr1_F))
+    mae_lwr2_F.append(mae(ytest,yhat_lwr2_F))
+    mae_blwr1_T.append(mae(ytest,yhat_blwr1_T))
+    mae_blwr2_T.append(mae(ytest,yhat_blwr2_T))
+    mae_blwr1_F.append(mae(ytest,yhat_blwr1_F))
+    mae_blwr2_F.append(mae(ytest,yhat_blwr2_F))
+    mae_xgb_1.append(mae(ytest, yhat_xgb_1))
+    mae_xgb_2.append(mae(ytest, yhat_xgb_2))
+
+print('The Cross-validated Mean Squared Error for triangular LWR with intercept is : ' + str(np.mean(mse_lwr1_T)))
+print('The Cross-validated Mean Squared Error for Epanechnikov LWR with intercept is : ' + str(np.mean(mse_lwr2_T)))
+print('The Cross-validated Mean Squared Error for triangular BLWR with intercept is : '+str(np.mean(mse_blwr1_T)))
+print('The Cross-validated Mean Squared Error for Epanechnikov BLWR with intercept is : '+str(np.mean(mse_blwr2_T)))
+print('The Cross-validated Mean Squared Error for XGB with 1000 trees and alpha of 1 is : '+str(np.mean(mse_xgb_1)))
+print('The Cross-validated Mean Squared Error for XGB with 1000 trees and alpha of 5 is : '+str(np.mean(mse_xgb_2)))
+print('The Cross-validated Mean Squared Error for triangular LWR without intercept is : ' + str(np.mean(mse_lwr1_F)))
+print('The Cross-validated Mean Squared Error for Epanechnikov LWR without intercept is : ' + str(np.mean(mse_lwr2_F)))
+print('The Cross-validated Mean Squared Error for triangular BLWR without intercept is : '+str(np.mean(mse_blwr1_F)))
+print('The Cross-validated Mean Squared Error for Epanechnikov BLWR without intercept is : '+str(np.mean(mse_blwr2_F)))
+print('\n')
+print('The Cross-validated Mean Absolute Error for triangular LWR with intercept is : ' + str(np.mean(mae_lwr1_T)))
+print('The Cross-validated Mean Absolute Error for Epanechnikov LWR with intercept is : ' + str(np.mean(mae_lwr2_T)))
+print('The Cross-validated Mean Absolute Error for triangular BLWR with intercept is : '+str(np.mean(mae_blwr1_T)))
+print('The Cross-validated Mean Absolute Error for Epanechnikov BLWR with intercept is : '+str(np.mean(mae_blwr2_T)))
+print('The Cross-validated Mean Absolute Error for XGB with 1000 trees and alpha of 1 is : '+str(np.mean(mae_xgb_1)))
+print('The Cross-validated Mean Absolute Error for XGB with 1000 trees and alpha of 5 is : '+str(np.mean(mae_xgb_2)))
+print('The Cross-validated Mean Absolute Error for triangular LWR without intercept is : ' + str(np.mean(mae_lwr1_F)))
+print('The Cross-validated Mean Absolute Error for Epanechnikov LWR without intercept is : ' + str(np.mean(mae_lwr2_F)))
+print('The Cross-validated Mean Absolute Error for triangular BLWR without intercept is : '+str(np.mean(mae_blwr1_F)))
+print('The Cross-validated Mean Absolute Error for Epanechnikov BLWR without intercept is : '+str(np.mean(mae_blwr2_F)))
 
 # Making plots
 
 # Walmart Sales Dataset
+walmart_data = pd.read_csv("Walmart.csv")
 
 # Making plots
 
