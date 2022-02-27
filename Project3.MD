@@ -17,22 +17,22 @@ In the case of extreme gradient boosting (XGB), we are applying gradient boostin
 This dataset contains information pertaining to housing prices and potential contributing features to those price values, such as number of rooms and pupil-to-teacher ratios in local schools.  Below I have attached a screenshot of a sample of the dataset, including each of the dataset's original features.  For my multivariate analysis, I utilized rooms, crime level, and distance as the predictors and cmedv as the dependent variable.  I have also included graphs depicting each of the features against y (cmedv).
 
 #### Number of Rooms
-![]('BostonRooms.png')
+![](BostonRooms.png)
 
 #### Crime Rating
-![]('BostonCrime.png')
+![](BostonCrime.png)
 
 #### Distance from Boston
-![]('BostonDistance.png')
+![](BostonDistance.png)
 
 ### Cars Dataset
 This dataset contains information pertaining to car models and their features, such as weight and mileage.  Below I have attached a screenshot of a sample of the dataset, including each of the dataset's original features.  For my multivariate analysis, I utilized WGT, CYL, and ENG as the predictors and MPG as the dependent variable. I have also included graphs depicting each of the features against y (MPG).
 
 #### Car's Weight
-![]('CarsWeight.png')
+![](CarsWeight.png)
 
 #### Number of Cylinders
-![]('CarsCylinder.png')
+![](CarsCylinder.png)
 
 #### Engine Size
 ![]('CarsEngine.png')
@@ -41,28 +41,28 @@ This dataset contains information pertaining to car models and their features, s
 This dataset contains information pertaining to weekly Walmart Sales data and potential contributing factors to those sales, such as whether or not it was a holiday, the temperature at that time, and the consumer price index (CPI).  Below I have attached a screenshot of a sample of the dataset, including each of the dataset's original features.  For my multivariate analysis, I utilized Weekly_Sales, CPI, Temperature, and Fuel_Prices as the predictors and Unemployment as the dependent variable. I have also included graphs depicting each of the features against y (Unemployment).
 
 #### Weekly Sales
-![]('WalmartSales.png')
+![](WalmartSales.png)
 
 #### Consumer Price Index
-![]('WalmartCPI.png')
+![](WalmartCPI.png)
 
 #### Temperature
-![]('WalmartTemp.png')
+![](WalmartTemp.png)
 
 #### Fuel Prices
-![]('WalmartFuel.png')
+![](WalmartFuel.png)
 
 ### Concrete Strength Dataset
 This dataset contains information pertaining to the compressive strength of concrete and the component materials in that particular batch of concrete, such as its age, fly ash content, and its amounts and sizes of aggregate.  Below I have attached a screenshot of a sample of the dataset, including each of the dataset's original features.  For my multivariate analysis, I utilized water content, age, and coarse aggregate content as the predictors and compressive strength as the dependent variable. I have also included graphs depicting each of the features against y (Compressive Strength).
 
 #### Water Content
-![]('ConcreteWater.png')
+![](ConcreteWater.png)
 
 #### Days of Age
-![]('ConcreteAge.png')
+![](ConcreteAge.png)
 
 #### Course Aggregate Content
-![]('ConcreteAgg.png')
+![](ConcreteAgg.png)
 
 
 ### Conclusions
