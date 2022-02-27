@@ -28,6 +28,9 @@ This dataset contains information pertaining to housing prices and potential con
 ### Cars Dataset
 This dataset contains information pertaining to car models and their features, such as weight and mileage.  Below I have attached a screenshot of a sample of the dataset, including each of the dataset's original features.  For my multivariate analysis, I utilized WGT, CYL, and ENG as the predictors and MPG as the dependent variable. I have also included graphs depicting each of the features against y (MPG).
 
+#### Features
+![](CarFeatures.png)
+
 #### Car's Weight
 ![](CarsWeight.png)
 
@@ -35,10 +38,13 @@ This dataset contains information pertaining to car models and their features, s
 ![](CarsCylinder.png)
 
 #### Engine Size
-![]('CarsEngine.png')
+![](CarsEngine.png)
 
 ### Walmart Sales Dataset
 This dataset contains information pertaining to weekly Walmart Sales data and potential contributing factors to those sales, such as whether or not it was a holiday, the temperature at that time, and the consumer price index (CPI).  Below I have attached a screenshot of a sample of the dataset, including each of the dataset's original features.  For my multivariate analysis, I utilized Weekly_Sales, CPI, Temperature, and Fuel_Prices as the predictors and Unemployment as the dependent variable. I have also included graphs depicting each of the features against y (Unemployment).
+
+#### Features
+![](WalmartFeatures.png)
 
 #### Weekly Sales
 ![](WalmartSales.png)
@@ -54,6 +60,9 @@ This dataset contains information pertaining to weekly Walmart Sales data and po
 
 ### Concrete Strength Dataset
 This dataset contains information pertaining to the compressive strength of concrete and the component materials in that particular batch of concrete, such as its age, fly ash content, and its amounts and sizes of aggregate.  Below I have attached a screenshot of a sample of the dataset, including each of the dataset's original features.  For my multivariate analysis, I utilized water content, age, and coarse aggregate content as the predictors and compressive strength as the dependent variable. I have also included graphs depicting each of the features against y (Compressive Strength).
+
+#### Features
+![](ConcreteFeatures.png)
 
 #### Water Content
 ![](ConcreteWater.png)
