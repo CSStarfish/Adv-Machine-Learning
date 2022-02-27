@@ -33,6 +33,8 @@ In the case of extreme gradient boosting (XGB),
 Note: Please see my main Github repository (entitled Adv-Machine-Learning) for the code below saved as a .ipynb file named "Project_3.ipynb"). Thank you!
 
 ```
+!pip install xlrd==1.2.0
+
 # Import Statements
 import numpy as np
 import pandas as pd
@@ -2348,6 +2350,485 @@ print('The Cross-validated Mean Absolute Error for Epanechnikov BLWR without int
 
 # Walmart Sales Dataset
 walmart_data = pd.read_csv("Walmart.csv")
+
+X = walmart_data[['Weekly_Sales', 'CPI', 'Fuel_Price', 'Temperature']].values
+y = walmart_data["Unemployment"].values
+
+# Making a visualization of each X feature
+fig, ax = plt.subplots(figsize=(10,8))
+ax.set_xlim(75000, 4000000)
+ax.set_ylim(0, 15)
+ax.scatter(x = walmart_data['Weekly_Sales'], y = walmart_data['Unemployment'],s=25)
+ax.set_xlabel('Weekly Sales ($)',fontsize=16,color='Darkgreen')
+ax.set_ylabel('Unemployment Rate (% of Working-Age Population)',fontsize=16,color='Darkgreen')
+ax.set_title('Walmart Sales',fontsize=16,color='purple')
+ax.grid(b=True,which='major', color ='grey', linestyle='-', alpha=0.8)
+ax.grid(b=True,which='minor', color ='grey', linestyle='--', alpha=0.2)
+ax.minorticks_on()
+
+fig, ax = plt.subplots(figsize=(10,8))
+ax.set_xlim(115, 240)
+ax.set_ylim(0, 15)
+ax.scatter(x = walmart_data['CPI'], y = walmart_data['Unemployment'],s=25)
+ax.set_xlabel('Consumer Price Index',fontsize=16,color='Darkgreen')
+ax.set_ylabel('Unemployment Rate (% of Working-Age Population)',fontsize=16,color='Darkgreen')
+ax.set_title('Walmart Sales',fontsize=16,color='purple')
+ax.grid(b=True,which='major', color ='grey', linestyle='-', alpha=0.8)
+ax.grid(b=True,which='minor', color ='grey', linestyle='--', alpha=0.2)
+ax.minorticks_on()
+
+fig, ax = plt.subplots(figsize=(10,8))
+ax.set_xlim(2, 5)
+ax.set_ylim(0, 15)
+ax.scatter(x = walmart_data['Fuel_Price'], y = walmart_data['Unemployment'],s=25)
+ax.set_xlabel('Fuel Price ($)',fontsize=16,color='Darkgreen')
+ax.set_ylabel('Unemployment Rate (% of Working-Age Population)',fontsize=16,color='Darkgreen')
+ax.set_title('Walmart Sales',fontsize=16,color='purple')
+ax.grid(b=True,which='major', color ='grey', linestyle='-', alpha=0.8)
+ax.grid(b=True,which='minor', color ='grey', linestyle='--', alpha=0.2)
+ax.minorticks_on()
+
+fig, ax = plt.subplots(figsize=(10,8))
+ax.set_xlim(0, 110)
+ax.set_ylim(0, 15)
+ax.scatter(x = walmart_data['Temperature'], y = walmart_data['Unemployment'],s=25)
+ax.set_xlabel('Temperature',fontsize=16,color='Darkgreen')
+ax.set_ylabel('Unemployment Rate (% of Working-Age Population)',fontsize=16,color='Darkgreen')
+ax.set_title('Walmart Sales',fontsize=16,color='purple')
+ax.grid(b=True,which='major', color ='grey', linestyle='-', alpha=0.8)
+ax.grid(b=True,which='minor', color ='grey', linestyle='--', alpha=0.2)
+ax.minorticks_on()
+
+# Testing Kernels, tau = 0.01
+kf = KFold(n_splits=2,shuffle=True,random_state=410) # 5 splits took way too long, so I reduced the number of splits (about 7 hours and then Colab disconnected my runtime)
+mse_tric_w1 = []
+mse_epa_w1 = []
+mse_quart_w1 = []
+mse_trian_w1 = []
+mse_triw_w1 = []
+mae_tric_w1 = []
+mae_epa_w1 = []
+mae_quart_w1 = []
+mae_trian_w1 = []
+mae_triw_w1 = []
+
+# Ones without intercepts never did as well, so I got rid of those to increase computing power.
+for idxtrain, idxtest in kf.split(X):
+  ytrain = y[idxtrain]
+  xtrain = X[idxtrain]
+  ytest = y[idxtest]
+  xtest = X[idxtest]
+  xtrain = scale.fit_transform(xtrain)
+  xtest = scale.transform(xtest)
+
+  yhat_tri_T = lw_reg(xtrain, ytrain, xtest, Tricubic, 0.01, intercept=True)
+  yhat_epa_T = lw_reg(xtrain, ytrain, xtest, Epanechnikov, 0.01, intercept=True)
+  yhat_quart_T = lw_reg(xtrain, ytrain, xtest, Quartic, 0.01, intercept=True)
+  yhat_trian_T = lw_reg(xtrain, ytrain, xtest, Triangular, 0.01, intercept=True)
+  yhat_triw_T = lw_reg(xtrain, ytrain, xtest, Triweight, 0.01, intercept=True)
+
+  mse_tric_w1.append(mse(ytest,yhat_tri_T))
+  mse_epa_w1.append(mse(ytest,yhat_epa_T))
+  mse_quart_w1.append(mse(ytest,yhat_quart_T))
+  mse_trian_w1.append(mse(ytest,yhat_trian_T))
+  mse_triw_w1.append(mse(ytest,yhat_triw_T))
+  mae_tric_w1.append(mae(ytest,yhat_tri_T))
+  mae_epa_w1.append(mae(ytest,yhat_epa_T))
+  mae_quart_w1.append(mae(ytest,yhat_quart_T))
+  mae_trian_w1.append(mae(ytest,yhat_trian_T))
+  mae_triw_w1.append(mae(ytest,yhat_triw_T))
+  
+print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tric_w1)))
+print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_w1)))
+print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_w1)))
+print("The MSE for LOWESS with the triangular kernel is: " + str(np.mean(mse_trian_w1)))
+print("The MSE for LOWESS with the triweight kernel is: " + str(np.mean(mse_triw_w1)))
+print("\n")
+print("The MAE for LOWESS with the tricubic kernel is: " + str(np.mean(mae_tric_w1)))
+print("The MAE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mae_epa_w1)))
+print("The MAE for LOWESS with the quartic kernel is: " + str(np.mean(mae_quart_w1)))
+print("The MAE for LOWESS with the triangular kernel is: " + str(np.mean(mae_trian_w1)))
+print("The MAE for LOWESS with the triweight kernel is: " + str(np.mean(mae_triw_w1)))
+
+# Testing Kernels, tau = 0.05
+kf = KFold(n_splits=2,shuffle=True,random_state=410)
+mse_tric_w2 = []
+mse_epa_w2 = []
+mse_quart_w2 = []
+mse_trian_w2 = []
+mse_triw_w2 = []
+mae_tric_w2 = []
+mae_epa_w2 = []
+mae_quart_w2 = []
+mae_trian_w2 = []
+mae_triw_w2 = []
+
+for idxtrain, idxtest in kf.split(X):
+  ytrain = y[idxtrain]
+  xtrain = X[idxtrain]
+  ytest = y[idxtest]
+  xtest = X[idxtest]
+  xtrain = scale.fit_transform(xtrain)
+  xtest = scale.transform(xtest)
+
+  yhat_tri_T = lw_reg(xtrain, ytrain, xtest, Tricubic, 0.05, intercept=True)
+  yhat_epa_T = lw_reg(xtrain, ytrain, xtest, Epanechnikov, 0.05, intercept=True)
+  yhat_quart_T = lw_reg(xtrain, ytrain, xtest, Quartic, 0.05, intercept=True)
+  yhat_trian_T = lw_reg(xtrain, ytrain, xtest, Triangular, 0.05, intercept=True)
+  yhat_triw_T = lw_reg(xtrain, ytrain, xtest, Triweight, 0.05, intercept=True)
+
+  mse_tric_w2.append(mse(ytest,yhat_tri_T))
+  mse_epa_w2.append(mse(ytest,yhat_epa_T))
+  mse_quart_w2.append(mse(ytest,yhat_quart_T))
+  mse_trian_w2.append(mse(ytest,yhat_trian_T))
+  mse_triw_w2.append(mse(ytest,yhat_triw_T))
+  mae_tric_w2.append(mae(ytest,yhat_tri_T))
+  mae_epa_w2.append(mae(ytest,yhat_epa_T))
+  mae_quart_w2.append(mae(ytest,yhat_quart_T))
+  mae_trian_w2.append(mae(ytest,yhat_trian_T))
+  mae_triw_w2.append(mae(ytest,yhat_triw_T))
+
+print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tric_w2)))
+print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_w2)))
+print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_w2)))
+print("The MSE for LOWESS with the triangular kernel is: " + str(np.mean(mse_trian_w2)))
+print("The MSE for LOWESS with the triweight kernel is: " + str(np.mean(mse_triw_w2)))
+print("\n")
+print("The MAE for LOWESS with the tricubic kernel is: " + str(np.mean(mae_tric_w2)))
+print("The MAE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mae_epa_w2)))
+print("The MAE for LOWESS with the quartic kernel is: " + str(np.mean(mae_quart_w2)))
+print("The MAE for LOWESS with the triangular kernel is: " + str(np.mean(mae_trian_w2)))
+print("The MAE for LOWESS with the triweight kernel is: " + str(np.mean(mae_triw_w2)))
+
+# Testing Kernels, tau = 0.1
+kf = KFold(n_splits=2,shuffle=True,random_state=410)
+mse_tric_w3 = []
+mse_epa_w3 = []
+mse_quart_w3 = []
+mse_trian_w3 = []
+mse_triw_w3 = []
+mae_tric_w3 = []
+mae_epa_w3 = []
+mae_quart_w3 = []
+mae_trian_w3 = []
+mae_triw_w3 = []
+
+for idxtrain, idxtest in kf.split(X):
+  ytrain = y[idxtrain]
+  xtrain = X[idxtrain]
+  ytest = y[idxtest]
+  xtest = X[idxtest]
+  xtrain = scale.fit_transform(xtrain)
+  xtest = scale.transform(xtest)
+
+  yhat_tri_T = lw_reg(xtrain, ytrain, xtest, Tricubic, 0.1, intercept=True)
+  yhat_epa_T = lw_reg(xtrain, ytrain, xtest, Epanechnikov, 0.1, intercept=True)
+  yhat_quart_T = lw_reg(xtrain, ytrain, xtest, Quartic, 0.1, intercept=True)
+  yhat_trian_T = lw_reg(xtrain, ytrain, xtest, Triangular, 0.1, intercept=True)
+  yhat_triw_T = lw_reg(xtrain, ytrain, xtest, Triweight, 0.1, intercept=True)
+
+  mse_tric_w3.append(mse(ytest,yhat_tri_T))
+  mse_epa_w3.append(mse(ytest,yhat_epa_T))
+  mse_quart_w3.append(mse(ytest,yhat_quart_T))
+  mse_trian_w3.append(mse(ytest,yhat_trian_T))
+  mse_triw_w3.append(mse(ytest,yhat_triw_T))
+  mae_tric_w3.append(mae(ytest,yhat_tri_T))
+  mae_epa_w3.append(mae(ytest,yhat_epa_T))
+  mae_quart_w3.append(mae(ytest,yhat_quart_T))
+  mae_trian_w3.append(mae(ytest,yhat_trian_T))
+  mae_triw_w3.append(mae(ytest,yhat_triw_T))
+
+print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tric_w3)))
+print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_w3)))
+print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_w3)))
+print("The MSE for LOWESS with the triangular kernel is: " + str(np.mean(mse_trian_w3)))
+print("The MSE for LOWESS with the triweight kernel is: " + str(np.mean(mse_triw_w3)))
+print("\n")
+print("The MAE for LOWESS with the tricubic kernel is: " + str(np.mean(mae_tric_w3)))
+print("The MAE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mae_epa_w3)))
+print("The MAE for LOWESS with the quartic kernel is: " + str(np.mean(mae_quart_w3)))
+print("The MAE for LOWESS with the triangular kernel is: " + str(np.mean(mae_trian_w3)))
+print("The MAE for LOWESS with the triweight kernel is: " + str(np.mean(mae_triw_w3)))
+
+# Testing Kernels, tau = 0.5
+kf = KFold(n_splits=2,shuffle=True,random_state=410)
+mse_tric_w4 = []
+mse_epa_w4 = []
+mse_quart_w4 = []
+mse_trian_w4 = []
+mse_triw_w4 = []
+mae_tric_w4 = []
+mae_epa_w4 = []
+mae_quart_w4 = []
+mae_trian_w4 = []
+mae_triw_w4 = []
+
+for idxtrain, idxtest in kf.split(X):
+  ytrain = y[idxtrain]
+  xtrain = X[idxtrain]
+  ytest = y[idxtest]
+  xtest = X[idxtest]
+  xtrain = scale.fit_transform(xtrain)
+  xtest = scale.transform(xtest)
+
+  yhat_tri_T = lw_reg(xtrain, ytrain, xtest, Tricubic, 0.5, intercept=True)
+  yhat_epa_T = lw_reg(xtrain, ytrain, xtest, Epanechnikov, 0.5, intercept=True)
+  yhat_quart_T = lw_reg(xtrain, ytrain, xtest, Quartic, 0.5, intercept=True)
+  yhat_trian_T = lw_reg(xtrain, ytrain, xtest, Triangular, 0.5, intercept=True)
+  yhat_triw_T = lw_reg(xtrain, ytrain, xtest, Triweight, 0.5, intercept=True)
+
+  mse_tric_w4.append(mse(ytest,yhat_tri_T))
+  mse_epa_w4.append(mse(ytest,yhat_epa_T))
+  mse_quart_w4.append(mse(ytest,yhat_quart_T))
+  mse_trian_w4.append(mse(ytest,yhat_trian_T))
+  mse_triw_w4.append(mse(ytest,yhat_triw_T))
+  mae_tric_w4.append(mae(ytest,yhat_tri_T))
+  mae_epa_w4.append(mae(ytest,yhat_epa_T))
+  mae_quart_w4.append(mae(ytest,yhat_quart_T))
+  mae_trian_w4.append(mae(ytest,yhat_trian_T))
+  mae_triw_w4.append(mae(ytest,yhat_triw_T))
+
+print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tric_w4)))
+print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_w4)))
+print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_w4)))
+print("The MSE for LOWESS with the triangular kernel is: " + str(np.mean(mse_trian_w4)))
+print("The MSE for LOWESS with the triweight kernel is: " + str(np.mean(mse_triw_w4)))
+print("\n")
+print("The MAE for LOWESS with the tricubic kernel is: " + str(np.mean(mae_tric_w4)))
+print("The MAE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mae_epa_w4)))
+print("The MAE for LOWESS with the quartic kernel is: " + str(np.mean(mae_quart_w4)))
+print("The MAE for LOWESS with the triangular kernel is: " + str(np.mean(mae_trian_w4)))
+print("The MAE for LOWESS with the triweight kernel is: " + str(np.mean(mae_triw_w4)))
+
+# Testing Kernels, tau = 1
+kf = KFold(n_splits=2,shuffle=True,random_state=410)
+mse_tric_w5 = []
+mse_epa_w5 = []
+mse_quart_w5 = []
+mse_trian_w5 = []
+mse_triw_w5 = []
+mae_tric_w5 = []
+mae_epa_w5 = []
+mae_quart_w5 = []
+mae_trian_w5 = []
+mae_triw_w5 = []
+
+for idxtrain, idxtest in kf.split(X):
+  ytrain = y[idxtrain]
+  xtrain = X[idxtrain]
+  ytest = y[idxtest]
+  xtest = X[idxtest]
+  xtrain = scale.fit_transform(xtrain)
+  xtest = scale.transform(xtest)
+
+  yhat_tri_T = lw_reg(xtrain, ytrain, xtest, Tricubic, 1, intercept=True)
+  yhat_epa_T = lw_reg(xtrain, ytrain, xtest, Epanechnikov, 1, intercept=True)
+  yhat_quart_T = lw_reg(xtrain, ytrain, xtest, Quartic, 1, intercept=True)
+  yhat_trian_T = lw_reg(xtrain, ytrain, xtest, Triangular, 1, intercept=True)
+  yhat_triw_T = lw_reg(xtrain, ytrain, xtest, Triweight, 1, intercept=True)
+
+  mse_tric_w5.append(mse(ytest,yhat_tri_T))
+  mse_epa_w5.append(mse(ytest,yhat_epa_T))
+  mse_quart_w5.append(mse(ytest,yhat_quart_T))
+  mse_trian_w5.append(mse(ytest,yhat_trian_T))
+  mse_triw_w5.append(mse(ytest,yhat_triw_T))
+  mae_tric_w5.append(mae(ytest,yhat_tri_T))
+  mae_epa_w5.append(mae(ytest,yhat_epa_T))
+  mae_quart_w5.append(mae(ytest,yhat_quart_T))
+  mae_trian_w5.append(mae(ytest,yhat_trian_T))
+  mae_triw_w5.append(mae(ytest,yhat_triw_T))
+
+print("The MSE for LOWESS with the tricubic kernel is: " + str(np.mean(mse_tric_w5)))
+print("The MSE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mse_epa_w5)))
+print("The MSE for LOWESS with the quartic kernel is: " + str(np.mean(mse_quart_w5)))
+print("The MSE for LOWESS with the triangular kernel is: " + str(np.mean(mse_trian_w5)))
+print("The MSE for LOWESS with the triweight kernel is: " + str(np.mean(mse_triw_w5)))
+print("\n")
+print("The MAE for LOWESS with the tricubic kernel is: " + str(np.mean(mae_tric_w5)))
+print("The MAE for LOWESS with the Epanechnikov kernel is: " + str(np.mean(mae_epa_w5)))
+print("The MAE for LOWESS with the quartic kernel is: " + str(np.mean(mae_quart_w5)))
+print("The MAE for LOWESS with the triangular kernel is: " + str(np.mean(mae_trian_w5)))
+print("The MAE for LOWESS with the triweight kernel is: " + str(np.mean(mae_triw_w5)))
+
+# Testing XGB
+kf = KFold(n_splits=2,shuffle=True,random_state=410)
+mse_100 = []
+mse_1000 = []
+mse_100_l10 = []
+mse_1000_l10 = []
+mse_100_l50 = []
+mse_1000_l50 = []
+mse_100_d5 = []
+mse_1000_d5 = []
+mse_100_l10_d5 = []
+mse_1000_l10_d5 = []
+mse_100_l50_d5 = []
+mse_1000_l50_d5 = []
+mse_100_a5 = []
+mse_1000_a5 = []
+mse_100_l10_a5 = []
+mse_1000_l10_a5 = []
+mse_100_l50_a5 = []
+mse_1000_l50_a5 = []
+mse_100_d5_a5 = []
+mse_1000_d5_a5 = []
+mse_100_l10_d5_a5 = []
+mse_1000_l10_d5_a5 = []
+mse_100_l50_d5_a5 = []
+mse_1000_l50_d5_a5 = []
+
+# Alphas didn't seem to make a difference so I removed those (similar to my reasoning for getting rid of taus over 1)
+for idxtrain, idxtest in kf.split(X):
+  ytrain = y[idxtrain]
+  xtrain = X[idxtrain]
+  ytest = y[idxtest]
+  xtest = X[idxtest]
+  xtrain = scale.fit_transform(xtrain)
+  xtest = scale.transform(xtest)
+
+  model_xgb_1 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=20,alpha=1,gamma=10,max_depth=3)
+  model_xgb_1.fit(xtrain,ytrain)
+  yhat_xgb_1 = model_xgb_1.predict(xtest)
+
+  model_xgb_2 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=20,alpha=1,gamma=10,max_depth=3)
+  model_xgb_2.fit(xtrain,ytrain)
+  yhat_xgb_2 = model_xgb_2.predict(xtest)
+
+  model_xgb_3 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=10,alpha=1,gamma=10,max_depth=3)
+  model_xgb_3.fit(xtrain,ytrain)
+  yhat_xgb_3 = model_xgb_3.predict(xtest)
+
+  model_xgb_4 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=10,alpha=1,gamma=10,max_depth=3)
+  model_xgb_4.fit(xtrain,ytrain)
+  yhat_xgb_4 = model_xgb_4.predict(xtest)
+
+  model_xgb_5 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=50,alpha=1,gamma=10,max_depth=3)
+  model_xgb_5.fit(xtrain,ytrain)
+  yhat_xgb_5 = model_xgb_5.predict(xtest)
+
+  model_xgb_6 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=50,alpha=1,gamma=10,max_depth=3)
+  model_xgb_6.fit(xtrain,ytrain)
+  yhat_xgb_6 = model_xgb_6.predict(xtest)
+
+  model_xgb_7 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=20,alpha=1,gamma=10,max_depth=5)
+  model_xgb_7.fit(xtrain,ytrain)
+  yhat_xgb_7 = model_xgb_7.predict(xtest)
+
+  model_xgb_8 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=20,alpha=1,gamma=10,max_depth=5)
+  model_xgb_8.fit(xtrain,ytrain)
+  yhat_xgb_8 = model_xgb_8.predict(xtest)
+
+  model_xgb_9 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=10,alpha=1,gamma=10,max_depth=5)
+  model_xgb_9.fit(xtrain,ytrain)
+  yhat_xgb_9 = model_xgb_9.predict(xtest)
+
+  model_xgb_10 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=10,alpha=1,gamma=10,max_depth=5)
+  model_xgb_10.fit(xtrain,ytrain)
+  yhat_xgb_10 = model_xgb_10.predict(xtest)
+
+  model_xgb_11 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=50,alpha=1,gamma=10,max_depth=5)
+  model_xgb_11.fit(xtrain,ytrain)
+  yhat_xgb_11 = model_xgb_11.predict(xtest)
+
+  model_xgb_12 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=50,alpha=1,gamma=10,max_depth=5)
+  model_xgb_12.fit(xtrain,ytrain)
+  yhat_xgb_12 = model_xgb_12.predict(xtest)
+
+  mse_100.append(mse(ytest,yhat_xgb_1))
+  mse_1000.append(mse(ytest,yhat_xgb_2))
+
+  mse_100_l10.append(mse(ytest,yhat_xgb_3))
+  mse_1000_l10.append(mse(ytest,yhat_xgb_4))
+
+  mse_100_l50.append(mse(ytest,yhat_xgb_5))
+  mse_1000_l50.append(mse(ytest,yhat_xgb_6))
+
+  mse_100_d5.append(mse(ytest,yhat_xgb_7))
+  mse_1000_d5.append(mse(ytest,yhat_xgb_8))
+
+  mse_100_l10_d5.append(mse(ytest,yhat_xgb_9))
+  mse_1000_l10_d5.append(mse(ytest,yhat_xgb_10))
+
+  mse_100_l50_d5.append(mse(ytest,yhat_xgb_11))
+  mse_1000_l50_d5.append(mse(ytest,yhat_xgb_12))
+
+print("The MSE for 100 trees is: " + str(np.mean(mse_100)))
+print("The MSE for 1000 trees is: " + str(np.mean(mse_1000)))
+
+print("The MSE for 100 trees and a lambda of 10 is: " + str(np.mean(mse_100_l10)))
+print("The MSE for 1000 trees and a lambda of 10 is: " + str(np.mean(mse_1000_l10)))
+
+print("The MSE for 100 trees and a lambda of 50 is: " + str(np.mean(mse_100_l50)))
+print("The MSE for 1000 trees and a lambda of 50 is: " + str(np.mean(mse_1000_l50)))
+
+print("The MSE for 100 trees and a depth of 5 is: " + str(np.mean(mse_100_d5)))
+print("The MSE for 1000 trees and a depth of 5 is: " + str(np.mean(mse_1000_d5)))
+
+print("The MSE for 100 trees, depth of 5, and a lambda of 10 is: " + str(np.mean(mse_100_l10_d5)))
+print("The MSE for 1000 trees, depth of 5, and a lambda of 10 is: " + str(np.mean(mse_1000_l10_d5)))
+
+print("The MSE for 100 trees, depth of 5, and a lambda of 50 is: " + str(np.mean(mse_100_l50_d5)))
+print("The MSE for 1000 trees, depth of 5, and a lambda of 50 is: " + str(np.mean(mse_1000_l50_d5)))
+
+# Testing regular gradient boosting
+# We want more nested cross-validation
+
+mse_lwr_1 = []
+mse_lwr_2 = []
+mse_blwr_1 = []
+mse_blwr_2 = []
+mse_xgb = []
+
+mae_lwr_1 = []
+mae_lwr_2 = []
+mae_blwr_1 = []
+mae_blwr_2 = []
+mae_xgb = []
+
+for i in range(2): # this would take way too long, so decreased to 2 random states to loop through
+  kf = KFold(n_splits=2,shuffle=True,random_state=i)
+  # this is the Cross-Validation Loop
+  for idxtrain, idxtest in kf.split(X):
+    xtrain = X[idxtrain]
+    ytrain = y[idxtrain]
+    ytest = y[idxtest]
+    xtest = X[idxtest]
+
+    xtrain = scale.fit_transform(xtrain)
+    xtest = scale.transform(xtest)
+
+    yhat_lwr_1 = lw_reg(xtrain,ytrain, xtest,Epanechnikov,tau=0.1,intercept=True)
+    yhat_lwr_2 = lw_reg(xtrain,ytrain, xtest,Triweight,tau=0.1,intercept=True)
+    yhat_blwr_1 = boosted_lwr(xtrain,ytrain, xtest,Epanechnikov,tau=0.1,intercept=True)
+    yhat_blwr_2 = boosted_lwr(xtrain,ytrain, xtest,Triweight,tau=0.1,intercept=True)
+    model_xgb = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=50,alpha=1,gamma=10,max_depth=5)
+    model_xgb.fit(xtrain,ytrain)
+    yhat_xgb = model_xgb.predict(xtest)
+
+    mse_lwr_1.append(mse(ytest,yhat_lwr_1))
+    mse_lwr_2.append(mse(ytest,yhat_lwr_2))
+    mse_blwr_1.append(mse(ytest,yhat_blwr_1))
+    mse_blwr_2.append(mse(ytest,yhat_blwr_2))
+    mse_xgb.append(mse(ytest, yhat_xgb))
+
+    mae_lwr_1.append(mae(ytest,yhat_lwr_1))
+    mae_lwr_2.append(mae(ytest,yhat_lwr_2))
+    mae_blwr_1.append(mae(ytest,yhat_blwr_1))
+    mae_blwr_2.append(mae(ytest,yhat_blwr_2))
+    mae_xgb.append(mae(ytest, yhat_xgb))
+print('The Cross-validated Mean Squared Error for Epanechnikov LWR is : ' + str(np.mean(mse_lwr_1)))
+print('The Cross-validated Mean Squared Error for triweight LWR is : ' + str(np.mean(mse_lwr_2)))
+print('The Cross-validated Mean Squared Error for Epanechnikov BLWR is : '+str(np.mean(mse_blwr_1)))
+print('The Cross-validated Mean Squared Error for triweight BLWR is : '+str(np.mean(mse_blwr_2)))
+print('The Cross-validated Mean Squared Error for XGB is : '+str(np.mean(mse_xgb)))
+
+print('The Cross-validated Mean Absolute Error for Epanechnikov LWR is : ' + str(np.mean(mae_lwr_1)))
+print('The Cross-validated Mean Absolute Error for triweight LWR is : ' + str(np.mean(mae_lwr_2)))
+print('The Cross-validated Mean Absolute Error for Epanechnikov BLWR is : '+str(np.mean(mae_blwr_1)))
+print('The Cross-validated Mean Absolute Error for triweight BLWR is : '+str(np.mean(mae_blwr_2)))
+print('The Cross-validated Mean Absolute Error for XGB is : '+str(np.mean(mae_xgb)))
+
+
 
 # Making plots
 
