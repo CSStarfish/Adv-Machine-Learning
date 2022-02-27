@@ -3657,6 +3657,276 @@ mse_1000_l10_d5_a5 = []
 mse_100_l50_d5_a5 = []
 mse_1000_l50_d5_a5 = []
 
+for idxtrain, idxtest in kf.split(X):
+  ytrain = y[idxtrain]
+  xtrain = X[idxtrain]
+  ytest = y[idxtest]
+  xtest = X[idxtest]
+  xtrain = scale.fit_transform(xtrain)
+  xtest = scale.transform(xtest)
+
+  model_xgb_1 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=20,alpha=1,gamma=10,max_depth=3)
+  model_xgb_1.fit(xtrain,ytrain)
+  yhat_xgb_1 = model_xgb_1.predict(xtest)
+
+  model_xgb_2 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=20,alpha=1,gamma=10,max_depth=3)
+  model_xgb_2.fit(xtrain,ytrain)
+  yhat_xgb_2 = model_xgb_2.predict(xtest)
+
+  model_xgb_3 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=10,alpha=1,gamma=10,max_depth=3)
+  model_xgb_3.fit(xtrain,ytrain)
+  yhat_xgb_3 = model_xgb_3.predict(xtest)
+
+  model_xgb_4 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=10,alpha=1,gamma=10,max_depth=3)
+  model_xgb_4.fit(xtrain,ytrain)
+  yhat_xgb_4 = model_xgb_4.predict(xtest)
+
+  model_xgb_5 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=50,alpha=1,gamma=10,max_depth=3)
+  model_xgb_5.fit(xtrain,ytrain)
+  yhat_xgb_5 = model_xgb_5.predict(xtest)
+
+  model_xgb_6 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=50,alpha=1,gamma=10,max_depth=3)
+  model_xgb_6.fit(xtrain,ytrain)
+  yhat_xgb_6 = model_xgb_6.predict(xtest)
+
+  model_xgb_7 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=20,alpha=1,gamma=10,max_depth=5)
+  model_xgb_7.fit(xtrain,ytrain)
+  yhat_xgb_7 = model_xgb_7.predict(xtest)
+
+  model_xgb_8 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=20,alpha=1,gamma=10,max_depth=5)
+  model_xgb_8.fit(xtrain,ytrain)
+  yhat_xgb_8 = model_xgb_8.predict(xtest)
+
+  model_xgb_9 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=10,alpha=1,gamma=10,max_depth=5)
+  model_xgb_9.fit(xtrain,ytrain)
+  yhat_xgb_9 = model_xgb_9.predict(xtest)
+
+  model_xgb_10 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=10,alpha=1,gamma=10,max_depth=5)
+  model_xgb_10.fit(xtrain,ytrain)
+  yhat_xgb_10 = model_xgb_10.predict(xtest)
+
+  model_xgb_11 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=50,alpha=1,gamma=10,max_depth=5)
+  model_xgb_11.fit(xtrain,ytrain)
+  yhat_xgb_11 = model_xgb_11.predict(xtest)
+
+  model_xgb_12 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=50,alpha=1,gamma=10,max_depth=5)
+  model_xgb_12.fit(xtrain,ytrain)
+  yhat_xgb_12 = model_xgb_12.predict(xtest)
+
+  model_xgb_13 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=20,alpha=5,gamma=10,max_depth=3)
+  model_xgb_13.fit(xtrain,ytrain)
+  yhat_xgb_13 = model_xgb_13.predict(xtest)
+
+  model_xgb_14 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=20,alpha=5,gamma=10,max_depth=3)
+  model_xgb_14.fit(xtrain,ytrain)
+  yhat_xgb_14 = model_xgb_14.predict(xtest)
+
+  model_xgb_15 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=10,alpha=5,gamma=10,max_depth=3)
+  model_xgb_15.fit(xtrain,ytrain)
+  yhat_xgb_15 = model_xgb_15.predict(xtest)
+
+  model_xgb_16 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=10,alpha=5,gamma=10,max_depth=3)
+  model_xgb_16.fit(xtrain,ytrain)
+  yhat_xgb_16 = model_xgb_16.predict(xtest)
+
+  model_xgb_17 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=50,alpha=5,gamma=10,max_depth=3)
+  model_xgb_17.fit(xtrain,ytrain)
+  yhat_xgb_17 = model_xgb_17.predict(xtest)
+
+  model_xgb_18 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=50,alpha=5,gamma=10,max_depth=3)
+  model_xgb_18.fit(xtrain,ytrain)
+  yhat_xgb_18 = model_xgb_18.predict(xtest)
+
+  model_xgb_19 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=20,alpha=5,gamma=10,max_depth=5)
+  model_xgb_19.fit(xtrain,ytrain)
+  yhat_xgb_19 = model_xgb_19.predict(xtest)
+
+  model_xgb_20 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=20,alpha=5,gamma=10,max_depth=5)
+  model_xgb_20.fit(xtrain,ytrain)
+  yhat_xgb_20 = model_xgb_20.predict(xtest)
+
+  model_xgb_21 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=10,alpha=5,gamma=10,max_depth=5)
+  model_xgb_21.fit(xtrain,ytrain)
+  yhat_xgb_21 = model_xgb_21.predict(xtest)
+
+  model_xgb_22 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=10,alpha=5,gamma=10,max_depth=5)
+  model_xgb_22.fit(xtrain,ytrain)
+  yhat_xgb_22 = model_xgb_22.predict(xtest)
+
+  model_xgb_23 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=100,reg_lambda=50,alpha=5,gamma=10,max_depth=5)
+  model_xgb_23.fit(xtrain,ytrain)
+  yhat_xgb_23 = model_xgb_23.predict(xtest)
+
+  model_xgb_24 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=50,alpha=5,gamma=10,max_depth=5)
+  model_xgb_24.fit(xtrain,ytrain)
+  yhat_xgb_24 = model_xgb_24.predict(xtest)
+
+  mse_100.append(mse(ytest,yhat_xgb_1))
+  mse_1000.append(mse(ytest,yhat_xgb_2))
+
+  mse_100_l10.append(mse(ytest,yhat_xgb_3))
+  mse_1000_l10.append(mse(ytest,yhat_xgb_4))
+
+  mse_100_l50.append(mse(ytest,yhat_xgb_5))
+  mse_1000_l50.append(mse(ytest,yhat_xgb_6))
+
+  mse_100_d5.append(mse(ytest,yhat_xgb_7))
+  mse_1000_d5.append(mse(ytest,yhat_xgb_8))
+
+  mse_100_l10_d5.append(mse(ytest,yhat_xgb_9))
+  mse_1000_l10_d5.append(mse(ytest,yhat_xgb_10))
+
+  mse_100_l50_d5.append(mse(ytest,yhat_xgb_11))
+  mse_1000_l50_d5.append(mse(ytest,yhat_xgb_12))
+
+  mse_100_a5.append(mse(ytest,yhat_xgb_13))
+  mse_1000_a5.append(mse(ytest,yhat_xgb_14))
+
+  mse_100_l10_a5.append(mse(ytest,yhat_xgb_15))
+  mse_1000_l10_a5.append(mse(ytest,yhat_xgb_16))
+
+  mse_100_l50_a5.append(mse(ytest,yhat_xgb_17))
+  mse_1000_l50_a5.append(mse(ytest,yhat_xgb_18))
+
+  mse_100_d5_a5.append(mse(ytest,yhat_xgb_19))
+  mse_1000_d5_a5.append(mse(ytest,yhat_xgb_20))
+
+  mse_100_l10_d5_a5.append(mse(ytest,yhat_xgb_21))
+  mse_1000_l10_d5_a5.append(mse(ytest,yhat_xgb_22))
+
+  mse_100_l50_d5_a5.append(mse(ytest,yhat_xgb_23))
+  mse_1000_l50_d5_a5.append(mse(ytest,yhat_xgb_24))
+
+print("The MSE for 100 trees is: " + str(np.mean(mse_100)))
+print("The MSE for 1000 trees is: " + str(np.mean(mse_1000)))
+
+print("The MSE for 100 trees and a lambda of 10 is: " + str(np.mean(mse_100_l10)))
+print("The MSE for 1000 trees and a lambda of 10 is: " + str(np.mean(mse_1000_l10)))
+
+print("The MSE for 100 trees and a lambda of 50 is: " + str(np.mean(mse_100_l50)))
+print("The MSE for 1000 trees and a lambda of 50 is: " + str(np.mean(mse_1000_l50)))
+
+print("The MSE for 100 trees and a depth of 5 is: " + str(np.mean(mse_100_d5)))
+print("The MSE for 1000 trees and a depth of 5 is: " + str(np.mean(mse_1000_d5)))
+
+print("The MSE for 100 trees, depth of 5, and a lambda of 10 is: " + str(np.mean(mse_100_l10_d5)))
+print("The MSE for 1000 trees, depth of 5, and a lambda of 10 is: " + str(np.mean(mse_1000_l10_d5)))
+
+print("The MSE for 100 trees, depth of 5, and a lambda of 50 is: " + str(np.mean(mse_100_l50_d5)))
+print("The MSE for 1000 trees, depth of 5, and a lambda of 50 is: " + str(np.mean(mse_1000_l50_d5)))
+
+print("The MSE for 100 tres and an alpha of 5 is: " + str(np.mean(mse_100_a5)))
+print("The MSE for 1000 trees and an alpha of 5 is: " + str(np.mean(mse_1000_a5)))
+
+print("The MSE for 100 trees, lambda of 10, and an alpha of 5 is: " + str(np.mean(mse_100_l10_a5)))
+print("The MSE for 1000 trees, lambda of 10, and an alpha of 5 is: " + str(np.mean(mse_1000_l10_a5)))
+
+print("The MSE for 100 trees, lambda of 50, and an alpha of 5 is: " + str(np.mean(mse_100_l50_a5)))
+print("The MSE for 1000 trees, lambda of 50, and an alpha of 5 is: " + str(np.mean(mse_1000_l50_a5)))
+
+print("The MSE for 100 trees, depth of 5, and an alpha of 5 is: " + str(np.mean(mse_100_d5_a5)))
+print("The MSE for 1000 trees, depth of 5, and an alpha of 5 is: " + str(np.mean(mse_1000_d5_a5)))
+
+print("The MSE for 100 trees, lambda of 10, depth of 5, and an alpha of 5 is: " + str(np.mean(mse_100_l10_d5_a5)))
+print("The MSE for 1000 trees, lambda of 10, depth of 5, and an alpha of 5 is: " + str(np.mean(mse_1000_l10_d5_a5)))
+
+print("The MSE for 100 trees, lambda of 50, depth of 5, and an alpha of 5 is: " + str(np.mean(mse_100_l50_d5_a5)))
+print("The MSE for 1000 trees, lambda of 50, depth of 5, and an alpha of 5 is: " + str(np.mean(mse_1000_l50_d5_a5)))
+
 # Testing regular gradient boosting
+# We want more nested cross-validation
+
+mse_lwr1_T = []
+mse_lwr1_F = []
+mse_lwr2_T = []
+mse_lwr2_F = []
+mse_blwr1_T = []
+mse_blwr1_F = []
+mse_blwr2_T = []
+mse_blwr2_F = []
+mse_xgb_1 = []
+mse_xgb_2 = []
+
+mae_lwr1_T = []
+mae_lwr2_T = []
+mae_lwr1_F = []
+mae_lwr2_F = []
+mae_blwr1_T = []
+mae_blwr2_T = []
+mae_blwr1_F = []
+mae_blwr2_F = []
+mae_xgb_1 = []
+mae_xgb_2 = []
+
+for i in range(10):
+  kf = KFold(n_splits=10,shuffle=True,random_state=i)
+  # this is the Cross-Validation Loop
+  for idxtrain, idxtest in kf.split(X):
+    xtrain = X[idxtrain]
+    ytrain = y[idxtrain]
+    ytest = y[idxtest]
+    xtest = X[idxtest]
+
+    xtrain = scale.fit_transform(xtrain)
+    xtest = scale.transform(xtest)
+
+    yhat_lwr1_T = lw_reg(xtrain,ytrain, xtest, Epanechnikov,tau=0.05,intercept=True)
+    yhat_lwr1_F = lw_reg(xtrain,ytrain, xtest,Epanechnikov,tau=0.05,intercept=False)
+    yhat_lwr2_T = lw_reg(xtrain,ytrain, xtest, Triangular,tau=0.05,intercept=True)
+    yhat_lwr2_F = lw_reg(xtrain,ytrain, xtest, Triangular,tau=0.05,intercept=False)
+    yhat_blwr1_T = boosted_lwr(xtrain,ytrain, xtest, Epanechnikov,tau=0.05,intercept=True)
+    yhat_blwr1_F = boosted_lwr(xtrain,ytrain, xtest, Epanechnikov,tau=0.05,intercept=False)
+    yhat_blwr2_T = boosted_lwr(xtrain,ytrain, xtest, Triangular,tau=0.05,intercept=True)
+    yhat_blwr2_F = boosted_lwr(xtrain,ytrain, xtest, Triangular,tau=0.05,intercept=False)
+    model_xgb_1 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=10,alpha=1,gamma=10,max_depth=5)
+    model_xgb_1.fit(xtrain,ytrain)
+    yhat_xgb_1 = model_xgb_1.predict(xtest)
+    model_xgb_2 = xgb.XGBRegressor(objective ='reg:squarederror',n_estimators=1000,reg_lambda=10,alpha=5,gamma=10,max_depth=5)
+    model_xgb_2.fit(xtrain,ytrain)
+    yhat_xgb_2 = model_xgb_2.predict(xtest)
+
+    mse_lwr1_T.append(mse(ytest,yhat_lwr1_T))
+    mse_lwr1_F.append(mse(ytest,yhat_lwr1_F))
+    mse_lwr2_T.append(mse(ytest,yhat_lwr2_T))
+    mse_lwr2_F.append(mse(ytest,yhat_lwr2_F))
+    mse_blwr1_T.append(mse(ytest,yhat_blwr1_T))
+    mse_blwr1_F.append(mse(ytest,yhat_blwr1_F))
+    mse_blwr2_T.append(mse(ytest,yhat_blwr2_T))
+    mse_blwr2_F.append(mse(ytest,yhat_blwr2_F))
+    mse_xgb_1.append(mse(ytest, yhat_xgb_1))
+    mse_xgb_2.append(mse(ytest, yhat_xgb_2))
+
+    mae_lwr1_T.append(mae(ytest,yhat_lwr1_T))
+    mae_lwr1_F.append(mae(ytest,yhat_lwr1_F))
+    mae_lwr2_T.append(mae(ytest,yhat_lwr2_T))
+    mae_lwr2_F.append(mae(ytest,yhat_lwr2_F))
+    mae_blwr1_T.append(mae(ytest,yhat_blwr1_T))
+    mae_blwr1_F.append(mae(ytest,yhat_blwr1_F))
+    mae_blwr2_T.append(mae(ytest,yhat_blwr2_T))
+    mae_blwr2_F.append(mae(ytest,yhat_blwr2_F))
+    mae_xgb_1.append(mae(ytest, yhat_xgb_1))
+    mae_xgb_2.append(mae(ytest, yhat_xgb_2))
+
+print('The Cross-validated Mean Squared Error for Epanechnikov LWR with intercept is : ' + str(np.mean(mse_lwr1_T)))
+print('The Cross-validated Mean Squared Error for triangular LWR with intercept is : ' + str(np.mean(mse_lwr2_T)))
+print('The Cross-validated Mean Squared Error for Epanechnikov BLWR with intercept is : '+str(np.mean(mse_blwr1_T)))
+print('The Cross-validated Mean Squared Error for triangular BLWR with intercept is : '+str(np.mean(mse_blwr2_T)))
+print('The Cross-validated Mean Squared Error for XGB with 1000 trees and alpha of 1 is : '+str(np.mean(mse_xgb_1)))
+print('The Cross-validated Mean Squared Error for XGB with 1000 trees and alpha of 5 is : '+str(np.mean(mse_xgb_2)))
+print('The Cross-validated Mean Squared Error for Epanechnikov LWR without intercept is : ' + str(np.mean(mse_lwr1_F)))
+print('The Cross-validated Mean Squared Error for triangular LWR without intercept is : ' + str(np.mean(mse_lwr2_F)))
+print('The Cross-validated Mean Squared Error for Epanechnikov BLWR without intercept is : '+str(np.mean(mse_blwr1_F)))
+print('The Cross-validated Mean Squared Error for triangular BLWR without intercept is : '+str(np.mean(mse_blwr2_F)))
+print('\n')
+print('The Cross-validated Mean Absolute Error for Epanechnikov LWR with intercept is : ' + str(np.mean(mae_lwr1_T)))
+print('The Cross-validated Mean Absolute Error for triangular LWR with intercept is : ' + str(np.mean(mae_lwr2_T)))
+print('The Cross-validated Mean Absolute Error for Epanechnikov BLWR with intercept is : '+str(np.mean(mae_blwr1_T)))
+print('The Cross-validated Mean Absolute Error for triangular BLWR with intercept is : '+str(np.mean(mae_blwr2_T)))
+print('The Cross-validated Mean Absolute Error for XGB with 1000 trees and alpha of 1 is : '+str(np.mean(mae_xgb_1)))
+print('The Cross-validated Mean Absolute Error for XGB with 1000 trees and alpha of 5 is : '+str(np.mean(mae_xgb_2)))
+print('The Cross-validated Mean Absolute Error for Epanechnikov LWR without intercept is : ' + str(np.mean(mae_lwr1_F)))
+print('The Cross-validated Mean Absolute Error for triangular LWR without intercept is : ' + str(np.mean(mae_lwr2_F)))
+print('The Cross-validated Mean Absolute Error for Epanechnikov BLWR without intercept is : '+str(np.mean(mae_blwr1_F)))
+print('The Cross-validated Mean Absolute Error for triangular BLWR without intercept is : '+str(np.mean(mae_blwr2_F)))
 
 ```
