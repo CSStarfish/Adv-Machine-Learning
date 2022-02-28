@@ -104,7 +104,7 @@ In conclusion, my analysis showed not only that gradient boosted models outperfo
 
 ### Code - Making Mathematical Comparisons and Plotting Results
 
-Note: Please see my main Github repository (entitled Adv-Machine-Learning) for the code below saved as a .ipynb file named "Project_3.ipynb"). Thank you!
+Note: Please see my main Github repository (entitled Adv-Machine-Learning) for the code below saved as a .ipynb file named "Project3.ipynb"). Thank you!
 
 ```
 !pip install xlrd==1.2.0
@@ -167,11 +167,10 @@ def Triweight(x):
 # Defining the locally weighted regression model
 
 def lw_reg(X, y, xnew, kern, tau, intercept):
-    # tau is called bandwidth K((x-x[i])/(2*tau))
-    n = len(X) # the number of observations
+    n = len(X) 
     yest = np.zeros(n)
 
-    if len(y.shape)==1: # here we make column vectors
+    if len(y.shape)==1:
       y = y.reshape(-1,1)
 
     if len(X.shape)==1:
@@ -203,13 +202,11 @@ def lw_reg(X, y, xnew, kern, tau, intercept):
  
 # Defining the Gradient Boosted locally weighted regression model
 def boosted_lwr(X, y, xnew, kern, tau, intercept):
-  # we need decision trees
-  # for training the boosted method we use X and y
-  Fx = lw_reg(X,y,X,kern,tau,intercept) # we need this for training the Decision Tree
+  Fx = lw_reg(X,y,X,kern,tau,intercept) 
   # Now train the Decision Tree on y_i - F(x_i)
   new_y = y - Fx
   tree_model = DecisionTreeRegressor(max_depth=2, random_state=123)
-  tree_model.fit(X,new_y) # new_y is the difference between y and the initial predictions
+  tree_model.fit(X,new_y) 
   output = tree_model.predict(xnew) + lw_reg(X,y,xnew,kern,tau,intercept) # output = h_i + F(x_i)
   return output 
   
@@ -2420,8 +2417,6 @@ print('The Cross-validated Mean Absolute Error for Epanechnikov LWR without inte
 print('The Cross-validated Mean Absolute Error for triangular BLWR without intercept is : '+str(np.mean(mae_blwr1_F)))
 print('The Cross-validated Mean Absolute Error for Epanechnikov BLWR without intercept is : '+str(np.mean(mae_blwr2_F)))
 
-# Making plots
-
 # Walmart Sales Dataset
 walmart_data = pd.read_csv("Walmart.csv")
 
@@ -2751,7 +2746,7 @@ mse_1000_l10_d5_a5 = []
 mse_100_l50_d5_a5 = []
 mse_1000_l50_d5_a5 = []
 
-# Alphas didn't seem to make a difference so I removed those (similar to my reasoning for getting rid of taus over 1)
+# Alphas didn't seem to make a difference so I removed those (similar to my reasoning for getting rid of taus over 1) to save computing time
 for idxtrain, idxtest in kf.split(X):
   ytrain = y[idxtrain]
   xtrain = X[idxtrain]
@@ -2845,7 +2840,6 @@ print("The MSE for 100 trees, depth of 5, and a lambda of 50 is: " + str(np.mean
 print("The MSE for 1000 trees, depth of 5, and a lambda of 50 is: " + str(np.mean(mse_1000_l50_d5)))
 
 # Testing regular gradient boosting
-# We want more nested cross-validation
 
 mse_lwr_1 = []
 mse_lwr_2 = []
@@ -2859,9 +2853,8 @@ mae_blwr_1 = []
 mae_blwr_2 = []
 mae_xgb = []
 
-for i in range(2): # this would take way too long, so decreased to 2 random states to loop through
+for i in range(2): # this takes an extremely long time, over 7 hours so decreased to 2 random states to loop through and 2 splits
   kf = KFold(n_splits=2,shuffle=True,random_state=i)
-  # this is the Cross-Validation Loop
   for idxtrain, idxtest in kf.split(X):
     xtrain = X[idxtrain]
     ytrain = y[idxtrain]
@@ -2901,8 +2894,6 @@ print('The Cross-validated Mean Absolute Error for triweight LWR is : ' + str(np
 print('The Cross-validated Mean Absolute Error for Epanechnikov BLWR is : '+str(np.mean(mae_blwr_1)))
 print('The Cross-validated Mean Absolute Error for triweight BLWR is : '+str(np.mean(mae_blwr_2)))
 print('The Cross-validated Mean Absolute Error for XGB is : '+str(np.mean(mae_xgb)))
-
-# Making plots
 
 # Concrete Data
 concrete = pd.read_excel("Concrete_Data.xls")
@@ -3908,7 +3899,6 @@ print("The MSE for 100 trees, lambda of 50, depth of 5, and an alpha of 5 is: " 
 print("The MSE for 1000 trees, lambda of 50, depth of 5, and an alpha of 5 is: " + str(np.mean(mse_1000_l50_d5_a5)))
 
 # Testing regular gradient boosting
-# We want more nested cross-validation
 
 mse_lwr1_T = []
 mse_lwr1_F = []
