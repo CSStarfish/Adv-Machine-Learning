@@ -2422,7 +2422,7 @@ print('The Cross-validated Mean Squared Error for Epanechnikov LWR with intercep
 print('The Cross-validated Mean Squared Error for triangular BLWR with intercept is : '+str(np.mean(mse_blwr1_T)))
 print('The Cross-validated Mean Squared Error for Epanechnikov BLWR with intercept is : '+str(np.mean(mse_blwr2_T)))
 print('The Cross-validated Mean Squared Error for XGB with 100 trees, depth of 5, and alpha of 1 is : '+str(np.mean(mse_xgb_1)))
-print('The Cross-validated Mean Squared Error for XGB with 1000 trees, depth of 5, and alpha of 5 is : '+str(np.mean(mse_xgb_2)))
+print('The Cross-validated Mean Squared Error for XGB with 100 trees, depth of 5, and alpha of 5 is : '+str(np.mean(mse_xgb_2)))
 print('The Cross-validated Mean Squared Error for triangular LWR without intercept is : ' + str(np.mean(mse_lwr1_F)))
 print('The Cross-validated Mean Squared Error for Epanechnikov LWR without intercept is : ' + str(np.mean(mse_lwr2_F)))
 print('The Cross-validated Mean Squared Error for triangular BLWR without intercept is : '+str(np.mean(mse_blwr1_F)))
