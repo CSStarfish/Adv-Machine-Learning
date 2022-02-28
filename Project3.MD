@@ -183,7 +183,6 @@ def lw_reg(X, y, xnew, kern, tau, intercept):
 
     w = np.array([kern((X - X[i])/(2*tau)) for i in range(n)])
 
-    #Looping through all X-points
     for i in range(n):          
         W = np.diag(w[:,i])
         b = np.transpose(X1).dot(W).dot(y)
@@ -203,7 +202,6 @@ def lw_reg(X, y, xnew, kern, tau, intercept):
 # Defining the Gradient Boosted locally weighted regression model
 def boosted_lwr(X, y, xnew, kern, tau, intercept):
   Fx = lw_reg(X,y,X,kern,tau,intercept) 
-  # Now train the Decision Tree on y_i - F(x_i)
   new_y = y - Fx
   tree_model = DecisionTreeRegressor(max_depth=2, random_state=123)
   tree_model.fit(X,new_y) 
@@ -1218,8 +1216,6 @@ print("The MSE for 1000 trees, lambda of 50, depth of 5, and an alpha of 5 is: "
 # Testing regular gradient boosting
 kf = KFold(n_splits=10,shuffle=True,random_state=1234)
 
-# We want more nested cross-validation
-
 mse_lwr1_T = []
 mse_lwr1_F = []
 mse_lwr2_T = []
@@ -1244,7 +1240,6 @@ mae_xgb_2 = []
 
 for i in range(100):
   kf = KFold(n_splits=10,shuffle=True,random_state=i)
-  # this is the Cross-Validation Loop
   for idxtrain, idxtest in kf.split(X):
     xtrain = X[idxtrain]
     ytrain = y[idxtrain]
@@ -1313,7 +1308,6 @@ print('The Cross-validated Mean Absolute Error for triangular LWR without interc
 print('The Cross-validated Mean Absolute Error for triweight BLWR without intercept is : '+str(np.mean(mae_blwr1_F)))
 print('The Cross-validated Mean Absolute Error for triangular BLWR without intercept is : '+str(np.mean(mae_blwr2_F)))
 
-# Making plots
 
 # Cars Dataset
 cars = pd.read_csv('cars.csv')
@@ -1321,7 +1315,7 @@ cars = pd.read_csv('cars.csv')
 X = cars[['ENG', 'CYL', 'WGT']].values
 y = cars['MPG'].values
 
-#  Make plots to visualize each X feature
+# Make plots to visualize each X feature
 fig, ax = plt.subplots(figsize=(10,8))
 ax.set_xlim(25, 500)
 ax.set_ylim(0, 50)
@@ -2322,8 +2316,6 @@ print("The MSE for 1000 trees, lambda of 50, depth of 5, and an alpha of 5 is: "
 # Testing regular gradient boosting
 kf = KFold(n_splits=10,shuffle=True,random_state=1234)
 
-# We want more nested cross-validation
-
 mse_lwr1_T = []
 mse_lwr2_T = []
 mse_lwr1_F = []
@@ -2348,7 +2340,6 @@ mae_xgb_2 = []
 
 for i in range(100):
   kf = KFold(n_splits=10,shuffle=True,random_state=i)
-  # this is the Cross-Validation Loop
   for idxtrain, idxtest in kf.split(X):
     xtrain = X[idxtrain]
     ytrain = y[idxtrain]
@@ -2417,6 +2408,7 @@ print('The Cross-validated Mean Absolute Error for Epanechnikov LWR without inte
 print('The Cross-validated Mean Absolute Error for triangular BLWR without intercept is : '+str(np.mean(mae_blwr1_F)))
 print('The Cross-validated Mean Absolute Error for Epanechnikov BLWR without intercept is : '+str(np.mean(mae_blwr2_F)))
 
+
 # Walmart Sales Dataset
 walmart_data = pd.read_csv("Walmart.csv")
 
@@ -2469,7 +2461,7 @@ ax.grid(b=True,which='minor', color ='grey', linestyle='--', alpha=0.2)
 ax.minorticks_on()
 
 # Testing Kernels, tau = 0.01
-kf = KFold(n_splits=2,shuffle=True,random_state=410) # 5 splits took way too long, so I reduced the number of splits (about 7 hours and then Colab disconnected my runtime)
+kf = KFold(n_splits=2,shuffle=True,random_state=410) # 5 splits took an extremely long time, so I reduced the number of splits (about 7 hours and then Colab disconnected my runtime)
 mse_tric_w1 = []
 mse_epa_w1 = []
 mse_quart_w1 = []
@@ -2853,7 +2845,7 @@ mae_blwr_1 = []
 mae_blwr_2 = []
 mae_xgb = []
 
-for i in range(2): # this takes an extremely long time, over 7 hours so decreased to 2 random states to loop through and 2 splits
+for i in range(2): # this takes an extremely long time, over 7 hours, and Colab restricted my runtime so I decreased to 2 random states to loop through and 2 splits
   kf = KFold(n_splits=2,shuffle=True,random_state=i)
   for idxtrain, idxtest in kf.split(X):
     xtrain = X[idxtrain]
@@ -2894,6 +2886,7 @@ print('The Cross-validated Mean Absolute Error for triweight LWR is : ' + str(np
 print('The Cross-validated Mean Absolute Error for Epanechnikov BLWR is : '+str(np.mean(mae_blwr_1)))
 print('The Cross-validated Mean Absolute Error for triweight BLWR is : '+str(np.mean(mae_blwr_2)))
 print('The Cross-validated Mean Absolute Error for XGB is : '+str(np.mean(mae_xgb)))
+
 
 # Concrete Data
 concrete = pd.read_excel("Concrete_Data.xls")
@@ -3924,7 +3917,6 @@ mae_xgb_2 = []
 
 for i in range(10):
   kf = KFold(n_splits=10,shuffle=True,random_state=i)
-  # this is the Cross-Validation Loop
   for idxtrain, idxtest in kf.split(X):
     xtrain = X[idxtrain]
     ytrain = y[idxtrain]
