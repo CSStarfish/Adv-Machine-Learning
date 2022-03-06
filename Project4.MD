@@ -2,12 +2,29 @@
 
 I created two multiple boosting algorithms - one that utilized locally-weighted regression and then proceeded to boost the initial prediction with a tree-based model of the user's choice that would be passed as an argument to the algorithm's method, and another that solely used locally-weighted regression multiple times.  It was interesting to find that the multiple boosting method based solely on multiple appications of locally-weighted regression was the lowest-performing method and led to MSEs in the thousands, as opposed to less than 100 in the algorithm that boosted with a tree-based model.  I have included the method code below, in addition to the full code for this portion of the project beneath my summary of my procedures for both portions of the project.
 
-I initially tested my multiple boosting algorithm with 
+```
+def booster_lwrandchoice(X,y,xnew,kern,tau,model_boosting,nboost):
+  Fx = lw_reg(X,y,X,kern,tau,True)
+  Fx_new = lw_reg(X,y,xnew,kern,tau,True)
+  new_y = y - Fx
+  output = Fx
+  output_new = Fx_new
+  for i in range(nboost):
+    model_boosting.fit(X,new_y)
+    output += model_boosting.predict(X)
+    output_new += model_boosting.predict(xnew)
+    new_y = y - output
+  return output_new
+```
+
+I initially tested my multiple boosting algorithm on the concrete compressive strength dataset with a set of eight random forest regressors with eight different hyperparameter settings, which were combinations of 5, 10, 50, or 100 decision tree estimators and max depths of 2 or 3.  I then tested the algorithm with a set of six extreme gradient boost (XGB) regressors, consisting of a combination of 10, 50, or 100 decision trees and max depths of 2 or 3.  Next, I proceeded to test the algorithm on a set of eight LightGBM regressors with either a learning rate of 0.05 or 0.1, 5 or 10 decision tree estimators, and a max depth of 2 or 3.  I also tested each model with each of five kernels for the initial locally-weighted regression prediction: tricubic, quartic, Epanechnikov, triweight, and triangular.  At this point in the application of the algorithm, I used a tau of 1 across all model-kernel combinations,  After testing the multiple boosting algorithm on each of these sets of models,  I then proceeded to test varying levels of tau on the top performing model-kernel combinations.
+
+In the case of the random forest regressors, the combinations of 50 or 100 estimators and maximum depths of 3 proved to be the most accurate, as measured by the mean squared error (MSE) of their predictions. Among the kernels combined with these three models, the best performing were the triweight and quartic kernels. These results showed that multiple boosting algorithm performed best when the decision trees were allowed to grow to deeper levels and tended to perform better with a higher learning rate and greater number of trees in the forest.
 
 
 ### Description and Application of LightGBM Algorithm
 
-The LightGBM boosting algorithm was developed by Microsoft as a less-intensive alternative to other boosting algorithms, like extreme gradient boosting (XGB).  According to the documentation for the algorithm provided [here](https://lightgbm.readthedocs.io/en/latest/), it is faster and more efficient than other tree-based methods while still maintaining high accuracy.  The main feature that distinguishes LightGBM from XGB and other tree-based boosting algorithms is that it implements leaf-wise splitting, as opposed to level-wise splitting.  As such, it searches for the leaf with the greatest change in loss (i.e., the greatest decline in loss) and splits the data at that particular node, as opposed to splitting at a full level of the tree (Reference: [https://www.geeksforgeeks.org/lightgbm-light-gradient-boosting-machine/](https://www.geeksforgeeks.org/lightgbm-light-gradient-boosting-machine/)).  Because this generates a less complex decision tree, the LightGBM model is faster and requires less memory usage.  Please see the two diagrams below for an illustrated comparison of leaf-splitting and level-splitting, respectively.
+The LightGBM boosting algorithm was developed by Microsoft as a less-intensive alternative to other boosting algorithms, like XGB.  According to the documentation for the algorithm provided [here](https://lightgbm.readthedocs.io/en/latest/), it is faster and more efficient than other tree-based methods while still maintaining high accuracy.  The main feature that distinguishes LightGBM from XGB and other tree-based boosting algorithms is that it implements leaf-wise splitting, as opposed to level-wise splitting.  As such, it searches for the leaf with the greatest change in loss (i.e., the greatest decline in loss) and splits the data at that particular node, as opposed to splitting at a full level of the tree (Reference: [https://www.geeksforgeeks.org/lightgbm-light-gradient-boosting-machine/](https://www.geeksforgeeks.org/lightgbm-light-gradient-boosting-machine/)).  Because this generates a less complex decision tree, the LightGBM model is faster and requires less memory usage.  Please see the two diagrams below for an illustrated comparison of leaf-splitting and level-splitting, respectively.
 
 # Leaf Splitting
 ![](https://i.stack.imgur.com/YOE9y.png)
@@ -1371,7 +1388,7 @@ print('The Cross-validated Mean Squared Error for Boosted LWR with Epanechikov i
 print('The Cross-validated Mean Squared Error for Boosted LWR with triweight is : '+str(np.mean(mse_blwr_triw8)))
 print('The Cross-validated Mean Squared Error for Boosted LWR with triangular is : '+str(np.mean(mse_blwr_trian8)))
 
-# The seventh random forest model had the best results and the triweight/quartic kernels tended to outperform the others
+# The seventh and eighth random forest model had the best results and the triweight/quartic kernels tended to outperform the others
 # Tau = 0.01
 mse_blwr_triw7 = []
 mse_blwr_quart7 = []
@@ -2442,7 +2459,7 @@ mse_blwr_quart4 = []
 
 
 mse_blwr_tric6 = []
-mse_blwr_tric6 = []
+mse_blwr_quart6 = []
 
 
 mse_blwr_tric8 = []
@@ -2491,7 +2508,7 @@ mse_blwr_quart4 = []
 
 
 mse_blwr_tric6 = []
-mse_blwr_tric6 = []
+mse_blwr_quart6 = []
 
 
 mse_blwr_tric8 = []
@@ -2540,7 +2557,7 @@ mse_blwr_quart4 = []
 
 
 mse_blwr_tric6 = []
-mse_blwr_tric6 = []
+mse_blwr_quart6 = []
 
 
 mse_blwr_tric8 = []
@@ -2589,7 +2606,7 @@ mse_blwr_quart4 = []
 
 
 mse_blwr_tric6 = []
-mse_blwr_tric6 = []
+mse_blwr_quart6 = []
 
 
 mse_blwr_tric8 = []
@@ -2638,7 +2655,7 @@ mse_blwr_quart4 = []
 
 
 mse_blwr_tric6 = []
-mse_blwr_tric6 = []
+mse_blwr_quart6 = []
 
 
 mse_blwr_tric8 = []
