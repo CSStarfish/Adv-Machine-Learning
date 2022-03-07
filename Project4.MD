@@ -46,6 +46,7 @@ The LightGBM documentation also states that this algorithm is quick and efficien
 
 
 ## Code for LightGBM Application to Concrete Strength Dataset
+Please see my GitHub Repository for the code below saved in a file labeled, "Project4_LightGBM.ipynb"
 ```
 # Import Statements
 !pip install xlrd==1.2.0
