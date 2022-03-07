@@ -1403,14 +1403,13 @@ print('The Cross-validated Mean Squared Error for Boosted LWR with Epanechikov i
 print('The Cross-validated Mean Squared Error for Boosted LWR with triweight is : '+str(np.mean(mse_blwr_triw8)))
 print('The Cross-validated Mean Squared Error for Boosted LWR with triangular is : '+str(np.mean(mse_blwr_trian8)))
 
-
+# Tau = 0.01
 mse_blwr_triw7 = []
 mse_blwr_quart7 = []
 
 
 mse_blwr_triw8 = []
 mse_blwr_quart8 = []
-
 
 
 kf = KFold(n_splits=5,shuffle=True,random_state=1234)
@@ -1441,13 +1440,13 @@ print('The Cross-validated Mean Squared Error for Boosted LWR with triweight is 
 print('The Cross-validated Mean Squared Error for Boosted LWR with quartic is : '+str(np.mean(mse_blwr_quart8)))
 
 
+# Tau = 0.05
 mse_blwr_triw7 = []
 mse_blwr_quart7 = []
 
 
 mse_blwr_triw8 = []
 mse_blwr_quart8 = []
-
 
 
 kf = KFold(n_splits=5,shuffle=True,random_state=1234)
@@ -1478,13 +1477,13 @@ print('The Cross-validated Mean Squared Error for Boosted LWR with triweight is 
 print('The Cross-validated Mean Squared Error for Boosted LWR with quartic is : '+str(np.mean(mse_blwr_quart8)))
 
 
+# Tau = 0.1
 mse_blwr_triw7 = []
 mse_blwr_quart7 = []
 
 
 mse_blwr_triw8 = []
 mse_blwr_quart8 = []
-
 
 
 kf = KFold(n_splits=5,shuffle=True,random_state=1234)
@@ -1515,13 +1514,13 @@ print('The Cross-validated Mean Squared Error for Boosted LWR with triweight is 
 print('The Cross-validated Mean Squared Error for Boosted LWR with quartic is : '+str(np.mean(mse_blwr_quart8)))
 
 
+# Tau = 0.5
 mse_blwr_triw7 = []
 mse_blwr_quart7 = []
 
 
 mse_blwr_triw8 = []
 mse_blwr_quart8 = []
-
 
 
 kf = KFold(n_splits=5,shuffle=True,random_state=1234)
@@ -1552,13 +1551,13 @@ print('The Cross-validated Mean Squared Error for Boosted LWR with triweight is 
 print('The Cross-validated Mean Squared Error for Boosted LWR with quartic is : '+str(np.mean(mse_blwr_quart8)))
 
 
+# Tau = 1
 mse_blwr_triw7 = []
 mse_blwr_quart7 = []
 
 
 mse_blwr_triw8 = []
 mse_blwr_quart8 = []
-
 
 
 kf = KFold(n_splits=5,shuffle=True,random_state=1234)
@@ -1958,6 +1957,7 @@ print('The Cross-validated Mean Squared Error for Boosted LWR with triweight is 
 print('The Cross-validated Mean Squared Error for Boosted LWR with triangular is : '+str(np.mean(mse_blwr_trian6)))
 
 
+# Tau = 0.01
 mse_blwr_triw4 = []
 mse_blwr_quart4 = []
 mse_blwr_tric4 = []
@@ -1970,7 +1970,6 @@ mse_blwr_tric5 = []
 mse_blwr_triw6 = []
 mse_blwr_quart6 = []
 mse_blwr_tric6 = []
-
 
 
 kf = KFold(n_splits=5,shuffle=True,random_state=1234)
@@ -2020,6 +2019,7 @@ print('The Cross-validated Mean Squared Error for Boosted LWR with triweight is 
 print('The Cross-validated Mean Squared Error for Boosted LWR with tricubic is : '+str(np.mean(mse_blwr_tric6)))
 
 
+# Tau = 0.05
 mse_blwr_triw4 = []
 mse_blwr_quart4 = []
 mse_blwr_tric4 = []
@@ -2032,7 +2032,6 @@ mse_blwr_tric5 = []
 mse_blwr_triw6 = []
 mse_blwr_quart6 = []
 mse_blwr_tric6 = []
-
 
 
 kf = KFold(n_splits=5,shuffle=True,random_state=1234)
@@ -2082,6 +2081,7 @@ print('The Cross-validated Mean Squared Error for Boosted LWR with triweight is 
 print('The Cross-validated Mean Squared Error for Boosted LWR with tricubic is : '+str(np.mean(mse_blwr_tric6)))
 
 
+# Tau = 0.1
 mse_blwr_triw4 = []
 mse_blwr_quart4 = []
 mse_blwr_tric4 = []
@@ -2094,7 +2094,6 @@ mse_blwr_tric5 = []
 mse_blwr_triw6 = []
 mse_blwr_quart6 = []
 mse_blwr_tric6 = []
-
 
 
 kf = KFold(n_splits=5,shuffle=True,random_state=1234)
@@ -2144,6 +2143,7 @@ print('The Cross-validated Mean Squared Error for Boosted LWR with triweight is 
 print('The Cross-validated Mean Squared Error for Boosted LWR with tricubic is : '+str(np.mean(mse_blwr_tric6)))
 
 
+# Tau = 0.5
 mse_blwr_triw4 = []
 mse_blwr_quart4 = []
 mse_blwr_tric4 = []
@@ -2205,6 +2205,7 @@ print('The Cross-validated Mean Squared Error for Boosted LWR with triweight is 
 print('The Cross-validated Mean Squared Error for Boosted LWR with tricubic is : '+str(np.mean(mse_blwr_tric6)))
 
 
+# Tau = 1
 mse_blwr_triw4 = []
 mse_blwr_quart4 = []
 mse_blwr_tric4 = []
@@ -2217,7 +2218,6 @@ mse_blwr_tric5 = []
 mse_blwr_triw6 = []
 mse_blwr_quart6 = []
 mse_blwr_tric6 = []
-
 
 
 kf = KFold(n_splits=5,shuffle=True,random_state=1234)
@@ -2481,6 +2481,7 @@ print('The Cross-validated Mean Squared Error for Boosted LWR with triweight is 
 print('The Cross-validated Mean Squared Error for Boosted LWR with triangular is : '+str(np.mean(mse_blwr_trian8)))
 
 
+# Tau = 0.01
 mse_blwr_triw4 = []
 mse_blwr_quart4 = []
 
@@ -2530,6 +2531,7 @@ print('The Cross-validated Mean Squared Error for Boosted LWR triweight is : '+s
 print('The Cross-validated Mean Squared Error for Boosted LWR quartic is : '+str(np.mean(mse_blwr_quart6)))
 
 
+# Tau = 0.05
 mse_blwr_triw4 = []
 mse_blwr_quart4 = []
 
@@ -2579,7 +2581,7 @@ print('The Cross-validated Mean Squared Error for Boosted LWR triweight is : '+s
 print('The Cross-validated Mean Squared Error for Boosted LWR quartic is : '+str(np.mean(mse_blwr_quart6)))
 
 
-
+# Tau = 0.1
 mse_blwr_triw4 = []
 mse_blwr_quart4 = []
 
@@ -2629,6 +2631,7 @@ print('The Cross-validated Mean Squared Error for Boosted LWR triweight is : '+s
 print('The Cross-validated Mean Squared Error for Boosted LWR quartic is : '+str(np.mean(mse_blwr_quart6)))
 
 
+# Tau = 0.5
 mse_blwr_triw4 = []
 mse_blwr_quart4 = []
 
@@ -2678,6 +2681,7 @@ print('The Cross-validated Mean Squared Error for Boosted LWR triweight is : '+s
 print('The Cross-validated Mean Squared Error for Boosted LWR quartic is : '+str(np.mean(mse_blwr_quart6)))
 
 
+# Tau = 1
 mse_blwr_triw4 = []
 mse_blwr_quart4 = []
 
@@ -2941,6 +2945,7 @@ print('The Cross-validated Mean Squared Error for Boosted LWR with triweight is 
 print('The Cross-validated Mean Squared Error for Boosted LWR with triangular is : '+str(np.mean(mse_blwr_trian8)))
 
 
+# Tau = 0.01
 mse_blwr_tric8 = []
 mse_blwr_quart8 = []
 mse_blwr_epa8 = []
@@ -2977,6 +2982,7 @@ print('The Cross-validated Mean Squared Error for Boosted LWR with triweight is 
 print('The Cross-validated Mean Squared Error for Boosted LWR with triangular is : '+str(np.mean(mse_blwr_trian8)))
 
 
+# Tau = 0.05
 mse_blwr_tric8 = []
 mse_blwr_quart8 = []
 mse_blwr_epa8 = []
@@ -3013,6 +3019,7 @@ print('The Cross-validated Mean Squared Error for Boosted LWR with triweight is 
 print('The Cross-validated Mean Squared Error for Boosted LWR with triangular is : '+str(np.mean(mse_blwr_trian8)))
 
 
+# Tau = 0.1
 mse_blwr_tric8 = []
 mse_blwr_quart8 = []
 mse_blwr_epa8 = []
@@ -3049,6 +3056,7 @@ print('The Cross-validated Mean Squared Error for Boosted LWR with triweight is 
 print('The Cross-validated Mean Squared Error for Boosted LWR with triangular is : '+str(np.mean(mse_blwr_trian8)))
 
 
+# Tau = 0.5
 mse_blwr_tric8 = []
 mse_blwr_quart8 = []
 mse_blwr_epa8 = []
@@ -3085,6 +3093,7 @@ print('The Cross-validated Mean Squared Error for Boosted LWR with triweight is 
 print('The Cross-validated Mean Squared Error for Boosted LWR with triangular is : '+str(np.mean(mse_blwr_trian8)))
 
 
+# Tau = 1
 mse_blwr_tric8 = []
 mse_blwr_quart8 = []
 mse_blwr_epa8 = []
