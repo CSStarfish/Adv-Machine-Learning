@@ -108,7 +108,7 @@ print(np.intersect1d(pos,pos_elasticnet).shape)
 # We  were able to reconstruct 25 ground truths
 
 
-# RMSE and L2 Distance Calculations
+# RMSE, MSE, and L2 Distance Calculations
 # Ridge Regression calculations
 %%time
 model = Ridge(fit_intercept=False,max_iter=1000)
@@ -169,5 +169,8 @@ gs = GridSearchCV(estimator=model,cv=10,scoring='neg_mean_squared_error',param_g
 gs_results = gs.fit(x,y)
 print(gs_results.best_params_)
 print('The mean square error is: ', np.abs(gs_results.best_score_))
+
+# Compute the L2 distance
+np.linalg.norm(model.coef_-beta,ord=2)
 
 ```
