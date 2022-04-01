@@ -44,6 +44,7 @@ y = np.matmul(x,beta) + sigma*np.random.normal(0,1,n)
 ## Part 3. Description of Technique
 
 ### Part 3. Code
+Note: I will be adding the L2 distance to the ideal solution next
 
 ```
 # Ridge Regression
@@ -105,4 +106,68 @@ print(np.array(pos_elasticnet).shape[1])
 print(np.intersect1d(pos,pos_elasticnet))
 print(np.intersect1d(pos,pos_elasticnet).shape)
 # We  were able to reconstruct 25 ground truths
+
+
+# RMSE and L2 Distance Calculations
+# Ridge Regression calculations
+%%time
+model = Ridge(fit_intercept=False,max_iter=1000)
+params = [{'alpha':np.linspace(0.001,1,num=50)}]
+gs = GridSearchCV(estimator=model,cv=10,scoring='neg_mean_squared_error',param_grid=params)
+gs_results = gs.fit(x,y)
+print(gs_results.best_params_)
+print('The root mean square error is: ', np.sqrt(np.abs(gs_results.best_score_)))
+
+%%time
+model = Ridge(fit_intercept=False,max_iter=1000)
+params = [{'alpha':np.linspace(0.001,1,num=50)}]
+gs = GridSearchCV(estimator=model,cv=10,scoring='neg_mean_squared_error',param_grid=params)
+gs_results = gs.fit(x,y)
+print(gs_results.best_params_)
+print('The mean square error is: ', np.abs(gs_results.best_score_))
+
+# Compute the L2 distance
+print(np.linalg.norm(model.coef_-beta,ord=2))
+
+
+
+# Lasso Regression calculations
+%%time
+model = Lasso(fit_intercept=False,max_iter=2500)
+params = [{'alpha':np.linspace(0.001,1,num=50)}]
+gs = GridSearchCV(estimator=model,cv=10,scoring='neg_mean_squared_error',param_grid=params)
+gs_results = gs.fit(x,y)
+print(gs_results.best_params_)
+print('The root mean square error is: ', np.sqrt(np.abs(gs_results.best_score_)))
+
+%%time
+model = Lasso(fit_intercept=False,max_iter=2500)
+params = [{'alpha':np.linspace(0.001,1,num=50)}]
+gs = GridSearchCV(estimator=model,cv=10,scoring='neg_mean_squared_error',param_grid=params)
+gs_results = gs.fit(x,y)
+print(gs_results.best_params_)
+print('The mean square error is: ', np.abs(gs_results.best_score_))
+
+# Compute the L2 distance
+print(np.linalg.norm(model.coef_-beta,ord=2))
+
+
+
+# Elastic Net Regression calculations
+%%time
+model = ElasticNet(fit_intercept=False, max_iter=500000)
+params = [{'alpha':np.linspace(0.001,1,num=50),'l1_ratio':np.linspace(0.5,1,num=50)}]
+gs = GridSearchCV(estimator=model,cv=10,scoring='neg_mean_squared_error',param_grid=params)
+gs_results = gs.fit(x,y)
+print(gs_results.best_params_)
+print('The root mean square error is: ', np.sqrt(np.abs(gs_results.best_score_)))
+
+%%time
+model = ElasticNet(fit_intercept=False, max_iter=500000)
+params = [{'alpha':np.linspace(0.001,1,num=50),'l1_ratio':np.linspace(0.5,1,num=50)}]
+gs = GridSearchCV(estimator=model,cv=10,scoring='neg_mean_squared_error',param_grid=params)
+gs_results = gs.fit(x,y)
+print(gs_results.best_params_)
+print('The mean square error is: ', np.abs(gs_results.best_score_))
+
 ```
