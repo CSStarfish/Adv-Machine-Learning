@@ -4,6 +4,67 @@
 
 ### Part 1. Code
 
+```
+# Create Sklearn compliant function for Square Root Lasso Regression
+class SQRTLasso(BaseEstimator, RegressorMixin):
+    def __init__(self, alpha=0.01):
+        self.alpha = alpha
+    def fit(self, x, y):
+        alpha=self.alpha
+        def f_obj(x,y,beta,alpha):
+          n =len(x)
+          beta = beta.flatten()
+          beta = beta.reshape(-1,1)
+          output = np.sqrt(1/n*np.sum((y-x.dot(beta))**2)) + alpha*np.sum(np.abs(beta))
+          return output
+        def f_grad(x,y,beta,alpha):
+          n=x.shape[0]
+          p=x.shape[1]
+          beta = beta.flatten()
+          beta = beta.reshape(-1,1)
+          output = np.array((-1/np.sqrt(n))*np.transpose(x).dot(y-x.dot(beta))/np.sqrt(np.sum((y-x.dot(beta))**2))+alpha*np.sign(beta)).flatten()
+          return output
+        def objective(beta):
+          return(f_obj(x,y,beta,alpha))
+        def gradient(beta):
+          return(f_grad(x,y,beta,alpha))
+        
+        beta0 = np.ones((x.shape[1],1))
+        output = minimize(objective, beta0, method='L-BFGS-B', jac=gradient,options={'gtol': 1e-8, 'maxiter': 50000,'maxls': 25,'disp': True})
+        beta = output.x
+        self.coef_ = beta
+        
+    def predict(self, x):
+        return x.dot(self.coef_)
+        
+# Test out an example model
+model = SQRTLasso(alpha = 0.1)
+%%time
+model.fit(x,y.reshape(-1,1))
+beta_hat = model.coef_
+print(beta_hat)
+
+# Implementing soft-thresholding by setting any absolute values less than 0.05 equal to 0
+beta_hat[abs(beta_hat)<0.05] = 0
+print(beta_hat)
+
+# Detect the position of the estimated non-zero beta coefficients/significant variables
+pos_sqrtlasso = np.where(beta_hat!=0)
+print(pos_sqrtlasso)
+
+print(np.array(pos_sqrtlasso).shape[1])
+# My square root lasso regression model identified 106 important variables
+
+# Check how many of these important variables were actually important
+print(np.intersect1d(pos,pos_sqrtlasso))
+print(np.intersect1d(pos,pos_sqrtlasso).shape)
+# We were able to reconstruct 24 ground truths
+
+
+# Compute the L2 distance
+np.linalg.norm(model.coef_-beta,ord=2)
+```
+
 
 ## Part 2. Description of Technique
 
@@ -44,7 +105,7 @@ y = np.matmul(x,beta) + sigma*np.random.normal(0,1,n)
 ## Part 3. Description of Technique
 
 ### Part 3. Code
-Note: I will be adding the SCAD penalty regression model results next
+Note: I will be adding the SCAD penalty regression model and Square Root Lasso regression model results next
 
 ```
 # Ridge Regression
