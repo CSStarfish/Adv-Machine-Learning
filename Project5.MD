@@ -44,3 +44,51 @@ y = np.matmul(x,beta) + sigma*np.random.normal(0,1,n)
 ## Part 3. Description of Technique
 
 ### Part 3. Code
+
+```
+# Ridge Regression
+model = Ridge(alpha=0.1, fit_intercept=False)
+model.fit(x,y)
+beta_hat = model.coef_
+print(beta_hat)
+
+# Implement soft-thresholding by setting any absolute values less than 0.05 equal to 0
+beta_hat[abs(beta_hat)<0.05] = 0
+print(beta_hat)
+
+# Detect the position of the estimated non-zero beta coefficients/significant variables
+pos_ridge = np.where(beta_hat!=0)
+print(pos_ridge)
+
+print(np.array(pos_ridge).shape[1])
+# My ridge regression model identified 627 important variables
+
+# Check how many of these important variables were actually important
+print(np.intersect1d(pos,pos_ridge))
+print(np.intersect1d(pos,pos_ridge).shape)
+# We were able to reconstruct 27 ground truths
+
+
+# Lasso Regression
+model = Lasso(alpha=0.1, fit_intercept=False, max_iter=5000) # no intercept because the mean is 0
+model.fit(x,y)
+beta_hat = model.coef_
+print(beta_hat)
+
+# Detect the position of the estimated non-zero beta coefficients/significant variables
+pos_lasso = np.where(beta_hat!=0)
+print(pos_lasso)
+
+print(np.array(pos_lasso).shape[1])
+# My lasso regression model identified 144 important variables
+
+# Check how many of these important variables were actually important
+print(np.intersect1d(pos,pos_lasso))
+print(np.intersect1d(pos,pos_lasso).shape)
+# We were able to reconstruct 21 ground truths
+
+
+# Elastic Net Regression
+
+
+```
