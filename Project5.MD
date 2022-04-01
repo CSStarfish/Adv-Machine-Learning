@@ -66,7 +66,7 @@ print(np.array(pos_ridge).shape[1])
 # Check how many of these important variables were actually important
 print(np.intersect1d(pos,pos_ridge))
 print(np.intersect1d(pos,pos_ridge).shape)
-# We were able to reconstruct 27 ground truths
+# We were able to reconstruct all 27 ground truths
 
 
 # Lasso Regression
@@ -89,6 +89,20 @@ print(np.intersect1d(pos,pos_lasso).shape)
 
 
 # Elastic Net Regression
+model = ElasticNet(alpha=0.1, fit_intercept=False)
+model.fit(x,y)
+beta_hat = model.coef_
+print(beta_hat)
 
+# Detect the position of the estimated non-zero beta coefficients/significant variables
+pos_elasticnet = np.where(beta_hat!=0)
+print(pos_elasticnet)
 
+print(np.array(pos_elasticnet).shape[1])
+# My elastic net regression model identified 238 important variables
+
+# Detect the position of the estimated non-zero beta coefficients/significant variables
+print(np.intersect1d(pos,pos_elasticnet))
+print(np.intersect1d(pos,pos_elasticnet).shape)
+# We  were able to reconstruct 25 ground truths
 ```
