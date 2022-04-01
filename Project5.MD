@@ -44,7 +44,7 @@ y = np.matmul(x,beta) + sigma*np.random.normal(0,1,n)
 ## Part 3. Description of Technique
 
 ### Part 3. Code
-Note: I will be adding the L2 distance to the ideal solution next
+Note: I will be adding the SCAD penalty regression model results next
 
 ```
 # Ridge Regression
