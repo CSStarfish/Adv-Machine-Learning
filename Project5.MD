@@ -281,7 +281,15 @@ model.fit(x,y)
 # Compute the L2 distance
 print(np.linalg.norm(model.coef_-beta,ord=2))
 
-
+true_coeffs = []
+L2Distance = []
+RMSE = []
+model = Ridge(alpha=0.001, fit_intercept=False, max_iter=1000)
+for i in range(0,100):
+  model.fit(X[i], Y[i])
+  true_coeffs.append(np.intersect1d(pos,np.where(model.coef_!=0)).shape[0])
+  L2Distance.append(np.linalg.norm(model.coef_-beta,ord=2))
+  RMSE.append(np.sqrt(MSE(Y[i],model.predict(X[i]))))
 
 print(np.mean(true_coeffs))
 print(np.mean(L2Distance))
@@ -392,7 +400,15 @@ model.fit(x,y.reshape(-1,1))
 # Compute the L2 distance
 np.linalg.norm(model.coef_-beta,ord=2)
 
-
+true_coeffs = []
+L2Distance = []
+RMSE = []
+model = SCADRegression(a=0.16410204081632654, lam=0.001)
+for i in range(0,100):
+  model.fit(X[i], Y[i].reshape(-1,1))
+  true_coeffs.append(np.intersect1d(pos,np.where(model.coef_!=0)).shape[0])
+  L2Distance.append(np.linalg.norm(model.coef_-beta,ord=2))
+  RMSE.append(np.sqrt(MSE(Y[i],model.predict(X[i]))))
 
 print(np.mean(true_coeffs))
 print(np.mean(L2Distance))
@@ -422,7 +438,15 @@ print('The mean square error is: ', np.abs(gs_results.best_score_))
 # Compute the L2 distance
 np.linalg.norm(model.coef_-beta,ord=2)
 
-
+true_coeffs = []
+L2Distance = []
+RMSE = []
+model = SQRTLasso(alpha=0.1437142857142857)
+for i in range(0,100):
+  model.fit(X[i], Y[i].reshape(-1,1))
+  true_coeffs.append(np.intersect1d(pos,np.where(model.coef_!=0)).shape[0])
+  L2Distance.append(np.linalg.norm(model.coef_-beta,ord=2))
+  RMSE.append(np.sqrt(MSE(Y[i],model.predict(X[i]))))
 
 print(np.mean(true_coeffs))
 print(np.mean(L2Distance))
