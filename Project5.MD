@@ -307,15 +307,20 @@ model.fit(x,y)
 # Compute the L2 distance
 print(np.linalg.norm(model.coef_-beta,ord=2))
 
-# Compute the average L2 distances and RMSEs
+# Compute the average true coefficients, L2 distances, and RMSEs
+true_coeffs = []
 L2Distance = []
 RMSE = []
 model = Lasso(alpha=0.16410204081632654, fit_intercept=False, max_iter=2500)
 for i in range(0,100):
   model.fit(X[i], Y[i])
-  L2Distance.append(np.intersect1d(pos,np.where(model.coef_!=0)).shape[0])
+  true_coeffs.append(np.intersect1d(pos,np.where(model.coef_!=0)).shape[0])
+  L2Distance.append(np.linalg.norm(model.coef_-beta,ord=2))
   RMSE.append(np.sqrt(MSE(Y[i],model.predict(X[i]))))
-
+  
+print(np.mean(true_coeffs))
+print(np.mean(L2Distance))
+print(np.mean(RMSE))
 
 
 # Elastic Net Regression calculations
