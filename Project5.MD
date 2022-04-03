@@ -264,6 +264,10 @@ gs_results = gs.fit(x,y)
 print(gs_results.best_params_)
 print('The mean square error is: ', np.abs(gs_results.best_score_))
 
+# Testing out the results using the best parameters found by GridSearchCV
+model = Ridge(alpha=0.001, fit_intercept=False, max_iter=1000)
+model.fit(x,y)
+
 # Compute the L2 distance
 print(np.linalg.norm(model.coef_-beta,ord=2))
 
@@ -286,6 +290,7 @@ gs_results = gs.fit(x,y)
 print(gs_results.best_params_)
 print('The mean square error is: ', np.abs(gs_results.best_score_))
 
+# Testing out the results using the best parameters found by GridSearchCV
 model = Lasso(alpha=0.16410204081632654, fit_intercept=False, max_iter=2500)
 model.fit(x,y)
 
@@ -311,6 +316,10 @@ gs_results = gs.fit(x,y)
 print(gs_results.best_params_)
 print('The mean square error is: ', np.abs(gs_results.best_score_))
 
+# Testing out the results using the best parameters found by GridSearchCV
+model = ElasticNet(alpha=0.041775510204081635, l1_ratio=0.6020408163265306, fit_intercept=False, max_iter=500000)
+model.fit(x,y)
+
 # Compute the L2 distance
 np.linalg.norm(model.coef_-beta,ord=2)
 
@@ -318,19 +327,22 @@ np.linalg.norm(model.coef_-beta,ord=2)
 # SCAD Penalty Regression calculations
 %%time
 model = SCADRegression()
-params = [{'a':np.linspace(0.001,1,num=50), 'lam':np.linspace(0.001,5,num=100)}]
+params = [{'a':np.linspace(0.001,1,num=50), 'lam':np.linspace(0.001,3,num=100)}]
 gs = GridSearchCV(estimator=model,cv=10,scoring='neg_mean_squared_error',param_grid=params)
-gs_results = gs.fit(x,y)
+gs_results = gs.fit(x,y.reshape(-1,1))
 print(gs_results.best_params_)
 print('The root mean square error is: ', np.sqrt(np.abs(gs_results.best_score_)))
 
 %%time
 model = SCADRegression()
-params = [{'a':np.linspace(0.001,1,num=50), 'lam':np.linspace(0.001,5,num=100)}]
+params = [{'a':np.linspace(0.001,1,num=50), 'lam':np.linspace(0.001,3,num=100)}]
 gs = GridSearchCV(estimator=model,cv=10,scoring='neg_mean_squared_error',param_grid=params)
-gs_results = gs.fit(x,y)
+gs_results = gs.fit(x,y.reshape(-1,1))
 print(gs_results.best_params_)
 print('The mean square error is: ', np.abs(gs_results.best_score_))
+
+# Testing out the results using the best parameters found by GridSearchCV
+
 
 # Compute the L2 distance
 np.linalg.norm(model.coef_-beta,ord=2)
@@ -338,20 +350,23 @@ np.linalg.norm(model.coef_-beta,ord=2)
 
 # Square Root Lasso Regression calculations
 %%time
-model = SCADRegression()
-params = [{'a':np.linspace(0.001,1,num=50)}]
+model = SQRTLasso()
+params = [{'alpha':np.linspace(0.001,1,num=50)}]
 gs = GridSearchCV(estimator=model,cv=10,scoring='neg_mean_squared_error',param_grid=params)
 gs_results = gs.fit(x,y)
 print(gs_results.best_params_)
 print('The root mean square error is: ', np.sqrt(np.abs(gs_results.best_score_)))
 
 %%time
-model = SCADRegression()
-params = [{'a':np.linspace(0.001,1,num=50)}]
+model = SQRTLasso()
+params = [{'alpha':np.linspace(0.001,1,num=50)}]
 gs = GridSearchCV(estimator=model,cv=10,scoring='neg_mean_squared_error',param_grid=params)
 gs_results = gs.fit(x,y)
 print(gs_results.best_params_)
 print('The mean square error is: ', np.abs(gs_results.best_score_))
+
+# Testing out the results using the best parameters found by GridSearchCV
+
 
 # Compute the L2 distance
 np.linalg.norm(model.coef_-beta,ord=2)
