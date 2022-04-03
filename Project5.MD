@@ -62,7 +62,61 @@ print(np.intersect1d(pos,pos_sqrtlasso).shape)
 
 
 # Compute the L2 distance
-np.linalg.norm(model.coef_-beta,ord=2)
+print(np.linalg.norm(model.coef_-beta,ord=2))
+
+
+# Create Sklearn compliant function for SCAD Penalty Regression
+class SCAD(BaseEstimator, RegressorMixin):
+    def __init__(self, a=2,lam=1):
+        self.a, self.lam = a, lam
+  
+    def fit(self, x, y):
+        a = self.a
+        lam   = self.lam
+
+        def scad_penalty(beta_hat, lambda_val, a_val):
+          is_linear = (np.abs(beta_hat) <= lambda_val)
+          is_quadratic = np.logical_and(lambda_val < np.abs(beta_hat), np.abs(beta_hat) <= a_val * lambda_val)
+          is_constant = (a_val * lambda_val) < np.abs(beta_hat)
+    
+          linear_part = lambda_val * np.abs(beta_hat) * is_linear
+          quadratic_part = (2 * a_val * lambda_val * np.abs(beta_hat) - beta_hat**2 - lambda_val**2) / (2 * (a_val - 1)) * is_quadratic
+          constant_part = (lambda_val**2 * (a_val + 1)) / 2 * is_constant
+          return linear_part + quadratic_part + constant_part
+
+        def scad_derivative(beta_hat, lambda_val, a_val):
+          return lambda_val * ((beta_hat <= lambda_val) + (a_val * lambda_val - beta_hat)*((a_val * lambda_val - beta_hat) > 0) / ((a_val - 1) * lambda_val) * (beta_hat > lambda_val))
+
+        
+        def scad(beta):
+          beta = beta.flatten()
+          beta = beta.reshape(-1,1)
+          n = len(y)
+          return 1/n*np.sum((y-x.dot(beta))**2) + np.sum(scad_penalty(beta,lam,a))
+
+         
+        def dscad(beta):
+          beta = beta.flatten()
+          beta = beta.reshape(-1,1)
+          n = len(y)
+          output = -2/n*np.transpose(x).dot(y-x.dot(beta))+scad_derivative(beta,lam,a)
+          return output.flatten()
+        
+        p = x.shape[1]
+        beta0 = np.zeros(p)
+        output = minimize(scad, beta0, method='L-BFGS-B', jac=dscad,options={'gtol': 1e-8, 'maxiter': 50000,'maxls': 50,'disp': False})
+        beta = output.x
+        self.coef_ = beta
+        
+    def predict(self, x):
+        return x.dot(self.coef_)
+        
+# Detect the position of the estimated non-zero beta coefficients/significant variables
+
+# Check how many of these important variables are actually important
+
+# Compute the L2 distance
+
 ```
 
 
