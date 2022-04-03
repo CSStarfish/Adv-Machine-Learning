@@ -177,6 +177,13 @@ np.random.seed(123)
 x = np.random.multivariate_normal(mu, toeplitz(vctr), size=n)
 y = np.matmul(x,beta) + sigma*np.random.normal(0,1,n)
 
+# Making 100 datasets
+X = []
+Y = []
+for i in range(0,100):
+  X.append(np.random.multivariate_normal(mu, toeplitz(vctr), size=n))
+  Y.append(np.matmul(x,beta) + sigma*np.random.normal(0,1,n))
+
 ```
 
 ## Part 3. Description of Technique
