@@ -286,6 +286,9 @@ gs_results = gs.fit(x,y)
 print(gs_results.best_params_)
 print('The mean square error is: ', np.abs(gs_results.best_score_))
 
+model = Lasso(alpha=0.16410204081632654, fit_intercept=False, max_iter=2500)
+model.fit(x,y)
+
 # Compute the L2 distance
 print(np.linalg.norm(model.coef_-beta,ord=2))
 
