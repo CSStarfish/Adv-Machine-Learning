@@ -181,8 +181,9 @@ y = np.matmul(x,beta) + sigma*np.random.normal(0,1,n)
 X = []
 Y = []
 for i in range(0,100):
-  X.append(np.random.multivariate_normal(mu, toeplitz(vctr), size=n))
-  Y.append(np.matmul(x,beta) + sigma*np.random.normal(0,1,n))
+  xnew = np.random.multivariate_normal(mu, toeplitz(vctr), size=n)
+  X.append(xnew)
+  Y.append(np.matmul(xnew,beta) + sigma*np.random.normal(0,1,n))
 
 ```
 
