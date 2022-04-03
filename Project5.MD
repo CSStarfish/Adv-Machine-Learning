@@ -283,6 +283,12 @@ print(np.linalg.norm(model.coef_-beta,ord=2))
 
 
 
+print(np.mean(true_coeffs))
+print(np.mean(L2Distance))
+print(np.mean(RMSE))
+
+
+
 # Lasso Regression calculations
 %%time
 model = Lasso(fit_intercept=False,max_iter=2500)
@@ -347,6 +353,20 @@ model.fit(x,y)
 # Compute the L2 distance
 np.linalg.norm(model.coef_-beta,ord=2)
 
+true_coeffs = []
+L2Distance = []
+RMSE = []
+model = ElasticNet(alpha=0.041775510204081635, l1_ratio=0.6020408163265306, fit_intercept=False, max_iter=500000)
+for i in range(0,100):
+  model.fit(X[i], Y[i])
+  true_coeffs.append(np.intersect1d(pos,np.where(model.coef_!=0)).shape[0])
+  L2Distance.append(np.linalg.norm(model.coef_-beta,ord=2))
+  RMSE.append(np.sqrt(MSE(Y[i],model.predict(X[i]))))
+  
+print(np.mean(true_coeffs))
+print(np.mean(L2Distance))
+print(np.mean(RMSE))
+
 
 # SCAD Penalty Regression calculations
 %%time
@@ -373,6 +393,12 @@ model.fit(x,y.reshape(-1,1))
 np.linalg.norm(model.coef_-beta,ord=2)
 
 
+
+print(np.mean(true_coeffs))
+print(np.mean(L2Distance))
+print(np.mean(RMSE))
+
+
 # Square Root Lasso Regression calculations
 %%time
 model = SQRTLasso()
@@ -395,4 +421,10 @@ print('The mean square error is: ', np.abs(gs_results.best_score_))
 
 # Compute the L2 distance
 np.linalg.norm(model.coef_-beta,ord=2)
+
+
+
+print(np.mean(true_coeffs))
+print(np.mean(L2Distance))
+print(np.mean(RMSE))
 ```
