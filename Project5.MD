@@ -66,7 +66,7 @@ print(np.linalg.norm(model.coef_-beta,ord=2))
 
 
 # Create Sklearn compliant function for SCAD Penalty Regression
-class SCAD(BaseEstimator, RegressorMixin):
+class SCADRegression(BaseEstimator, RegressorMixin):
     def __init__(self, a=2,lam=1):
         self.a, self.lam = a, lam
   
@@ -110,12 +110,33 @@ class SCAD(BaseEstimator, RegressorMixin):
         
     def predict(self, x):
         return x.dot(self.coef_)
-        
+   
+model = SCADRegression(a = 0.01, lam=0.1)
+
+%%time
+model.fit(x,y.reshape(-1,1))
+
+beta_hat = model.coef_
+print(beta_hat)
+
+# Incorporate soft-thresholding by setting any absolute values less than 0.05 equal to 0
+beta_hat[abs(beta_hat)<0.05] = 0
+print(beta_hat)
+
 # Detect the position of the estimated non-zero beta coefficients/significant variables
+pos_SCAD = np.where(beta_hat!=0)
+print(pos_SCAD)
+
+print(np.array(pos_SCAD).shape[1])
+# My SCAD penalty regression model identified 855 important variables
 
 # Check how many of these important variables are actually important
+print(np.intersect1d(pos,pos_SCAD))
+print(np.intersect1d(pos,pos_SCAD).shape)
+# We were able to reconstruct all 27 ground truths
 
 # Compute the L2 distance
+print(np.linalg.norm(model.coef_-beta,ord=2))
 
 ```
 
@@ -287,5 +308,8 @@ print('The mean square error is: ', np.abs(gs_results.best_score_))
 
 # Compute the L2 distance
 np.linalg.norm(model.coef_-beta,ord=2)
+
+
+# SCAD Penalty Regression calculations
 
 ```
