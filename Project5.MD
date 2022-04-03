@@ -311,5 +311,43 @@ np.linalg.norm(model.coef_-beta,ord=2)
 
 
 # SCAD Penalty Regression calculations
+%%time
+model = SCADRegression()
+params = [{'a':np.linspace(0.001,1,num=50), 'lam':np.linspace(0.001,5,num=100)}]
+gs = GridSearchCV(estimator=model,cv=10,scoring='neg_mean_squared_error',param_grid=params)
+gs_results = gs.fit(x,y)
+print(gs_results.best_params_)
+print('The root mean square error is: ', np.sqrt(np.abs(gs_results.best_score_)))
 
+%%time
+model = SCADRegression()
+params = [{'a':np.linspace(0.001,1,num=50), 'lam':np.linspace(0.001,5,num=100)}]
+gs = GridSearchCV(estimator=model,cv=10,scoring='neg_mean_squared_error',param_grid=params)
+gs_results = gs.fit(x,y)
+print(gs_results.best_params_)
+print('The mean square error is: ', np.abs(gs_results.best_score_))
+
+# Compute the L2 distance
+np.linalg.norm(model.coef_-beta,ord=2)
+
+
+# Square Root Lasso Regression calculations
+%%time
+model = SCADRegression()
+params = [{'a':np.linspace(0.001,1,num=50)}]
+gs = GridSearchCV(estimator=model,cv=10,scoring='neg_mean_squared_error',param_grid=params)
+gs_results = gs.fit(x,y)
+print(gs_results.best_params_)
+print('The root mean square error is: ', np.sqrt(np.abs(gs_results.best_score_)))
+
+%%time
+model = SCADRegression()
+params = [{'a':np.linspace(0.001,1,num=50)}]
+gs = GridSearchCV(estimator=model,cv=10,scoring='neg_mean_squared_error',param_grid=params)
+gs_results = gs.fit(x,y)
+print(gs_results.best_params_)
+print('The mean square error is: ', np.abs(gs_results.best_score_))
+
+# Compute the L2 distance
+np.linalg.norm(model.coef_-beta,ord=2)
 ```
