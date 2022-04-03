@@ -190,6 +190,8 @@ for i in range(0,100):
 ## Part 3. Description of Technique
 For the final portion of the project, I used the GridSearchCV function to determine the best set of alpha and, when applicable, L1 ratio and/or lambda parameters to minimize the root mean-squared error (RMSE) of the respective regression models applied to the simulated data.  I then calculated the L2 distance between the ground truth beta coefficients and those estimated by the regression model being tested.  In the case of ridge regression, the best alpha was determined to be approximately 0.001 with an RMSE of approximately 5.9033 (or a mean-squared error of about 34.8486).  The L2 distance for ridge regression with this alpha was about 3.0028.  Lasso regression's best alpha was calculated to be about 0.1641 with an RMSE of approximately 3.936 (or a mean-squared error of 15.4909).  The L2 distance for lasso regression with this alpha was about 3.80797.  Elastic Net regression, which is essentially a convex combination of ridge and lasso regression, had the lowest RMSE at about 3.9004 (or a mean-squared error of 15.2135) using an alpha of approximately 0.0418 and an L1 ratio of 0.60204.  The L2 distance for elastic net regression with this comination of alpha and L1 ratio was approximately 3.1211.  The best alpha value for square root lasso regression was found to be 0.1437, yielding an RMSE of approximately 3.8686 and an MSE of about 14.9664.  This regression model's L2 distance was notably smaller than the preceding regression models' L2 distances at  approximately 1.2019.  Lastly, the best alpha for SCAD penalty regression was determined to be approximately 0.1641, similar to the best alpha for lasso regression, and the best lambda value for SCAD penalty was 0.001.  This pair of arguments yielded an RMSE of approximately 5.9201 (or a mean-squared error of 35.0478) and an L2 distance of 3.0188 units. 
 
+Finally, I applied the best sets of arguments to each regression model, respectively, and fit these models to each of the 100 datasets to determine the average number of ground truth beta coefficients identified, the average L2 distance between the estimated and ground truth coefficients, and the average RMSE of the models across all 100 datasets.  For ridge regression,  .  For lasso regression, the average number of ground truth betas correctly identified was about 20.88, the average L2 distance was 3.1569, and the average RMSE was approxiamtely 1.7096.  For elastic net regression, .  For square root lasso regression,  .  Lastly, for SCAD penalty regression, .  
+
 ### Part 3. Code
 
 ```
@@ -304,6 +306,15 @@ model.fit(x,y)
 
 # Compute the L2 distance
 print(np.linalg.norm(model.coef_-beta,ord=2))
+
+# Compute the average L2 distances and RMSEs
+L2Distance = []
+RMSE = []
+model = Lasso(alpha=0.16410204081632654, fit_intercept=False, max_iter=2500)
+for i in range(0,100):
+  model.fit(X[i], Y[i])
+  L2Distance.append(np.intersect1d(pos,np.where(model.coef_!=0)).shape[0])
+  RMSE.append(np.sqrt(MSE(Y[i],model.predict(X[i]))))
 
 
 
