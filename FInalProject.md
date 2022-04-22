@@ -20,6 +20,7 @@
   1. Inflation Levels
 
   2. Value of S&P 500 Market Index
+  ![S&P 500](SP500.png)
 
   3. Yields on 10-Year U.S. Treasury Securities
 
