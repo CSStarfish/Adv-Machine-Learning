@@ -34,6 +34,8 @@
 
   6. Commercial Paper Outstanding
   ![Commercial Paper](commpaper.png)
-
+  
+  7. Total Dataset Merged
+  ![Merged Data](totaldataframe.png)
 
 ### **Discussion and Inferences**
