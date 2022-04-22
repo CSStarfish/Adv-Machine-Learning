@@ -9,4 +9,25 @@
 
 ### **Description of Data**
 
-  I have collected my data directly from the Federal Reserve, which provides numerous datasets on US economic indicators.  For this project, I selected daily data on the current value of the S&P 500 index, the yields on 10-year US Treasury securities which are essentially considered risk-free investments, the yield on high-yield or junk bonds which are considered higher risk investments because of the below-investment-grade credit rating (i.e., below a BBB-).  I also chose to analyze quarterly data on the current US gross domestic product (GDP) and commercial paper outstanding, which is essentially like a short-term corporate-issued bond.  From there, I merged the data into one larger dataset by joining on the date column.
+  I have collected my data directly from the Federal Reserve, which provides numerous datasets on US economic indicators.  For this project, I selected daily data on the current value of the S&P 500 index, the yields on 10-year US Treasury securities which are essentially considered risk-free investments, the yield on high-yield or junk bonds which are considered higher risk investments because of the below-investment-grade credit rating (i.e., below a BBB-).  I also chose to analyze quarterly data on the current US gross domestic product (GDP) and commercial paper outstanding, which is essentially like a short-term corporate-issued bond.  Each dataset begins on April 9, 2012 and continues through the present day.  From there, I merged the data into one larger dataset by joining on the date column.
+  
+  Since two of my initial datasets recorded data quarterly, I filled in the remainder of daily data records in the merged dataset via interpolation.
+
+
+### **Description of Methods**
+  I began my analysis with data pre-processing to read the CSV data files into Pandas dataframes, interpolating the quarterly data into daily data, and merging each individual dataset into one larger dataframe by joining on the date column that I used as the index for the data entries.  From there, I plotted the data to get a sense of the trends and seasonality that could be easily noted visually.  I have attached screenshots of each dataset plotted against time below:
+  
+  1. Inflation Levels
+
+  2. Value of S&P 500 Market Index
+
+  3. Yields on 10-Year U.S. Treasury Securities
+
+  4. Yields on Below-Investment-Grade Bonds (i.e., High-yield or junk bonds)
+
+  5. U.S. GDP
+
+  6. Commercial Paper Outstanding
+
+
+### **Discussion and Inferences**
