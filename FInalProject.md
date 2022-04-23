@@ -38,3 +38,8 @@
   ![Merged Data](totaldataframe.png)
 
 ### **Discussion and Inferences**
+
+
+### **Citations**
+1. 
+2. https://pandas.pydata.org/docs/reference/api/pandas.Series.interpolate.html
