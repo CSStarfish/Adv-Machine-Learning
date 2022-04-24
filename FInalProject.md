@@ -17,24 +17,38 @@
   I began my analysis with data pre-processing to read the CSV data files into Pandas dataframes, interpolating the quarterly data and duplicating the weekly data into daily data, and merging each individual dataset into one larger dataframe by joining on the date column that I used as the index for the data entries.  From there, I plotted the data to get a sense of the trends and seasonality that could be easily noted visually.  I have attached screenshots of each dataset plotted against time below:
   
   1. Inflation Levels
+  
+  
   ![Inflation](Inflation.png)
 
   2. Value of S&P 500 Market Index
+  
+  
   ![S&P 500](SP500.png)
 
   3. Yields on 10-Year U.S. Treasury Securities
+  
+  
   ![Ten-Year Yields](10year.png)
 
   4. Yields on Below-Investment-Grade Bonds (i.e., High-yield or junk bonds)
+  
+  
   ![High-Yield Bonds](highyieldbonds.png)
 
   5. U.S. GDP
+  
+  
   ![GDP](GDP.png)
 
   6. Commercial Paper Outstanding
+  
+  
   ![Commercial Paper](commpaper.png)
   
   7. Total Dataset Merged
+  
+  
   ![Merged Data](totaldataframe.png)
 
 ### **Discussion and Inferences**
