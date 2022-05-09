@@ -74,4 +74,29 @@ For example, here is an image from each category:
   
   ![](Sugarbeet.png)
 
-###  
+As one may note after viewing the images above, each of the images is a different size.  As such, the first step I took in my data processing was to rescale all the images to be 128x128 pixels.
+
+###  Description of Methods
+
+#### Data Processing
+
+
+### Discussion and Inferences
+
+
+### Citations
+#### Convolutional Neural Network
+
+  * Architecture
+
+#### ResNet
+  
+  * Architecture
+
+#### Dense Neural Network
+
+  * Architecture
+
+#### Recurrent Neural Network
+
+  * Architecture
