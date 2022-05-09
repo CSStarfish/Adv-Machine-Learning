@@ -25,28 +25,53 @@ The dataset contains pictures of 960 different plant seedlings shortly after spr
 The images were split into a training and testing dataset, with the training images assigned to their respective species's label and the testing images having no assigned label.
 
 For example, here is an image from each category:
-  ** Black-grass:
+
+  * Black-grass:
   
-  ** Charlock:
+  ![](Blackgrass.png)
   
-  ** Cleavers:
+  * Charlock:
+
+  ![](Charlock.png)
   
-  ** Common Chickweed:
+  * Cleavers:
   
-  ** Common Wheat:
+  ![](Cleavers.png)
   
-  ** Fat Hen:
+  * Common Chickweed:
   
-  ** Loose Silky-bent:
+  ![]('Common Chickweed.png')
   
-  ** Maize:
+  * Common Wheat:
   
-  ** Scentless Mayweed:
+  ![]('Common Wheat.png')
   
-  ** Shepherds Purse:
+  * Fat Hen:
   
-  ** Small-flowered Cranesbill:
+  ![]('Fat Hen.png')
   
-  ** Sugar Beet:
+  * Loose Silky-bent:
+  
+  ![](Loose Silkybent.png)
+  
+  * Maize:
+  
+  ![](Maize.png)
+  
+  * Scentless Mayweed:
+  
+  ![]('Scentless Mayweed.png')
+  
+  * Shepherds Purse:
+  
+  ![]('Sheperds Purse.png')
+  
+  * Small-flowered Cranesbill:
+ 
+ ![]('Smallflowered Cranesbill.png')
+  
+  * Sugar Beet:
+  
+  ![]('Sugar beet.png')
 
 ###  
