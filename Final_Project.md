@@ -100,3 +100,5 @@ As one may note after viewing the images above, each of the images is a differen
 #### Recurrent Neural Network
 
   * Architecture
+
+#### AlexNet
