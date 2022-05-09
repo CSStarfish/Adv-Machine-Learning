@@ -40,19 +40,19 @@ For example, here is an image from each category:
   
   * Common Chickweed:
   
-  ![]('Common Chickweed.png')
+  ![](CommonChickweed.png)
   
   * Common Wheat:
   
-  ![]('Common Wheat.png')
+  ![](CommonWheat.png)
   
   * Fat Hen:
   
-  ![]('Fat Hen.png')
+  ![](FatHen.png)
   
   * Loose Silky-bent:
   
-  ![](Loose Silkybent.png)
+  ![](LooseSilkybent.png)
   
   * Maize:
   
@@ -60,18 +60,18 @@ For example, here is an image from each category:
   
   * Scentless Mayweed:
   
-  ![]('Scentless Mayweed.png')
+  ![](ScentlessMayweed.png)
   
   * Shepherds Purse:
   
-  ![]('Sheperds Purse.png')
+  ![](SheperdsPurse.png)
   
   * Small-flowered Cranesbill:
  
- ![]('Smallflowered Cranesbill.png')
+ ![](SmallfloweredCranesbill.png)
   
   * Sugar Beet:
   
-  ![]('Sugar beet.png')
+  ![](Sugarbeet.png)
 
 ###  
