@@ -9,7 +9,7 @@ It can be especially difficult to differentiate a weed from a crop seedling earl
 ### Description of Data
 
 The seedling data was provided by the Aarhus University Signal Processing group and University of Southern Denmark and was posted to Kaggle as a competition to allow the public to help improve upon computer vision algorithms and contribute to the advancement of farming techniques.
-The dataset contains pictures of 960 different plant seedlings shortly after sprouting that belong to one of 12 species categories:
+The dataset contains pictures of 4,7500 different plant seedlings shortly after sprouting that belong to one of 12 species categories:
   1. Black-grass
   2. Charlock
   3. Cleavers
