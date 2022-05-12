@@ -183,16 +183,29 @@ For example, here is an image from each category:
 #### Data Processing
 I began the data processing step by importing the images and their respective labels by following their respective file paths and resized the images to all be the same 128x128 pixel size.  I then ensured all of the images followed the same Red-Green-Blue (RGB) color mapping and appended the images and their class names to their respective lists.  Next, I converted the lists of image arrays and class labels into numpy arrays so that I could rescale the pixel values in the pictures by dividing by 255 to normalize them.  I also encoded each of the 12 classes in the label list into categorical values.  The image arrays containing their pixel values would then become the x-values to be input into the machine learning models and the class labels would become the y-values that the machine learning models sought to predict.  I then split the data into testing and training sets with an 80%-20% division, respectively, and passed these data into each of my models.  After analyzing the accuracy associated with these preliminary models, I passed the training images into an image data generator to augment the data.  In doing so, pictures were rotated up to 20 degrees, zoomed in and out by up to 20%, shifted vertically and horizontally by up to 30%, and flipped on both the horizontal and vertical axes to allow the models to be trained on a wide variety of image qualities they could potentially encounter.
 
+
+Because I was seeking to classify images and would thus need to implement computer vision techniques, I chose to use neural networks to create a machine learning model that would predict what it saw in the picture.  A neural network is a collection of sequential layers of neurons that take an array of pixel data as input, process those pixels through forward propagation through each successive neural layer in the network, and ultimately yield an output with an estimated response.  In the case of image classification, this estimate will be the model's prediction of what class that picture belongs to/what the image depicts.  While it is the programmer's personal choice how many neurons to have in each layer, the final layer must contain the same amount of neurons as image class options.  For instance, if a neural network is trying to predict whether an image is displaying a cat or a dog, that network must have two (and only two) neurons in its final layer.  Each layer also has its own activation function which makes the determination of whether a neuron's input is a significant predictor.  For classification problems, sigmoid is is a useful activator because it outputs a probability between 0 and 1 that the input belongs to a particular class.  The weights that are calculated as the input feeds through the neural network will be back-propagated through the layers to better inform the model's learning.  The programmer will also select a learning rate for the model to provide as a parameter for the network's optimizer function.  It is the optimizer that seeks to minimize the loss of the model.  The neural network model is then compiled and fit to the data.  
+
+
+
 #### Convolutional Neural Network
+
+  I first chose to test a convolutional neural network model containing a series of convolutional, max pooling, and batch normalization layers.  A convolutional layer operates by applying a filter of specified dimensionality across the picture and transform the pixels in that location by setting the pixel intensity in the center of the filter equal to the sum of the pixel intensities enveloped by the filter.  If one chooses to include padding in their convolutional filter, then this will allow the filter to calculate a new pixel intensity to replace each original pixel.  Max 2D pooling layers similarly scan a collection of pixels in the image contained within a square of the specified dimensionality of the pool and creates a less granular/smaller version of the original image by setting a singular pixel intensity equal to the largest intensity value from the selection of pixels from the original picture.  This allows the model to pick out the most important and most distinctive features in a picture.  It can sometimes be helpful to include dropout layers to cut ties between neurons in a given layer and the neurons in preceding layers to prevent overfitting the model to the training data and thus negatively impacting the model's ability to accurately predict future testing pictures that it has never seen before.  
 
   * Architecture (Note: Next, I will be inserting a screenshot of the model summary.)
   * Cross-Entropy Loss
   * Accuracy
 
+
+
 #### Dense Neural Network
+
+  Next, I tested a dense neural network model containing a series of dense neural layers, which means that each neuron is connected to all neurons from the layer prior to it.  Since dense neural networks are typically used in textual analysis, I assumed that this model would not be the most accurate because it was not as well-suited to image classification.  However, I still utilized a dense neural network because I thought it would be interesting to observe its results in the context of this particular dataset.
 
   * Architecture (Note: Next, I will be inserting a screenshot of the model summary.)
   * Cross-Entropy Loss
+
+
 
 #### AlexNet
 
@@ -200,11 +213,14 @@ I began the data processing step by importing the images and their respective la
   * Cross-Entropy Loss
   * Accuracy
 
+
+
 #### ResNet
   
   * Architecture (Note: Next, I will be inserting a screenshot of the model summary.)
   * Cross-Entropy Loss
   * Accuracy
+
 
 
 ### Discussion and Inferences
