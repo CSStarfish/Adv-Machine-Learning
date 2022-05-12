@@ -331,7 +331,7 @@ For each neural network model tested, I used K-fold cross validation to ensure t
   
   ResNet-50 is another alternative convolutional neural network design that contains 50 neural layers, so I implemented the keras ResNet50 architecture instantiation layer. This model proved to be the most accurate, with average accuracy reaching over 70% on the seedling images.  Average accuracy even reached 73% when the data passed to the model was augmented.  As such, I used the ResNet model to make predictions on brand new pictures for both classification problems.
   
-  Here is an example of a picture that the model correctly identified as a Small-flowered Cranesbill when it was passed a brand new picture that it had never seen before from the test folder of the dataset (which I kept in reserve for predictions because these were not labeled, so I had to check the species of the seedling depicted manually).  In this case, the model was highly confident, with a probability of over 99% that the image depicted a seedling from class 10.  This corresponded to the small-flowered cranesbill:
+  Here is an example of a picture that the model correctly identified as a Small-flowered Cranesbill when it was passed a brand new picture that it had never seen before from the test folder of the dataset (which I kept in reserve for predictions because these were not labeled, so I had to check the species of the seedling depicted manually).  In this case, the model was highly confident, with a probability of over 99% that the image depicted a seedling from class 11.  This corresponded to the Small-Flowered Cranesbill:
   
   
   ![](Prediction.png)
