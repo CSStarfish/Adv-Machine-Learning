@@ -3,6 +3,8 @@
 
 ## **Introduction**
 
+(Note: Please see my code saved in my Advanced Machine Learning GitHub repository as 'FinalProject.ipynb')
+
 Kaggle released a competition a few years ago to determine the species of a seedling based on a picture of the sprouted plant, so as to help farmers better tend to their farms by differentiating weeds from crops.  By being able to quickly scan a field and detect weeds or other plants that do not belong in that section of farmland, farmers can take action to remove the unwelcome addition to the plot to prevent their growth from consuming the resources, absorbing the nutrients, and crowding the space necessary for the intended plant seedlings' survival and healthy yield.  
 
 According to the Weed Science Society of America (WSSA), weeds were responsible for a 22.4% average yield loss on winter wheat and an average 35.3% yield loss on spring wheat in North America between 2007 and 2013 ([WSSA](https://wssa.net/wp-content/uploads/Wheat-yield-loss-POSTER.pdf)).  Their research also indicates that the estimated value loss for corn was approximately $47 billion and $16 billion ofr soybeans over this same time period ([WSSA](https://wssa.net/wssa/weed/croploss-2/)).
