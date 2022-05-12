@@ -186,11 +186,14 @@ I began the data processing step by importing the images and their respective la
 
 Because I was seeking to classify images and would thus need to implement computer vision techniques, I chose to use neural networks to create a machine learning model that would predict what it saw in the picture.  A neural network is a collection of sequential layers of neurons that take an array of pixel data as input, process those pixels through forward propagation through each successive neural layer in the network, and ultimately yield an output with an estimated response.  In the case of image classification, this estimate will be the model's prediction of what class that picture belongs to/what the image depicts.  While it is the programmer's personal choice how many neurons to have in each layer, the final layer must contain the same amount of neurons as image class options.  For instance, if a neural network is trying to predict whether an image is displaying a cat or a dog, that network must have two (and only two) neurons in its final layer.  Each layer also has its own activation function which makes the determination of whether a neuron's input is a significant predictor.  For classification problems, sigmoid is is a useful activator because it outputs a probability between 0 and 1 that the input belongs to a particular class.  The weights that are calculated as the input feeds through the neural network will be back-propagated through the layers to better inform the model's learning.  The programmer will also select a learning rate for the model to provide as a parameter for the network's optimizer function.  It is the optimizer that seeks to minimize the loss of the model.  The neural network model is then compiled and fit to the data.  
 
+For each neural network model tested, I used K-fold cross validation to ensure their respective accuracies were repeatable across multiple splits of the data.  I initially used 10 splits, but this took several hours to run and would often lead to excess RAM utilization, so I reduced the number of splits to 3 to conserve resources and yield results more quickly.
 
 
 ### Convolutional Neural Network
 
   I first chose to test a convolutional neural network model containing a series of convolutional, max pooling, and batch normalization layers.  A convolutional layer operates by applying a filter of specified dimensionality across the picture and transform the pixels in that location by setting the pixel intensity in the center of the filter equal to the sum of the pixel intensities enveloped by the filter.  If one chooses to include padding in their convolutional filter, then this will allow the filter to calculate a new pixel intensity to replace each original pixel.  Max 2D pooling layers similarly scan a collection of pixels in the image contained within a square of the specified dimensionality of the pool and creates a less granular/smaller version of the original image by setting a singular pixel intensity equal to the largest intensity value from the selection of pixels from the original picture.  This allows the model to pick out the most important and most distinctive features in a picture.  It can sometimes be helpful to include dropout layers to cut ties between neurons in a given layer and the neurons in preceding layers to prevent overfitting the model to the training data and thus negatively impacting the model's ability to accurately predict future testing pictures that it has never seen before.  
+  
+  Interestingly, the average accuracy with this model hovered around 12-13% on the seedling dataset.  While I expected the model would have great difficulty distinguishing between the varieties of seedlings, as even I can't tell the difference between each of the grassy varieties or each of the seedlings with rounded leaves, I was not expecting the accuracy to be this substantially low.  However, data augmentation did improve its accuracy slightly to about 15%.  It performed quite a bit better on the flower image dataset, with an average accuracy of over 25%, but this was still quite a poor job.
 
   * Architecture (Note: Next, I will be inserting a screenshot of the model summary.)
   * Cross-Entropy Loss
@@ -200,7 +203,7 @@ Because I was seeking to classify images and would thus need to implement comput
 
 ### Dense Neural Network
 
-  Next, I tested a dense neural network model containing a series of dense neural layers, which means that each neuron is connected to all neurons from the layer prior to it.  Since dense neural networks are typically used in textual analysis, I assumed that this model would not be the most accurate because it was not as well-suited to image classification.  However, I still utilized a dense neural network because I thought it would be interesting to observe its results in the context of this particular dataset.
+  Next, I tested a dense neural network model containing a series of dense neural layers, which means that each neuron is connected to all neurons from the layer prior to it.  Since dense neural networks are typically used in textual analysis, I assumed that this model would not be the most accurate because it was not as well-suited to image classification.  However, I still utilized a dense neural network because I thought it would be interesting to observe its results in the context of this particular dataset.  I was shocked to find that this model actually outperformed the convolutional neural network, with average accuracy exceeding 40% and reaching 70% in individual epochs for the seedling dataset.  The results were very similar on the flower dataset, with an average accuracy around 40%.
 
   * Architecture (Note: Next, I will be inserting a screenshot of the model summary.)
   * Cross-Entropy Loss
@@ -208,6 +211,8 @@ Because I was seeking to classify images and would thus need to implement comput
 
 
 ### AlexNet
+
+  I then implemented the convolutional neural network design created by Alex Krizhevsky, as discussed in class, but with the final layer's neurons reduced to 12 to fit the context of the seedling image dataset and 5 for the flower image dataset.  This fared just as poorly as the convolutional neural network, at an average accuracy of just 12-14% for the seedlings.  The average did not noticeably improve with data augmentation.  The average accuracy improved to approximately 25% on the flower image dataset.
 
   * Architecture (Note: Next, I will be inserting a screenshot of the model summary.)
   * Cross-Entropy Loss
@@ -217,13 +222,23 @@ Because I was seeking to classify images and would thus need to implement comput
 
 ### ResNet
   
+  ResNet-50 is another alternative convolutional neural network design that contains 50 neural layers, so I implemented the keras ResNet50 architecture instantiation layer. This model proved to be the most accurate, with average accuracy reaching over 70% on the seedling images.  Average accuracy even reached 73% when the data passed to the model was augmented.  As such, I used the ResNet model to make predictions on brand new pictures for both classification problems.
+  
+  Here is an example of a picture that the model correctly identified as a Small-flowered Cranesbill when it was passed a brand new picture that it had never seen before from the test folder of the dataset (which I kept in reserve for predictions because these were not labeled, so I had to check the species of the seedling depicted manually).  In this case, the model was highly confident, with a probability of over 99% that the image depicted a seedling from class 10.  This corresponded to the small-flowered cranesbill:
+  
+  ![](Prediction.png)
+  
+  
+  
   * Architecture (Note: Next, I will be inserting a screenshot of the model summary.)
   * Cross-Entropy Loss
   * Accuracy
 
 
-
-## Discussion and Inferences
-
-
-## Citations
+## Citations and Sources Used
+1. https://www.kaggle.com/competitions/plant-seedlings-classification
+2. https://www.kaggle.com/datasets/alxmamaev/flowers-recognition/code
+3. https://wssa.net/wp-content/uploads/Wheat-yield-loss-POSTER.pdf
+4. https://wssa.net/wssa/weed/croploss-2/)
+6. https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet50/ResNet50 
+7. Course/lecture documents on Blackboard
