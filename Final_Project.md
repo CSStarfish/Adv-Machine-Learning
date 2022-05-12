@@ -1,7 +1,7 @@
 # **Weeding Out The Bad Seeds**
 ## **Final Project - Image Classification Using Neural Networks to identify plant seedlings versus weeds**
 
-### **Introduction**
+## **Introduction**
 
 Kaggle released a competition a few years ago to determine the species of a seedling based on a picture of the sprouted plant, so as to help farmers better tend to their farms by differentiating weeds from crops.  By being able to quickly scan a field and detect weeds or other plants that do not belong in that section of farmland, farmers can take action to remove the unwelcome addition to the plot to prevent their growth from consuming the resources, absorbing the nutrients, and crowding the space necessary for the intended plant seedlings' survival and healthy yield.  
 
@@ -13,7 +13,7 @@ It can be especially difficult to differentiate a weed from a crop seedling earl
 
 To further build on this cultivation topic, I also decided to work with a dataset of various flower varieties to determine which type of flower the picture displays.  Since this dataset seemed more simplistic than the seedling dataset because it had fewer classes of vegetation and each class was more visually distinctive from the others, I did not use this as my main dataset for analysis and machine learning model evaluation.  However, I thought it paired nicely with the seedling analysis to show more applications of the neural network architectures I describe in further detail below.
 
-### **Description of Data**
+## **Description of Data**
 
 The seedling data was provided by the Aarhus University Signal Processing group and University of Southern Denmark and was posted to Kaggle as a competition to allow the public to help improve upon computer vision algorithms and contribute to the advancement of farming techniques.
 The dataset contains pictures of 4,7500 different plant seedlings shortly after sprouting that belong to one of 12 species categories:
@@ -178,9 +178,9 @@ For example, here is an image from each category:
   Similar to the rose, tulips also display a wide variety of colors and degree of flower development, which adds to the computer's difficulty successfully determining the most common characteristics of a tulip.
 
 
-###  Description of Methods
+##  Description of Methods
 
-#### Data Processing
+### Data Processing
 I began the data processing step by importing the images and their respective labels by following their respective file paths and resized the images to all be the same 128x128 pixel size.  I then ensured all of the images followed the same Red-Green-Blue (RGB) color mapping and appended the images and their class names to their respective lists.  Next, I converted the lists of image arrays and class labels into numpy arrays so that I could rescale the pixel values in the pictures by dividing by 255 to normalize them.  I also encoded each of the 12 classes in the label list into categorical values.  The image arrays containing their pixel values would then become the x-values to be input into the machine learning models and the class labels would become the y-values that the machine learning models sought to predict.  I then split the data into testing and training sets with an 80%-20% division, respectively, and passed these data into each of my models.  After analyzing the accuracy associated with these preliminary models, I passed the training images into an image data generator to augment the data.  In doing so, pictures were rotated up to 20 degrees, zoomed in and out by up to 20%, shifted vertically and horizontally by up to 30%, and flipped on both the horizontal and vertical axes to allow the models to be trained on a wide variety of image qualities they could potentially encounter.
 
 
@@ -188,7 +188,7 @@ Because I was seeking to classify images and would thus need to implement comput
 
 
 
-#### Convolutional Neural Network
+### Convolutional Neural Network
 
   I first chose to test a convolutional neural network model containing a series of convolutional, max pooling, and batch normalization layers.  A convolutional layer operates by applying a filter of specified dimensionality across the picture and transform the pixels in that location by setting the pixel intensity in the center of the filter equal to the sum of the pixel intensities enveloped by the filter.  If one chooses to include padding in their convolutional filter, then this will allow the filter to calculate a new pixel intensity to replace each original pixel.  Max 2D pooling layers similarly scan a collection of pixels in the image contained within a square of the specified dimensionality of the pool and creates a less granular/smaller version of the original image by setting a singular pixel intensity equal to the largest intensity value from the selection of pixels from the original picture.  This allows the model to pick out the most important and most distinctive features in a picture.  It can sometimes be helpful to include dropout layers to cut ties between neurons in a given layer and the neurons in preceding layers to prevent overfitting the model to the training data and thus negatively impacting the model's ability to accurately predict future testing pictures that it has never seen before.  
 
@@ -198,7 +198,7 @@ Because I was seeking to classify images and would thus need to implement comput
 
 
 
-#### Dense Neural Network
+### Dense Neural Network
 
   Next, I tested a dense neural network model containing a series of dense neural layers, which means that each neuron is connected to all neurons from the layer prior to it.  Since dense neural networks are typically used in textual analysis, I assumed that this model would not be the most accurate because it was not as well-suited to image classification.  However, I still utilized a dense neural network because I thought it would be interesting to observe its results in the context of this particular dataset.
 
@@ -207,7 +207,7 @@ Because I was seeking to classify images and would thus need to implement comput
 
 
 
-#### AlexNet
+### AlexNet
 
   * Architecture (Note: Next, I will be inserting a screenshot of the model summary.)
   * Cross-Entropy Loss
@@ -215,7 +215,7 @@ Because I was seeking to classify images and would thus need to implement comput
 
 
 
-#### ResNet
+### ResNet
   
   * Architecture (Note: Next, I will be inserting a screenshot of the model summary.)
   * Cross-Entropy Loss
@@ -223,7 +223,7 @@ Because I was seeking to classify images and would thus need to implement comput
 
 
 
-### Discussion and Inferences
+## Discussion and Inferences
 
 
-### Citations
+## Citations
