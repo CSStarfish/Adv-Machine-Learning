@@ -193,31 +193,138 @@ For each neural network model tested, I used K-fold cross validation to ensure t
 
   I first chose to test a convolutional neural network model containing a series of convolutional, max pooling, and batch normalization layers.  A convolutional layer operates by applying a filter of specified dimensionality across the picture and transform the pixels in that location by setting the pixel intensity in the center of the filter equal to the sum of the pixel intensities enveloped by the filter.  If one chooses to include padding in their convolutional filter, then this will allow the filter to calculate a new pixel intensity to replace each original pixel.  Max 2D pooling layers similarly scan a collection of pixels in the image contained within a square of the specified dimensionality of the pool and creates a less granular/smaller version of the original image by setting a singular pixel intensity equal to the largest intensity value from the selection of pixels from the original picture.  This allows the model to pick out the most important and most distinctive features in a picture.  It can sometimes be helpful to include dropout layers to cut ties between neurons in a given layer and the neurons in preceding layers to prevent overfitting the model to the training data and thus negatively impacting the model's ability to accurately predict future testing pictures that it has never seen before.  
   
-  Interestingly, the average accuracy with this model hovered around 12-13% on the seedling dataset.  While I expected the model would have great difficulty distinguishing between the varieties of seedlings, as even I can't tell the difference between each of the grassy varieties or each of the seedlings with rounded leaves, I was not expecting the accuracy to be this substantially low.  However, data augmentation did improve its accuracy slightly to about 15%.  It performed quite a bit better on the flower image dataset, with an average accuracy of over 25%, but this was still quite a poor job.
+  Interestingly, the average accuracy with this model hovered around 12-13% on the seedling dataset.  While I expected the model would have great difficulty distinguishing between the varieties of seedlings, as even I can't tell the difference between each of the grassy varieties or each of the seedlings with rounded leaves, I was not expecting the accuracy to be this substantially low.  However, data augmentation did improve its accuracy slightly to about 15%.  It performed quite a bit better on the flower image dataset, with an average accuracy of over 25%, but this was still quite a poor job.  Accuracy did not appear to improve after later removing dropout layers either.
 
-  * Architecture (Note: Next, I will be inserting a screenshot of the model summary.)
-  * Cross-Entropy Loss
-  * Accuracy
+  #### Architecture
+  
+  * Seedling Code:
+  
+  ```
+    model = Sequential()
+    model.add(Conv2D(filters = 64, kernel_size = (5,5),padding = 'Same',activation ='relu', input_shape = (128,128,3)))
+    model.add(MaxPooling2D(pool_size=(2,2)))
 
+    model.add(Conv2D(filters = 128, kernel_size = (5,5),padding = 'Same',activation ='relu'))
+    model.add(Conv2D(filters = 128, kernel_size = (5,5),padding = 'Same',activation ='relu'))
+    model.add(Conv2D(filters = 128, kernel_size = (5,5),padding = 'Same',activation ='relu'))
+    model.add(MaxPooling2D(pool_size=(2,2)))
 
+    model.add(Flatten())
+    model.add(Dense(128, activation='relu'))
+    model.add(Dense(64, activation='relu'))
+    model.add(Dropout(rate=0.5))
+    model.add(Dense(12, activation = "softmax"))
+  ```
+  
+    * Flower Code:
+  
+  ```
+    model = Sequential()
+    model.add(Conv2D(filters = 64, kernel_size = (5,5),padding = 'Same',activation ='relu', input_shape = (128,128,3)))
+    model.add(MaxPooling2D(pool_size=(2,2)))
+
+    model.add(Conv2D(filters = 128, kernel_size = (5,5),padding = 'Same',activation ='relu'))
+    model.add(Conv2D(filters = 128, kernel_size = (5,5),padding = 'Same',activation ='relu'))
+    model.add(Conv2D(filters = 128, kernel_size = (5,5),padding = 'Same',activation ='relu'))
+    model.add(MaxPooling2D(pool_size=(2,2)))
+
+    model.add(Flatten())
+    model.add(Dense(128, activation='relu'))
+    model.add(Dense(64, activation='relu'))
+    model.add(Dropout(rate=0.5))
+    model.add(Dense(5, activation = "softmax"))
+  ```
 
 ### Dense Neural Network
 
   Next, I tested a dense neural network model containing a series of dense neural layers, which means that each neuron is connected to all neurons from the layer prior to it.  Since dense neural networks are typically used in textual analysis, I assumed that this model would not be the most accurate because it was not as well-suited to image classification.  However, I still utilized a dense neural network because I thought it would be interesting to observe its results in the context of this particular dataset.  I was shocked to find that this model actually outperformed the convolutional neural network, with average accuracy exceeding 40% and reaching 70% in individual epochs for the seedling dataset.  The results were very similar on the flower dataset, with an average accuracy around 40%.
 
-  * Architecture (Note: Next, I will be inserting a screenshot of the model summary.)
-  * Cross-Entropy Loss
+  #### Architecture
 
+  * Seedling Code:
+ 
+  ```
+    model = Sequential()
+    model.add(Flatten())
+    model.add(Dense(200))
+    model.add(Dense(100))
+    model.add(Dense(64))
+    model.add(Dense(32)) 
+    model.add(Dense(24))
+    model.add(Dense(16))
+    model.add(Dense(12, activation='softmax'))
+  ```
 
+  * Flower Code:
+ 
+  ```
+    model = Sequential()
+    model.add(Flatten())
+    model.add(Dense(200))
+    model.add(Dense(100))
+    model.add(Dense(64))
+    model.add(Dense(32)) 
+    model.add(Dense(24))
+    model.add(Dense(16))
+    model.add(Dense(5, activation='softmax'))
+  ```
 
 ### AlexNet
 
   I then implemented the convolutional neural network design created by Alex Krizhevsky, as discussed in class, but with the final layer's neurons reduced to 12 to fit the context of the seedling image dataset and 5 for the flower image dataset.  This fared just as poorly as the convolutional neural network, at an average accuracy of just 12-14% for the seedlings.  The average did not noticeably improve with data augmentation.  The average accuracy improved to approximately 25% on the flower image dataset.
 
-  * Architecture (Note: Next, I will be inserting a screenshot of the model summary.)
-  * Cross-Entropy Loss
-  * Accuracy
+  #### Architecture 
 
+  * Seedling Code:
+ 
+  ```
+    model = Sequential()
+    model.add(Conv2D(filters=96, kernel_size=(11,11), strides=(4,4), activation='relu', input_shape=(128,128,3)))
+    model.add(BatchNormalization())
+    model.add(MaxPool2D(pool_size=(3,3), strides=(2,2)))
+    model.add(Conv2D(filters=256, kernel_size=(5,5), strides=(1,1), activation='relu', padding="same"))
+    model.add(BatchNormalization())
+    model.add(MaxPool2D(pool_size=(3,3), strides=(2,2)))
+    model.add(Conv2D(filters=384, kernel_size=(3,3), strides=(1,1), activation='relu', padding="same"))
+    model.add(BatchNormalization())
+    model.add(Conv2D(filters=384, kernel_size=(3,3), strides=(1,1), activation='relu', padding="same"))
+    model.add(BatchNormalization())
+    model.add(Conv2D(filters=256, kernel_size=(3,3), strides=(1,1), activation='relu', padding="same"))
+    model.add(BatchNormalization())
+    model.add(MaxPool2D(pool_size=(3,3), strides=(2,2)))
+    model.add(Flatten())
+    model.add(Dense(4096, activation='relu'))
+    model.add(Dropout(0.5))
+    model.add(Dense(4096, activation='relu'))
+    model.add(Dropout(0.25)),
+    model.add(Dense(12, activation='softmax'))
+  ```
+
+  * Flower Code:
+ 
+  ```
+    model = Sequential()
+    model.add(Conv2D(filters=96, kernel_size=(11,11), strides=(4,4), activation='relu', input_shape=(128,128,3)))
+    model.add(BatchNormalization())
+    model.add(MaxPool2D(pool_size=(3,3), strides=(2,2)))
+    model.add(Conv2D(filters=256, kernel_size=(5,5), strides=(1,1), activation='relu', padding="same"))
+    model.add(BatchNormalization())
+    model.add(MaxPool2D(pool_size=(3,3), strides=(2,2)))
+    model.add(Conv2D(filters=384, kernel_size=(3,3), strides=(1,1), activation='relu', padding="same"))
+    model.add(BatchNormalization())
+    model.add(Conv2D(filters=384, kernel_size=(3,3), strides=(1,1), activation='relu', padding="same"))
+    model.add(BatchNormalization())
+    model.add(Conv2D(filters=256, kernel_size=(3,3), strides=(1,1), activation='relu', padding="same"))
+    model.add(BatchNormalization())
+    model.add(MaxPool2D(pool_size=(3,3), strides=(2,2)))
+    model.add(Flatten())
+    model.add(Dense(4096, activation='relu'))
+    model.add(Dropout(0.5))
+    model.add(Dense(4096, activation='relu'))
+    model.add(Dropout(0.25)),
+    model.add(Dense(5, activation='softmax'))
+  ```
+  Perhaps this model could be improved in the future by reducing the number of neurons in the final dense layers from 4,096 (to a value somewhere in the hundreds, or even smaller) since there are so few classes and thus so few neurons in the final layer.  It seems reasonable to believe that there could be problems trying to connect thousands of neurons to only 12 (or 5, in the case of the flower classification problem) and still yield accurate results.
 
 
 ### ResNet
@@ -226,13 +333,36 @@ For each neural network model tested, I used K-fold cross validation to ensure t
   
   Here is an example of a picture that the model correctly identified as a Small-flowered Cranesbill when it was passed a brand new picture that it had never seen before from the test folder of the dataset (which I kept in reserve for predictions because these were not labeled, so I had to check the species of the seedling depicted manually).  In this case, the model was highly confident, with a probability of over 99% that the image depicted a seedling from class 10.  This corresponded to the small-flowered cranesbill:
   
+  
   ![](Prediction.png)
   
   
+  #### Architecture 
+
+  * Seedling Code:
   
-  * Architecture (Note: Next, I will be inserting a screenshot of the model summary.)
-  * Cross-Entropy Loss
-  * Accuracy
+  ```
+    model = Sequential()
+    model.add(ResNet50(include_top=False, weights='imagenet', pooling='max'))
+    model.add(Dense(64))
+    model.add(Dense(32)) 
+    model.add(Dense(24))
+    model.add(Dense(16))
+    model.add(Dense(12, activation='softmax'))  
+  ```
+  
+  * Flower Code:
+  
+  ```
+    model = Sequential()
+    model.add(ResNet50(include_top=False, weights='imagenet', pooling='max'))
+    model.add(Dense(64))
+    model.add(Dense(32)) 
+    model.add(Dense(24))
+    model.add(Dense(16))
+    model.add(Dense(5, activation='softmax'))  
+  ```
+
 
 
 ## Citations and Sources Used
